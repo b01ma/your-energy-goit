@@ -19,6 +19,9 @@ Your Energy is a web application designed to help users track and manage their
 energy-related activities. The project features a home page and favorites
 section, built with modern web technologies.
 
+**Design:**
+[Figma Design File](https://www.figma.com/design/E52uzlaSsHQS9yzLSQrtSX/YourEnergy--Copy-?node-id=126-18318&t=8Tr8GUtplZLQ2Dmk-0)
+
 ## 🛠 Tech Stack
 
 - **Build Tool:** Vite 5.4.6
