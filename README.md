@@ -1,113 +1,243 @@
-# Vanilla App Template
+# Your Energy - GoIT Project
 
-Цей проект було створено за допомогою Vite. Для знайомства та налаштування
-додаткових можливостей [звернись до документації](https://vitejs.dev/).
+A modern web application built with Vite for providing energy-related content
+and services.
 
-## Створення репозиторію за шаблоном
+## 📋 Table of Contents
 
-Використовуй цей репозиторій організації GoIT як шаблон для створення
-репозиторію свого проекту. Для цього натисни на кнопку `«Use this template»` і
-обери опцію `«Create a new repository»`, як показано на зображенні.
+- [About](#about)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Team Workflow](#team-workflow)
+- [Available Scripts](#available-scripts)
+- [Contributing](#contributing)
 
-![Creating repo from a template step 1](./assets/template-step-1.png)
+## 🎯 About
 
-На наступному етапі відкриється сторінка створення нового репозиторію. Заповни
-поле його імені, переконайся, що репозиторій публічний, після чого натисни
-кнопку `«Create repository from template»`.
+Your Energy is a web application designed to help users track and manage their
+energy-related activities. The project features a home page and favorites
+section, built with modern web technologies.
 
-![Creating repo from a template step 2](./assets/template-step-2.png)
+**Design:**
+[Figma Design File](https://www.figma.com/design/E52uzlaSsHQS9yzLSQrtSX/YourEnergy--Copy-?node-id=126-18318&t=8Tr8GUtplZLQ2Dmk-0)
 
-Після того, як репозиторій буде створено, необхідно перейти в налаштування
-створеного репозиторію на вкладку `Settings` > `Actions` > `General` як показано
-на зображенні.
+## 🛠 Tech Stack
 
-![Settings GitHub Actions permissions step 1](./assets/gh-actions-perm-1.png)
+- **Build Tool:** Vite 5.4.6
+- **HTTP Client:** Axios 1.13.2
+- **CSS:** Custom CSS with modular structure
+- **Plugins:**
+  - vite-plugin-full-reload
+  - vite-plugin-html-inject
+  - postcss-sort-media-queries
 
-Проскроливши сторінку до самого кінця, в секції `«Workflow permissions»` обери
-опцію `«Read and write permissions»` і постав галочку в чекбоксі. Це необхідно
-для автоматизації процесу деплою проекту.
+## 🚀 Getting Started
 
-![Settings GitHub Actions permissions step 2](./assets/gh-actions-perm-2.png)
+### Prerequisites
 
-Тепер у тебе є особистий репозиторій проекту, зі структурою файлів та папок
-репозиторію-шаблону. Далі працюй з ним, як з будь-яким іншим особистим
-репозиторієм, клонуй його собі на комп'ютер, пиши код, роби коміти та відправляй
-їх на GitHub.
+Before you begin, ensure you have the following installed:
 
-## Підготовка до роботи
+- [Node.js](https://nodejs.org/) (version 16.x or higher recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [Git](https://git-scm.com/)
 
-1. Переконайся, що на комп'ютері встановлено LTS-версію Node.js.
-   [Скачай та встанови](https://nodejs.org/en/) її якщо необхідно.
-2. Встанови базові залежності проекту в терміналі командою `npm install`.
-3. Запусти режим розробки, виконавши в терміналі команду `npm run dev`.
-4. Перейдіть у браузері за адресою
-   [http://localhost:5173](http://localhost:5173). Ця сторінка буде автоматично
-   перезавантажуватись після збереження змін у файли проекту.
+### Installation
 
-## Файли і папки
+1. **Clone the repository**
 
-- Файли розмітки компонентів сторінки повинні лежати в папці `src/partials` та
-  імпортуватись до файлу `index.html`. Наприклад, файл з розміткою хедера
-  `header.html` створюємо у папці `partials` та імпортуємо в `index.html`.
-- Файли стилів повинні лежати в папці `src/css` та імпортуватись до HTML-файлів
-  сторінок. Наприклад, для `index.html` файл стилів називається `index.css`.
-- Зображення додавай до папки `src/img`. Збирач оптимізує їх, але тільки при
-  деплої продакшн версії проекту. Все це відбувається у хмарі, щоб не
-  навантажувати твій комп'ютер, тому що на слабких компʼютерах це може зайняти
-  багато часу.
+   ```bash
+   git clone https://github.com/b01ma/your-energy-goit.git
+   cd your-energy-goit
+   ```
 
-## Деплой
+2. **Install dependencies**
 
-Продакшн версія проекту буде автоматично збиратися та деплоїтись на GitHub
-Pages, у гілку `gh-pages`, щоразу, коли оновлюється гілка `main`. Наприклад,
-після прямого пуша або прийнятого пул-реквесту. Для цього необхідно у файлі
-`package.json` змінити значення прапора `--base=/<REPO>/`, для команди `build`,
-замінивши `<REPO>` на назву свого репозиторію, та відправити зміни на GitHub.
+   ```bash
+   npm install
+   ```
 
-```json
-"build": "vite build --base=/<REPO>/",
+3. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   - Navigate to `http://localhost:5173` (or the port shown in your terminal)
+
+### Building for Production
+
+```bash
+npm run build
 ```
 
-Далі необхідно зайти в налаштування GitHub-репозиторію (`Settings` > `Pages`) та
-виставити роздачу продакшн версії файлів з папки `/root` гілки `gh-pages`, якщо
-це не було зроблено автоматично.
+The built files will be in the `dist/` directory.
 
-![GitHub Pages settings](./assets/repo-settings.png)
+### Preview Production Build
 
-### Статус деплою
+```bash
+npm run preview
+```
 
-Статус деплою крайнього коміту відображається іконкою біля його ідентифікатора.
+## 📁 Project Structure
 
-- **Жовтий колір** - виконується збірка та деплой проекту.
-- **Зелений колір** - деплой завершився успішно.
-- **Червоний колір** - під час лінтингу, збірки чи деплою сталася помилка.
+```
+your-energy-goit/
+├── src/
+│   ├── index.html              # Main entry page
+│   ├── favorites.html          # Favorites page
+│   ├── main.js                 # JavaScript entry point
+│   ├── css/
+│   │   ├── styles.css          # Main stylesheet
+│   │   ├── components/         # Component-specific styles
+│   │   │   ├── footer.css
+│   │   │   └── header.css
+│   │   ├── global/             # Global styles
+│   │   │   ├── base.css
+│   │   │   ├── container.css
+│   │   │   └── reset.css
+│   │   └── pages/              # Page-specific styles
+│   │       ├── favorites.css
+│   │       └── home.css
+│   ├── img/                    # Images and icons
+│   │   ├── icons/
+│   │   └── webp/
+│   ├── partials/               # HTML partials
+│   │   ├── components/
+│   │   │   ├── footer.html
+│   │   │   └── header.html
+│   │   └── content/
+│   │       ├── content-favorites.html
+│   │       └── content-home.html
+│   └── public/                 # Static assets
+├── package.json
+├── vite.config.js              # Vite configuration
+└── README.md
+```
 
-Більш детальну інформацію про статус можна переглянути натиснувши на іконку, і в
-вікні, що випадає, перейти за посиланням `Details`.
+## 👥 Team Workflow
 
-![Deployment status](./assets/deploy-status.png)
+### Branch Strategy
 
-### Жива сторінка
+We use a two-branch workflow:
 
-Через якийсь час, зазвичай кілька хвилин, живу сторінку можна буде подивитися за
-адресою, вказаною на вкладці `Settings` > `Pages` в налаштуваннях репозиторію.
-Наприклад, ось посилання на живу версію для цього репозиторію
+- **`main`** - Production-ready code
+- **`staging`** - Development and testing branch
 
-[https://goitacademy.github.io/vanilla-app-template/](https://goitacademy.github.io/vanilla-app-template/).
+### Working on Features
 
-Якщо відкриється порожня сторінка, переконайся, що у вкладці `Console` немає
-помилок пов'язаних з неправильними шляхами до CSS та JS файлів проекту
-(**404**). Швидше за все у тебе неправильне значення прапора `--base` для
-команди `build` у файлі `package.json`.
+1. **Pull the latest changes**
 
-## Як це працює
+   ```bash
+   git checkout staging
+   git pull origin staging
+   ```
 
-![How it works](./assets/how-it-works.png)
+2. **Create a feature branch** (optional, for larger features)
 
-1. Після кожного пуша у гілку `main` GitHub-репозиторію, запускається
-   спеціальний скрипт (GitHub Action) із файлу `.github/workflows/deploy.yml`.
-2. Усі файли репозиторію копіюються на сервер, де проект ініціалізується та
-   проходить лінтинг та збірку перед деплоєм.
-3. Якщо всі кроки пройшли успішно, зібрана продакшн версія файлів проекту
-   відправляється у гілку `gh-pages`. В іншому випадку, у лозі виконання скрипта
-   буде вказано в чому проблема.
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+3. **Make your changes**
+
+   - Write clean, maintainable code
+   - Follow the existing code style
+   - Test your changes locally
+
+4. **Commit your changes**
+
+   ```bash
+   git add .
+   git commit -m "feat: description of your changes"
+   ```
+
+5. **Push your changes**
+
+   ```bash
+   git push origin feature/your-feature-name
+   # or if working directly on staging:
+   git push origin staging
+   ```
+
+6. **Create a Pull Request**
+
+   - Go to the GitHub repository
+   - Create a PR from your feature branch to `staging`
+   - Request review from team members
+   - Address any feedback
+
+7. **After approval**
+   - Merge to `staging` for testing
+   - When ready for production, create PR from `staging` to `main`
+
+### Commit Message Convention
+
+Use clear, descriptive commit messages:
+
+```
+feat: add new exercise filter
+fix: resolve layout issue on mobile
+docs: update installation instructions
+style: format CSS files
+refactor: restructure favorites module
+test: add unit tests for API calls
+```
+
+### Code Review Guidelines
+
+- **Review promptly** - Try to review PRs within 24 hours
+- **Be constructive** - Provide helpful feedback
+- **Test locally** - Pull the branch and test functionality
+- **Check for:**
+  - Code quality and readability
+  - Performance implications
+  - Mobile responsiveness
+  - Browser compatibility
+
+## 📜 Available Scripts
+
+| Command           | Description                              |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Start development server with hot reload |
+| `npm run build`   | Build for production                     |
+| `npm run preview` | Preview production build locally         |
+
+## 🤝 Contributing
+
+1. Ensure your code follows the project structure
+2. Test your changes across different browsers
+3. Update documentation if needed
+4. Keep commits atomic and well-described
+5. Communicate with the team about major changes
+
+### CSS Guidelines
+
+- Use modular CSS structure
+- Place component styles in `css/components/`
+- Place page styles in `css/pages/`
+- Use global styles sparingly
+- Follow BEM or consistent naming convention
+
+### JavaScript Guidelines
+
+- Use ES6+ features
+- Keep functions small and focused
+- Use meaningful variable names
+- Handle errors appropriately
+- Comment complex logic
+
+## 📞 Support
+
+For questions or issues:
+
+- Open an issue on GitHub
+- Contact the development team
+- Check existing documentation
+
+---
+
+**Author:** GoIT dev team  
+**License:** ISC  
+**Version:** 1.0.0
