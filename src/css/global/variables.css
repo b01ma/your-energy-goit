@@ -1,13 +1,10 @@
 
 :root {
-
-  /* typo */
+  /* typography */
   --font-family-primary: 'DM Sans', sans-serif;
 
   /* colors */
-  --color-primary: rgb(36,36,36); /* #242424 */
-  --color-secondary: #C6CDD1;
-
+  --color-primary-rgb: 36, 36, 36; /* #242424 */
   --color-primary: rgba(var(--color-primary-rgb), 1);
   --color-primary-80: rgba(var(--color-primary-rgb), 0.8);
   --color-primary-60: rgba(var(--color-primary-rgb), 0.6);
@@ -15,6 +12,8 @@
   --color-primary-40: rgba(var(--color-primary-rgb), 0.4);
   --color-primary-20: rgba(var(--color-primary-rgb), 0.2);
   --color-primary-10: rgba(var(--color-primary-rgb), 0.1);
+
+  --color-secondary: #C6CDD1;
 
 
   --color-light: rgba(244,244,244, 1); /* #F4F4F4 */
