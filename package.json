@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open",
-    "build": "vite build --base=/vanilla-app-template/",
+    "build": "vite build --base=/your-energy-goit/",
     "preview": "vite preview"
   },
   "devDependencies": {
