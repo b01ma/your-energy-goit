@@ -3,6 +3,7 @@
 @import url('./global/normalize.css');
 @import url('./global/reset.css');
 @import url('./global/base.css');
+@import url('./global/fonts.css');
 @import url('./global/container.css');
 
 /* Sections style */

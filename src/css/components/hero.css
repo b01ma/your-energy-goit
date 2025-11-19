@@ -1,3 +1,144 @@
 /* ---------------------------------- */
 /* ---------- Hero section ---------- */
 /* ---------------------------------- */
+
+/* General */
+
+.hero-section {
+  padding-top: 80px;
+  color: var(--color-primary);
+}
+
+.container-hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-slogan {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-tags-mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-top-desktop {
+  display: none;
+}
+
+.hero-tags-desktop {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 197px;
+  gap: 8px;
+  justify-content: end;
+}
+
+.hero-tag {
+  padding: 4px 12px;
+  border: 1px Solid #242424;
+  border-radius: 30px;
+}
+
+/* Fonts */
+
+.p-hero {
+  letter-spacing: -0.02em;
+}
+
+/* Icons */
+
+.icon-hero {
+  stroke-width: 0.5;
+  vertical-align: -5px;
+  width: 38px;
+  height: 38px;
+  margin-right: 10px;
+}
+
+/* Images */
+
+.hero-img-container {
+  height: 480px;
+  width: 335px;
+  border-radius: 30px;
+  overflow: hidden;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.hero-img {
+  height: 510px;
+  width: 390px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-img-top-container {
+  width: 168px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .icon-hero {
+    width: 59px;
+    height: 59px;
+    vertical-align: -6px;
+  }
+
+  .p-hero {
+    max-width: 528px;
+  }
+
+  .hero-img-container {
+    height: 550px;
+    width: 704px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .hero-img {
+    width: 760px;
+    height: 730px;
+  }
+
+  .hero-tags-mobile {
+    align-self: flex-end;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .hero-top-desktop {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: end;
+  }
+  
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .hero-img-container {
+    height: 350px;
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 600px;
+  }
+
+  .hero-tags-mobile {
+    display: none;
+  }
+}

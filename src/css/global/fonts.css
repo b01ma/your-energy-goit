@@ -1,0 +1,42 @@
+.main-header {
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 44px;
+  letter-spacing: 0.02em;
+}
+
+.header-italic {
+  font-style: italic;
+}
+
+.p-middle {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0px;
+}
+
+.p-main {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0px;
+}
+
+@media only screen and (min-width: 768px) {
+  .main-header {
+    font-size: 75px;
+    line-height: 74px;
+    max-width: 639px;
+  }
+
+  .p-main {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .p-middle {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
