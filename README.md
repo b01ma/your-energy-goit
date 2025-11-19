@@ -22,6 +22,9 @@ section, built with modern web technologies.
 **Design:**
 [Figma Design File](https://www.figma.com/design/E52uzlaSsHQS9yzLSQrtSX/YourEnergy--Copy-?node-id=126-18318&t=8Tr8GUtplZLQ2Dmk-0)
 
+**API Documentation:**
+[Your Energy API Docs](https://your-energy.b.goit.study/api-docs/#/)
+
 ## 🛠 Tech Stack
 
 - **Build Tool:** Vite 5.4.6
