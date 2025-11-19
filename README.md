@@ -126,7 +126,7 @@ your-energy-goit/
 We use a two-branch workflow:
 
 - **`main`** - Production-ready code
-- **`staging`** - Development and testing branch
+- **`staging`** - Development and testing branch (default branch for PRs)
 
 ### Working on Features
 
@@ -167,7 +167,7 @@ We use a two-branch workflow:
 6. **Create a Pull Request**
 
    - Go to the GitHub repository
-   - Create a PR from your feature branch to `staging`
+   - Create a PR from your feature branch to `staging` (this is the default base branch)
    - Request review from team members
    - Address any feedback
 
