@@ -6,7 +6,7 @@ const headerSocialDesktop = document.querySelector('.header-socials');
 
 const menuLinks = mobileMenu.querySelectorAll('.header-socials-link');
 
-const mobileBreakpoint = window.matchMedia('(max-width: 768px)');
+const mobileBreakpoint = globalThis.matchMedia('(max-width: 768px)');
 
 function openMenu() {
   mobileMenuBtn.setAttribute('aria-expanded', 'true');
