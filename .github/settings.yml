@@ -1,0 +1,33 @@
+repository:
+  # The default branch for this repository
+  # Pull requests will target this branch by default
+  default_branch: staging
+  
+  # Repository description
+  description: A modern web application built with Vite for providing energy-related content and services
+  
+  # Repository homepage
+  homepage: https://b01ma.github.io/your-energy-goit/
+  
+  # Topics/tags for the repository
+  topics:
+    - vite
+    - javascript
+    - energy
+    - goit
+    - web-app
+
+# Branch protection rules
+branches:
+  - name: main
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+      enforce_admins: false
+      
+  - name: staging
+    protection:
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+      enforce_admins: false

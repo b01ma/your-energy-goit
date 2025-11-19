@@ -1,0 +1,21 @@
+# Repository Configuration
+# This file can be used by GitHub Apps like Probot to configure repository settings
+
+# Default branch for pull requests
+branches:
+  default: staging
+
+# Branch protection (informational - actual protection set in GitHub UI)
+protection:
+  staging:
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+    enforce_admins: false
+  main:
+    required_pull_request_reviews:
+      required_approving_review_count: 1
+    enforce_admins: true
+
+# Pull Request settings
+pull_requests:
+  default_branch: staging
