@@ -6,12 +6,13 @@ const headerSocialDesktop = document.querySelector('.header-socials');
 
 const menuLinks = mobileMenu.querySelectorAll('.header-socials-link');
 
-const mobileBreakPoint = 768;
+const mobileBreakpoint = window.matchMedia('(max-width: 768px)');
 
 function openMenu() {
   mobileMenuBtn.setAttribute('aria-expanded', 'true');
   mobileMenu.setAttribute('aria-expanded', 'true');
 }
+
 function closeMenu() {
   mobileMenuBtn.setAttribute('aria-expanded', 'false');
   mobileMenu.setAttribute('aria-expanded', 'false');
@@ -51,9 +52,9 @@ function updateActiveNav() {
     ?.classList.toggle('nav-active', isOnFavorites);
 }
 
-globalThis.addEventListener('resize', () => {
-  window.innerWidth <= mobileBreakPoint ? showMobileMenu() : hideMobileMenu();
-});
+function handleBreakpointChange(e) {
+  e.matches ? showMobileMenu() : hideMobileMenu();
+}
 
 mobileMenuBtn.addEventListener('click', () => {
   const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
@@ -74,7 +75,8 @@ document.addEventListener('keydown', e => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  window.innerWidth <= mobileBreakPoint ? showMobileMenu() : hideMobileMenu();
-
   updateActiveNav();
 });
+
+handleBreakpointChange(mobileBreakpoint);
+mobileBreakpoint.addEventListener('change', handleBreakpointChange);
