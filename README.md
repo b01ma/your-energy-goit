@@ -81,7 +81,8 @@ npm run build
 
 The built files will be in the `dist/` directory.
 
-**Note:** The build is configured for GitHub Pages deployment with base path `/your-energy-goit/`.
+**Note:** The build is configured for GitHub Pages deployment with base path
+`/your-energy-goit/`.
 
 ### Preview Production Build
 
@@ -112,6 +113,13 @@ your-energy-goit/
 │   │   └── pages/              # Page-specific styles
 │   │       ├── favorites.css
 │   │       └── home.css
+│   ├── js/
+│   │   ├── api/                # API integration
+│   │   │   └── api.js
+│   │   ├── components/         # JavaScript components
+│   │   │   └── exercises.js
+│   │   └── utilities/          # Helper functions
+│   │       └── modal.js
 │   ├── img/                    # Images and icons
 │   │   ├── icons/
 │   │   └── webp/
