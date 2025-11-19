@@ -1,4 +1,5 @@
 .header {
   /* header styles here */
-}
 
+  outline: 1px solid red; /* For debugging purposes only */
+}
