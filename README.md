@@ -30,6 +30,9 @@ section, built with modern web technologies.
 - **Build Tool:** Vite 5.4.6
 - **HTTP Client:** Axios 1.13.2
 - **CSS:** Custom CSS with modular structure
+- **UI Libraries:**
+  - iziToast 1.4.0 - Toast notifications
+  - iziModal 1.6.1 - Modal dialogs
 - **Plugins:**
   - vite-plugin-full-reload
   - vite-plugin-html-inject
@@ -68,6 +71,7 @@ Before you begin, ensure you have the following installed:
 
 4. **Open your browser**
    - Navigate to `http://localhost:5173` (or the port shown in your terminal)
+   - The browser will open automatically
 
 ### Building for Production
 
@@ -77,11 +81,16 @@ npm run build
 
 The built files will be in the `dist/` directory.
 
+**Note:** The build is configured for GitHub Pages deployment with base path
+`/your-energy-goit/`.
+
 ### Preview Production Build
 
 ```bash
 npm run preview
 ```
+
+After running preview, visit: `http://localhost:4173/your-energy-goit/`
 
 ## 📁 Project Structure
 
@@ -99,10 +108,18 @@ your-energy-goit/
 │   │   ├── global/             # Global styles
 │   │   │   ├── base.css
 │   │   │   ├── container.css
-│   │   │   └── reset.css
+│   │   │   ├── normalize.css
+│   │   │   └── variables.css
 │   │   └── pages/              # Page-specific styles
 │   │       ├── favorites.css
 │   │       └── home.css
+│   ├── js/
+│   │   ├── api/                # API integration
+│   │   │   └── api.js
+│   │   ├── components/         # JavaScript components
+│   │   │   └── exercises.js
+│   │   └── utilities/          # Helper functions
+│   │       └── modal.js
 │   ├── img/                    # Images and icons
 │   │   ├── icons/
 │   │   └── webp/
