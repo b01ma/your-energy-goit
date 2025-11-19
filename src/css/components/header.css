@@ -9,6 +9,7 @@
 }
 
 .header {
+
   position: relative;
   top: 0;
   background-color: var(--color-bg);
@@ -267,4 +268,9 @@ body:has(.header-mobile-menu[aria-expanded='true']) {
   clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
+
+  /* header styles here */
+
+  outline: 1px solid red; /* For debugging purposes only */
+
 }
