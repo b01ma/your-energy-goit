@@ -47,7 +47,28 @@
 
 /* Fonts */
 
-.p-hero {
+.main-header-hero {
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 44px;
+  letter-spacing: 0.02em;
+}
+
+.header-italic-hero {
+  font-style: italic;
+}
+
+.p-middle-hero {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
+  letter-spacing: 0px;
+}
+
+.p-main-hero {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18px;
   letter-spacing: -0.02em;
 }
 
@@ -93,10 +114,6 @@
     vertical-align: -6px;
   }
 
-  .p-hero {
-    max-width: 528px;
-  }
-
   .hero-img-container {
     height: 550px;
     width: 704px;
@@ -111,6 +128,23 @@
 
   .hero-tags-mobile {
     align-self: flex-end;
+  }
+
+  .main-header-hero {
+    font-size: 75px;
+    line-height: 74px;
+    max-width: 639px;
+  }
+
+  .p-main-hero {
+    font-size: 18px;
+    line-height: 24px;
+    max-width: 528px;
+  }
+
+  .p-middle-hero {
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 
