@@ -1,0 +1,65 @@
+<main>
+    <section
+        class="exercises-section"
+        data-exercises-section
+        data-category="Waist"
+        data-filter="bodypart"
+    >
+        <div class="container">
+        <div class="exercises-header">
+            <h2 class="exercises-title">
+            Exercises / <span data-exercises-category-title></span>
+            </h2>
+
+            <div class="exercises-tabs" data-exercises-tabs>
+            <button type="button" data-filter-value="muscles">Muscles</button>
+            <button type="button" data-filter-value="bodypart" class="is-active">
+                Body parts
+            </button>
+            <button type="button" data-filter-value="equipment">Equipment</button>
+            </div>
+
+            <form class="exercises-search" data-exercises-search-form>
+            <div class="exercises-search-inner">
+                <input
+                type="text"
+                class="exercises-search-input"
+                placeholder="Search"
+                autocomplete="off"
+                data-exercises-search-input
+                />
+
+                
+                <button
+                type="button"
+                class="exercises-search-clear"
+                data-search-clear
+                aria-label="Clear search"
+                >
+                ×
+                </button>
+
+                
+                <button
+                type="submit"
+                class="exercises-search-submit"
+                aria-label="Search"
+                >
+                🔍
+                </button>
+            </div>
+            </form>
+
+
+        </div>
+
+        <ul class="exercises-list" data-exercises-list></ul>
+
+        <p class="exercises-empty is-hidden" data-exercises-empty>
+            No exercises found. Try changing filters or keyword.
+        </p>
+
+        <div class="exercises-pagination" data-exercises-pagination></div>
+        </div>
+  </section>
+</main>
