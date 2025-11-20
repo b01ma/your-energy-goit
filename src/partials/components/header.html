@@ -1,9 +1,127 @@
-<header class="header">
-  <div class="container">
-    <h1>Your Energy</h1>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="favorites.html">Favorites</a></li>
+<header class="header header-container">
+  <div class="header-menu">
+    <a href="./" class="header-logo-link" aria-label="Logo">
+      <svg class="header-logo" width="132" height="24">
+        <use href="./img/icons.svg#icon-logo"></use>
+      </svg>
+    </a>
+
+    <nav class="header-nav" aria-label="menu">
+      <ul class="header-nav-items">
+        <li class="header-nav-item nav-active" id="nav-desktop-home">
+          <a href="index.html" class="header-nav-link">Home</a>
+        </li>
+        <li class="header-nav-item" id="nav-desktop-favorites">
+          <a href="favorites.html" class="header-nav-link">Favorites</a>
+        </li>
+      </ul>
+    </nav>
+
+    <ul class="header-socials">
+      <li class="header-socials-item">
+        <a
+          href="https://www.facebook.com/goITclub/"
+          class="header-socials-link"
+          aria-label="Facebook"
+          target="_blank"
+        >
+          <svg class="header-socials-icon" width="28" height="28">
+            <use href="./img/icons.svg#icon-facebook"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="header-socials-item">
+        <a
+          href="https://www.instagram.com/goitclub/ "
+          class="header-socials-link"
+          aria-label="Instagram"
+          target="_blank"
+        >
+          <svg class="header-socials-icon" width="28" height="28">
+            <use href="./img/icons.svg#icon-instagram"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="header-socials-item">
+        <a
+          href="https://www.youtube.com/c/GoIT"
+          class="header-socials-link"
+          aria-label="Youtube"
+          target="_blank"
+        >
+          <svg class="header-socials-icon" width="28" height="28">
+            <use href="./img/icons.svg#icon-youtube"></use>
+          </svg>
+        </a>
+      </li>
     </ul>
+
+    <button
+      class="mobile-menu-btn visually-hidden"
+      id="mobile-menu-btn"
+      type="button"
+      aria-label="Open mobile menu"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </div>
 </header>
+
+<!-- Mobile menu OUTSIDE of header -->
+<div class="header-mobile-menu" aria-expanded="false" id="header-mobile-menu">
+  <div class="mobile-menu-container">
+    <nav class="mobile-menu-nav" aria-label="mobile-menu">
+      <ul class="mobile-menu-items">
+        <li class="mobile-menu-item nav-active" id="nav-mobile-home">
+          <a href="./index.html" class="mobile-menu-nav-link">Home</a>
+        </li>
+        <li class="mobile-menu-item" id="nav-mobile-favorites">
+          <a href="./favorites.html" class="mobile-menu-nav-link">Favorites</a>
+        </li>
+      </ul>
+    </nav>
+
+    <ul class="header-socials">
+      <li class="header-socials-item">
+        <a
+          href="https://www.facebook.com/goITclub/"
+          class="header-socials-link"
+          aria-label="Facebook"
+          target="_blank"
+        >
+          <svg class="header-socials-icon" width="28" height="28">
+            <use href="./img/icons.svg#icon-facebook"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="header-socials-item">
+        <a
+          href="https://www.instagram.com/goitclub/ "
+          class="header-socials-link"
+          aria-label="Instagram"
+          target="_blank"
+        >
+          <svg class="header-socials-icon" width="28" height="28">
+            <use href="./img/icons.svg#icon-instagram"></use>
+          </svg>
+        </a>
+      </li>
+      <li class="header-socials-item">
+        <a
+          href="https://www.youtube.com/c/GoIT"
+          class="header-socials-link"
+          aria-label="Youtube"
+          target="_blank"
+        >
+          <svg class="header-socials-icon" width="28" height="28">
+            <use href="./img/icons.svg#icon-youtube"></use>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
