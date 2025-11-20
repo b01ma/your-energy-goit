@@ -13,3 +13,7 @@
 /* Pages */
 @import url('./pages/home.css');
 @import url('./pages/favorites.css');
+
+/* Search */
+@import url('./components/search.css');
+

@@ -1,6 +1,6 @@
 /* ==== SEARCH ==== */
 .exercises-search {
-  max-width: 360px;
+  max-width: 273px;   /* Hug 273px из Figma */
   width: 100%;
 }
 
@@ -11,9 +11,10 @@
 
 .exercises-search-input {
   width: 100%;
-  padding: 14px 72px 14px 20px; 
-  border: 1px solid #111111;
-  border-radius: 40px;
+  height: 48px;                     /* высота 48px */
+  padding: 12px 48px 12px 14px;     /* top | right | bottom | left */
+  border: 1px solid #242424;        /* цвет бордера как в макете */
+  border-radius: 30px;              /* радиус 30px */
   outline: none;
   font-size: 16px;
   line-height: 1.4;
@@ -44,16 +45,28 @@
   line-height: 1;
 }
 
+/* лупа справа, по макету */
 .exercises-search-submit {
-  right: 18px;
+  right: 14px;
 }
 
+/* крестик слева от лупы */
 .exercises-search-clear {
-  right: 46px;
-  display: none; 
+  right: 44px;
+  display: none;
   font-size: 20px;
 }
 
 .exercises-search-input.not-empty + .exercises-search-clear {
   display: block;
 }
+
+/* иконки */
+.exercises-search-icon,
+.ex-icon {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+}
+

@@ -2,7 +2,6 @@ import { api } from '../api/api.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-
 const section = document.querySelector('[data-exercises-section]');
 
 if (section) {
@@ -16,7 +15,6 @@ if (section) {
     pagination: section.querySelector('[data-exercises-pagination]'),
     categoryTitle: section.querySelector('[data-exercises-category-title]'),
   };
-
 
   const state = {
     category:
@@ -55,13 +53,22 @@ if (section) {
     }
 
     if (refs.searchInput && refs.searchClear) {
+      // здесь обновляем keyword при любом изменении текста
       refs.searchInput.addEventListener('input', () => {
-        if (refs.searchInput.value.trim().length > 0) {
+        const value = refs.searchInput.value.trim();
+        state.keyword = value; // ← ключевой момент
+
+        if (value.length > 0) {
           refs.searchInput.classList.add('not-empty');
           refs.searchClear.style.display = 'block';
         } else {
           refs.searchInput.classList.remove('not-empty');
           refs.searchClear.style.display = 'none';
+
+          // при полном очищении поиска логично вернуть на первую страницу
+          state.page = 1;
+          // запрос специально НЕ шлём отсюда, чтобы не спамить API
+          // он уйдёт при следующем submit / смене вкладки / пагинации
         }
       });
 
@@ -79,8 +86,6 @@ if (section) {
     highlightActiveTab();
   }
 
-
-
   async function loadExercises() {
     if (!refs.list) return;
 
@@ -88,19 +93,25 @@ if (section) {
     refs.empty?.classList.add('is-hidden');
 
     try {
-      const filterKey = state.filter; 
+      const filterKey = state.filter;
       const categoryForApi = state.category
         ? state.category.toLowerCase()
         : undefined;
 
-      const data = await api.getExercisesByFilters({
+      // формируем объект параметров без пустого keyword
+      const params = {
         [filterKey]: categoryForApi,
-        keyword: state.keyword || undefined,
         page: state.page,
         limit: state.limit,
-      });
+      };
 
-      console.log('EXERCISES DATA:', data); 
+      if (state.keyword) {
+        params.keyword = state.keyword;
+      }
+
+      const data = await api.getExercisesByFilters(params);
+
+      console.log('EXERCISES DATA:', data);
 
       const items = Array.isArray(data.results) ? data.results : [];
       state.totalPages = Number(data.totalPages) || 1;
@@ -112,7 +123,8 @@ if (section) {
 
         iziToast.info({
           title: 'No results',
-          message: 'No exercises found for these filters. Try changing category or keyword.',
+          message:
+            'No exercises found for these filters. Try changing category or keyword.',
           position: 'topRight',
           timeout: 3000,
           closeOnClick: true,
@@ -128,7 +140,8 @@ if (section) {
 
       iziToast.error({
         title: 'Error',
-        message: error?.message || 'Failed to load exercises. Try again later.',
+        message:
+          error?.message || 'Failed to load exercises. Try again later.',
         position: 'topRight',
         timeout: 4000,
         closeOnClick: true,
@@ -154,7 +167,7 @@ if (section) {
     const btn = event.target.closest('[data-filter-value]');
     if (!btn) return;
 
-    const newFilter = btn.dataset.filterValue; 
+    const newFilter = btn.dataset.filterValue;
     if (!newFilter || newFilter === state.filter) return;
 
     state.filter = newFilter;
@@ -183,15 +196,8 @@ if (section) {
   }
 
   function createExerciseCardMarkup(exercise) {
-    const {
-      _id,
-      name,
-      burnedCalories,
-      bodyPart,
-      target,
-      rating,
-      time,
-    } = exercise;
+    const { _id, name, burnedCalories, bodyPart, target, rating, time } =
+      exercise;
 
     return `
       <li class="exercise-card" data-id="${_id}">
