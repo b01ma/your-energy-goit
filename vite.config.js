@@ -3,6 +3,7 @@ import { glob } from 'glob';
 import injectHTML from 'vite-plugin-html-inject';
 import FullReload from 'vite-plugin-full-reload';
 import SortCss from 'postcss-sort-media-queries';
+import nested from 'postcss-nested';
 
 export default defineConfig(({ command }) => {
   return {
@@ -40,9 +41,16 @@ export default defineConfig(({ command }) => {
     plugins: [
       injectHTML(),
       FullReload(['./src/**/**.html']),
-      SortCss({
-        sort: 'mobile-first',
-      }),
     ],
+    css: {
+      postcss: {
+        plugins: [
+          nested(),
+          SortCss({
+            sort: 'mobile-first',
+          }),
+        ],
+      },
+    },
   };
 });
