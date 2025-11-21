@@ -1,0 +1,35 @@
+.to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 0;
+
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.15s ease-in-out;
+}
+
+.to-top-btn:hover {
+  background-color: var(--color-primary-80);
+}
+
+.to-top-icon {
+  width: 50%;
+  height: 50%;
+}
+
+
+@media screen and (max-width: 768px) {
+  .to-top-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
