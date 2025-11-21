@@ -10,12 +10,12 @@ const mobileBreakpoint = globalThis.matchMedia('(max-width: 768px)');
 
 function openMenu() {
   mobileMenuBtn.setAttribute('aria-expanded', 'true');
-  mobileMenu.setAttribute('aria-expanded', 'true');
+   mobileMenu.dataset.expanded = 'true';
 }
 
 function closeMenu() {
   mobileMenuBtn.setAttribute('aria-expanded', 'false');
-  mobileMenu.setAttribute('aria-expanded', 'false');
+   mobileMenu.dataset.expanded = 'false';
 }
 
 function showMobileMenu() {
