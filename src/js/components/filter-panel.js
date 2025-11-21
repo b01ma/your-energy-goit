@@ -1,3 +1,5 @@
+import { api } from '../api/api.js';
+
 const filtersBlock = document.getElementById('filters');
 const filtersGrid = document.getElementById('filtersGrid');
 const selectedSubcategoryEl = document.getElementById('selectedSubcategory');
@@ -5,8 +7,6 @@ const searchContainer = document.getElementById('searchContainer');
 const searchInput = document.getElementById('searchInput');
 const searchIcon = document.querySelector('.search-icon');
 const exercisesTitle = document.querySelector('.exercises-title');
-
-const BASE_URL = 'https://your-energy.b.goit.study/api';
 
 let currentFilter = 'Muscles'; // Muscles / Body parts / Equipment
 let allFilterItems = []; // список КАТЕГОРІЙ з /filters
@@ -30,21 +30,18 @@ function setActiveButton(activeBtn) {
 }
 
 /* =========================
- * Завантаження КАТЕГОРІЙ (/filters)
+ * Завантаження КАТЕГОРІЙ (/filters через api)
  * ========================= */
 
 async function loadFilterCards(filterName) {
-  const url = `${BASE_URL}/filters?filter=${encodeURIComponent(
-    filterName
-  )}&page=1&limit=12`;
-
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+    const data = await api.getFiltersOfExercises({
+      filter: filterName,
+      page: 1,
+      limit: 12,
+    });
 
-    const data = await res.json();
     allFilterItems = data.results || [];
-
     renderFilterCards(allFilterItems);
   } catch (err) {
     console.error('Error loading filters:', err);
@@ -70,33 +67,31 @@ function renderFilterCards(items) {
 }
 
 /* =========================
- * Завантаження ВПРАВ для підкатегорії (/exercises)
+ * Завантаження ВПРАВ для підкатегорії (/exercises через api)
  * ========================= */
 
 async function loadExercisesForSubcategory(filterType, subcategoryName) {
-  const params = new URLSearchParams({
+  // payload для getExercisesByFilters
+  const payload = {
     page: 1,
     limit: 12,
-  });
+  };
 
-  // ⚠️ Назви параметрів звір із вашим Swagger’ом
+  // МАПІНГ: яка вкладка → який параметр:
+  // Body parts → bodyPart
+  // Muscles    → target       (у прикладі: target: "abs")
+  // Equipment  → equipment
   if (filterType === 'Body parts') {
-    params.set('bodyPart', subcategoryName);
+    payload.bodyPart = subcategoryName;
   } else if (filterType === 'Muscles') {
-    params.set('muscles', subcategoryName);
+    payload.target = subcategoryName;
   } else if (filterType === 'Equipment') {
-    params.set('equipment', subcategoryName);
+    payload.equipment = subcategoryName;
   }
 
-  const url = `${BASE_URL}/exercises?${params.toString()}`;
-
   try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
-
-    const data = await res.json();
+    const data = await api.getExercisesByFilters(payload);
     currentExercises = data.results || [];
-
     renderExercises(currentExercises);
   } catch (error) {
     console.error('Error loading exercises:', error);
@@ -116,19 +111,26 @@ function renderExercises(exercises) {
       ex => `
       <article class="exercise-card">
         <h3 class="exercise-card-title">${ex.name}</h3>
-        <p class="exercise-card-meta">${ex.bodyPart || ''}${
-        ex.bodyPart && ex.target ? ' · ' : ''
-      }${ex.target || ''}</p>
+        <p class="exercise-card-meta">
+          ${ex.bodyPart || ''}${ex.bodyPart && ex.target ? ' · ' : ''}${
+        ex.target || ''
+      }
+        </p>
       </article>
     `
     )
     .join('');
 }
 
+/* =========================
+ * ПОШУК по НАЗВАМ ВПРАВ (динамічний)
+ * ========================= */
+
 function runExercisesSearch() {
   const query = searchInput.value.toLowerCase().trim();
 
   if (!query) {
+    // якщо поле пусте — повертаємо повний список вправ
     renderExercises(currentExercises);
     return;
   }
@@ -140,6 +142,11 @@ function runExercisesSearch() {
   renderExercises(filtered);
 }
 
+/* =========================
+ * Обробники подій
+ * ========================= */
+
+/* Кнопки Muscles / Body parts / Equipment */
 filtersBlock.addEventListener('click', async event => {
   const btn = event.target.closest('.filter-btn');
   if (!btn) return;
@@ -150,19 +157,22 @@ filtersBlock.addEventListener('click', async event => {
   currentFilter = newFilter;
   setActiveButton(btn);
 
+  // Скидаємо підкатегорію та пошук
   selectedSubcategoryEl.textContent = '';
   currentSubcategory = '';
   searchContainer.hidden = true;
   searchInput.value = '';
+  currentExercises = [];
 
   await loadFilterCards(currentFilter);
 });
 
+/* Клік по картці КАТЕГОРІЇ → завантажуємо вправи */
 filtersGrid.addEventListener('click', async event => {
   const card = event.target.closest('.filter-card');
   if (!card) return;
 
-  const name = card.dataset.name; //  "waist"
+  const name = card.dataset.name; // "waist"
   const prettyName = capitalize(name); // "Waist"
 
   currentSubcategory = name;
@@ -170,6 +180,7 @@ filtersGrid.addEventListener('click', async event => {
   // Exercises / Waist
   selectedSubcategoryEl.textContent = prettyName;
 
+  // показуємо поле пошуку
   searchContainer.hidden = false;
   searchInput.value = '';
 
@@ -178,8 +189,10 @@ filtersGrid.addEventListener('click', async event => {
 
 /* === Search === */
 
+// динамічний пошук — після кожного символа
 searchInput.addEventListener('input', runExercisesSearch);
 
+// пошук по Enter
 searchInput.addEventListener('keydown', event => {
   if (event.key === 'Enter') {
     event.preventDefault();
@@ -187,15 +200,23 @@ searchInput.addEventListener('keydown', event => {
   }
 });
 
+// пошук по кліку на іконку
 if (searchIcon) {
   searchIcon.addEventListener('click', runExercisesSearch);
 }
 
+/* =========================
+ * Стартове завантаження
+ * ========================= */
+
 document.addEventListener('DOMContentLoaded', () => {
-  loadFilterCards(currentFilter); // "Muscles"
+  loadFilterCards(currentFilter); // "Muscles" за замовчуванням
 });
 
-// Click on "Exercises"
+/* =========================
+ * Click on "Exercises" → повний reset до Muscles
+ * ========================= */
+
 exercisesTitle.addEventListener('click', async () => {
   currentFilter = 'Muscles';
 
@@ -213,5 +234,6 @@ exercisesTitle.addEventListener('click', async () => {
   searchContainer.hidden = true;
 
   currentExercises = [];
+
   await loadFilterCards('Muscles');
 });
