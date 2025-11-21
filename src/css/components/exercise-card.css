@@ -61,6 +61,13 @@
   margin-right: 5px;
 }
 
+.exercise-card__start {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
 .exercise-card__start__text {
   font-size: 14px;
   line-height: 1.28;
@@ -70,6 +77,14 @@
     font-size: 16px;
     line-height: 1.5;
   }
+}
+
+.exercise-card__start__icon {
+  transition: transform 0.25s ease;
+}
+
+.exercise-card__start:hover .exercise-card__start__icon {
+  transform: translateX(4px);
 }
 
 .exercise-card__body {
