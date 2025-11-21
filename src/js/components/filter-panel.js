@@ -1,4 +1,5 @@
 import { api } from '../api/api.js';
+import {loadAndRenderCategories} from '../components/category_template.js';
 
 const filtersBlock = document.getElementById('filters');
 const filtersGrid = document.getElementById('filtersGrid');
@@ -164,7 +165,9 @@ filtersBlock.addEventListener('click', async event => {
   searchInput.value = '';
   currentExercises = [];
 
-  await loadFilterCards(currentFilter);
+  // await loadFilterCards(currentFilter);
+   console.log(currentFilter.toLowerCase());
+  await loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
 });
 
 /* Клік по картці КАТЕГОРІЇ → завантажуємо вправи */
@@ -185,6 +188,7 @@ filtersGrid.addEventListener('click', async event => {
   searchInput.value = '';
 
   await loadExercisesForSubcategory(currentFilter, currentSubcategory);
+ 
 });
 
 /* === Search === */
