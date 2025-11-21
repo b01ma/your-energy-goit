@@ -14,3 +14,6 @@
 /* Pages */
 @import url('./pages/home.css');
 @import url('./pages/favorites.css');
+
+/* Component styles */
+@import url('./components/to_top_btn.css');

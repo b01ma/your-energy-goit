@@ -11,15 +11,18 @@ const limit = 12;
 function createCategoryCardMarkup(category, filterType) {
   const { name, imgUrl } = category;
 
-  let filterDisplay = filterType === 'bodypart' ? 'Body parts' : filterType.charAt(0).toUpperCase() + filterType.slice(1);
+  let filterDisplay =
+    filterType === 'bodypart'
+      ? 'Body parts'
+      : filterType.charAt(0).toUpperCase() + filterType.slice(1);
 
   return `
         <li class="categories-item">
             <a href="#"
-               class="category-card"
-               data-name="${name}"
-               data-filter="${filterType}"
-               aria-label="Категорія ${name}">
+              class="category-card"
+              data-name="${name}"
+              data-filter="${filterType}"
+              aria-label="Категорія ${name}">
 
                 <div class="card-image-wrapper">
                     <img src="${imgUrl}" alt="${name} вправи">
@@ -53,21 +56,24 @@ function renderPagination(totalPages) {
 // Завантаження категорій
 async function loadAndRenderCategories(filterType = 'muscles', page = 1) {
   currentPage = page;
-  const apiFilterType = filterType.charAt(0).toUpperCase() + filterType.slice(1);
-
+  const apiFilterType =
+    filterType.charAt(0).toUpperCase() + filterType.slice(1);
 
   const url = `${BASE_URL}/filters?filter=${apiFilterType}&page=${currentPage}&limit=${limit}`;
   console.log(`Виконується запит за URL: ${url}`);
 
   try {
     if (categoriesContainer) {
-      categoriesContainer.innerHTML = '<p class="loading-message">Завантаження...</p>';
+      categoriesContainer.innerHTML =
+        '<p class="loading-message">Завантаження...</p>';
     }
 
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(`Помилка: ${response.status}. Не вдалося завантажити категорії.`);
+      throw new Error(
+        `Помилка: ${response.status}. Не вдалося завантажити категорії.`
+      );
     }
 
     const data = await response.json();
@@ -76,21 +82,23 @@ async function loadAndRenderCategories(filterType = 'muscles', page = 1) {
 
     if (categoriesContainer) {
       if (!Array.isArray(categories) || categories.length === 0) {
-        categoriesContainer.innerHTML = '<p class="error-message">Категорій не знайдено.</p>';
+        categoriesContainer.innerHTML =
+          '<p class="error-message">Категорій не знайдено.</p>';
         renderPagination(0);
         return;
       }
 
-      const markup = categories.map(category =>
-        createCategoryCardMarkup(category, filterType)
-      ).join('');
+      const markup = categories
+        .map(category => createCategoryCardMarkup(category, filterType))
+        .join('');
 
       categoriesContainer.innerHTML = markup;
 
       renderPagination(totalPages);
-      console.log(`[SUCCESS] Успішно відмальовано ${categories.length} категорій. Сторінок: ${totalPages}`);
+      console.log(
+        `[SUCCESS] Успішно відмальовано ${categories.length} категорій. Сторінок: ${totalPages}`
+      );
     }
-
   } catch (error) {
     console.log('[ERROR] Виникла несподівана помилка:', error.message);
     if (categoriesContainer) {
@@ -109,7 +117,6 @@ function handlePaginationClick(event) {
     loadAndRenderCategories('muscles', newPage);
   }
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
   if (paginationContainer) {
