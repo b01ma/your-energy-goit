@@ -9,14 +9,10 @@ const searchInput = document.getElementById('searchInput');
 const searchIcon = document.querySelector('.search-icon');
 const exercisesTitle = document.querySelector('.exercises-title');
 
-let currentFilter = 'Muscles'; // Muscles / Body parts / Equipment
-let allFilterItems = []; // список КАТЕГОРІЙ з /filters
-let currentExercises = []; // список ВПРАВ для обраної підкатегорії
-let currentSubcategory = ''; // наприклад 'waist'
-
-/* =========================
- * Допоміжні функції
- * ========================= */
+let currentFilter = 'Muscles';
+let allFilterItems = [];
+let currentExercises = [];
+let currentSubcategory = '';
 
 function capitalize(str) {
   if (!str) return '';
@@ -29,10 +25,6 @@ function setActiveButton(activeBtn) {
     .forEach(btn => btn.classList.remove('filter-btn--active'));
   activeBtn.classList.add('filter-btn--active');
 }
-
-/* =========================
- * Завантаження КАТЕГОРІЙ (/filters через api)
- * ========================= */
 
 async function loadFilterCards(filterName) {
   try {
@@ -67,21 +59,12 @@ function renderFilterCards(items) {
     .join('');
 }
 
-/* =========================
- * Завантаження ВПРАВ для підкатегорії (/exercises через api)
- * ========================= */
-
 async function loadExercisesForSubcategory(filterType, subcategoryName) {
-  // payload для getExercisesByFilters
   const payload = {
     page: 1,
     limit: 12,
   };
 
-  // МАПІНГ: яка вкладка → який параметр:
-  // Body parts → bodyPart
-  // Muscles    → target       (у прикладі: target: "abs")
-  // Equipment  → equipment
   if (filterType === 'Body parts') {
     payload.bodyPart = subcategoryName;
   } else if (filterType === 'Muscles') {
@@ -100,7 +83,6 @@ async function loadExercisesForSubcategory(filterType, subcategoryName) {
   }
 }
 
-/* Поки що простий рендер ВПРАВ — тільки назви + мета */
 function renderExercises(exercises) {
   if (!exercises.length) {
     filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
@@ -123,15 +105,10 @@ function renderExercises(exercises) {
     .join('');
 }
 
-/* =========================
- * ПОШУК по НАЗВАМ ВПРАВ (динамічний)
- * ========================= */
-
 function runExercisesSearch() {
   const query = searchInput.value.toLowerCase().trim();
 
   if (!query) {
-    // якщо поле пусте — повертаємо повний список вправ
     renderExercises(currentExercises);
     return;
   }
@@ -143,11 +120,6 @@ function runExercisesSearch() {
   renderExercises(filtered);
 }
 
-/* =========================
- * Обробники подій
- * ========================= */
-
-/* Кнопки Muscles / Body parts / Equipment */
 filtersBlock.addEventListener('click', async event => {
   const btn = event.target.closest('.filter-btn');
   if (!btn) return;
@@ -158,7 +130,6 @@ filtersBlock.addEventListener('click', async event => {
   currentFilter = newFilter;
   setActiveButton(btn);
 
-  // Скидаємо підкатегорію та пошук
   selectedSubcategoryEl.textContent = '';
   currentSubcategory = '';
   searchContainer.hidden = true;
@@ -170,7 +141,6 @@ filtersBlock.addEventListener('click', async event => {
   await loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
 });
 
-/* Клік по картці КАТЕГОРІЇ → завантажуємо вправи */
 filtersGrid.addEventListener('click', async event => {
   const card = event.target.closest('.filter-card');
   if (!card) return;
@@ -180,10 +150,8 @@ filtersGrid.addEventListener('click', async event => {
 
   currentSubcategory = name;
 
-  // Exercises / Waist
   selectedSubcategoryEl.textContent = prettyName;
 
-  // показуємо поле пошуку
   searchContainer.hidden = false;
   searchInput.value = '';
 
@@ -191,12 +159,8 @@ filtersGrid.addEventListener('click', async event => {
  
 });
 
-/* === Search === */
-
-// динамічний пошук — після кожного символа
 searchInput.addEventListener('input', runExercisesSearch);
 
-// пошук по Enter
 searchInput.addEventListener('keydown', event => {
   if (event.key === 'Enter') {
     event.preventDefault();
@@ -204,22 +168,13 @@ searchInput.addEventListener('keydown', event => {
   }
 });
 
-// пошук по кліку на іконку
 if (searchIcon) {
   searchIcon.addEventListener('click', runExercisesSearch);
 }
 
-/* =========================
- * Стартове завантаження
- * ========================= */
-
 document.addEventListener('DOMContentLoaded', () => {
-  loadFilterCards(currentFilter); // "Muscles" за замовчуванням
+  loadFilterCards(currentFilter);
 });
-
-/* =========================
- * Click on "Exercises" → повний reset до Muscles
- * ========================= */
 
 exercisesTitle.addEventListener('click', async () => {
   currentFilter = 'Muscles';
