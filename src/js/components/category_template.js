@@ -1,129 +1,84 @@
-const BASE_URL = 'api тут, або імпорт';
+const BASE_URL = 'https://your-energy.b.goit.study/api'; //api працює, не прибираю, бо темплейт не підключений ні до чого
 const categoriesContainer = document.getElementById('categories-container');
-const paginationContainer = document.getElementById('pagination-container');
 
 //!TEMPLATE
-
-let currentPage = 1;
-const limit = 12;
-
-// 1 Картка
 function createCategoryCardMarkup(category, filterType) {
-  const { name, imgUrl } = category;
+  const { name, imgURL } = category;
+  let ImgUrl = imgURL;
+  const title = name.charAt(0).toUpperCase() + name.slice(1);
 
-  let filterDisplay =
-    filterType === 'bodypart'
-      ? 'Body parts'
-      : filterType.charAt(0).toUpperCase() + filterType.slice(1);
+  if (typeof imgURL === 'string' && !imgURL.startsWith('http')) {
+    const IMAGE_BASE_URL = 'https://ftp.goit.study';
+    ImgUrl = IMAGE_BASE_URL + imgURL;
+  }
 
-  return `
-        <li class="categories-item">
+  let filterDisplay = filterType === 'bodypart' ? 'Body parts' : filterType.charAt(0).toUpperCase() + filterType.slice(1);
+
+  return `<li class="categories-item">
             <a href="#"
-              class="category-card"
-              data-name="${name}"
-              data-filter="${filterType}"
-              aria-label="Категорія ${name}">
+               class="category-card"
+               data-name="${title}"
+               data-filter="${filterType}"
+               aria-label="Category ${title}">
 
                 <div class="card-image-wrapper">
-                    <img src="${imgUrl}" alt="${name} вправи">
+                    <img src="${ImgUrl}" alt="${title}">
                     <div class="card-overlay"></div>
                 </div>
 
                 <div class="card-content">
-                    <h3 class="category-title">${name}</h3>
+                    <h3 class="category-title">${title}</h3>
                     <p class="category-filter">${filterDisplay}</p>
                 </div>
             </a>
-        </li>
-    `;
+        </li>`;
 }
-
 //!TEMPLATE
-// Пагінація
-function renderPagination(totalPages) {
-  if (!paginationContainer) return;
-  let paginationMarkup = '';
+async function loadAndRenderCategories(filterType = 'muscles') {
 
-  for (let i = 1; i <= totalPages; i++) {
-    const isActive = i === currentPage ? 'active-page' : '';
-    paginationMarkup += `<button type="button" class="pagination-btn ${isActive}" data-page="${i}">${i}</button>`;
-  }
-
-  paginationContainer.innerHTML = paginationMarkup;
-}
-
-//!TEMPLATE
-// Завантаження категорій
-async function loadAndRenderCategories(filterType = 'muscles', page = 1) {
-  currentPage = page;
-  const apiFilterType =
-    filterType.charAt(0).toUpperCase() + filterType.slice(1);
-
-  const url = `${BASE_URL}/filters?filter=${apiFilterType}&page=${currentPage}&limit=${limit}`;
-  console.log(`Виконується запит за URL: ${url}`);
+  const apiFilterType = filterType.charAt(0).toUpperCase() + filterType.slice(1);
+  const url = `${BASE_URL}/filters?filter=${apiFilterType}`;
+  console.log(`[FETCH] Виконується запит за URL: ${url}`);
 
   try {
     if (categoriesContainer) {
-      categoriesContainer.innerHTML =
-        '<p class="loading-message">Завантаження...</p>';
+      categoriesContainer.innerHTML = '<p class="loading-message">Loading...</p>';
     }
 
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error(
-        `Помилка: ${response.status}. Не вдалося завантажити категорії.`
-      );
+      throw new Error(`Error: ${response.status}. Can't load categories.`);
     }
 
     const data = await response.json();
-    const categories = data.results;
-    const totalPages = data.totalPages;
+    const categories = Array.isArray(data) ? data : data.results;
 
     if (categoriesContainer) {
       if (!Array.isArray(categories) || categories.length === 0) {
-        categoriesContainer.innerHTML =
-          '<p class="error-message">Категорій не знайдено.</p>';
-        renderPagination(0);
+        categoriesContainer.innerHTML = '<p class="error-message">No Category found.</p>';
         return;
       }
 
-      const markup = categories
-        .map(category => createCategoryCardMarkup(category, filterType))
-        .join('');
+      const markup = categories.map(category =>
+        createCategoryCardMarkup(category, filterType)
+      ).join('');
 
       categoriesContainer.innerHTML = markup;
-
-      renderPagination(totalPages);
-      console.log(
-        `[SUCCESS] Успішно відмальовано ${categories.length} категорій. Сторінок: ${totalPages}`
-      );
+      console.log(`[SUCCESS] Успішно відмальовано ${categories.length} категорій.`);
     }
+
   } catch (error) {
-    console.log('[ERROR] Виникла несподівана помилка:', error.message);
+    const displayError = error instanceof Error ? error.message : "Невідома помилка";
+    console.error('[ERROR] Виникла несподівана помилка:', displayError);
     if (categoriesContainer) {
-      categoriesContainer.innerHTML = `<p class="error-message">Помилка завантаження: ${error.message}</p>`;
+      categoriesContainer.innerHTML = `<p class="error-message">Error in loading: ${displayError}</p>`;
     }
   }
 }
 
 //!TEMPLATE
-function handlePaginationClick(event) {
-  const targetButton = event.target.closest('.pagination-btn');
-  if (!targetButton) return;
-
-  const newPage = parseInt(targetButton.dataset.page, 10);
-  if (newPage !== currentPage) {
-    loadAndRenderCategories('muscles', newPage);
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  if (paginationContainer) {
-    paginationContainer.addEventListener('click', handlePaginationClick);
-  }
-
-  loadAndRenderCategories('muscles', 1);
+  loadAndRenderCategories('muscles');
 });
-
 //!TEMPLATE
