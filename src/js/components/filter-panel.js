@@ -33,17 +33,20 @@ const filterPanel = () => {
   const exercisesTitle = document.querySelector('.exercises-title');
   const paginationContainer = document.getElementById('exercisesPagination');
 
-  const isMobile = window.matchMedia('(max-width: 767px)').matches;
-  const CATEGORY_LIMIT = isMobile ? 9 : 12;
-  const EXERCISE_LIMIT = isMobile ? 8 : 10;
+  const CATEGORY_LIMIT_BACKEND = 12;
+  const EXERCISE_LIMIT_BACKEND = 10;
+
+  const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+  const getCategoryPageSize = () => (isMobile() ? 9 : 12);
+  const getExercisePageSize = () => (isMobile() ? 8 : 10);
 
   let currentFilter = 'Muscles';
-  let allFilterItems = [];
   let currentExercises = [];
   let currentSubcategory = '';
 
   let currentPage = 1;
   let totalPages = 1;
+  let lastIsMobile = isMobile();
 
   function setActiveButton(activeBtn) {
     document
@@ -57,16 +60,20 @@ const filterPanel = () => {
       const data = await api.getFiltersOfExercises({
         filter: filterName,
         page,
-        limit: CATEGORY_LIMIT,
+        limit: CATEGORY_LIMIT_BACKEND,
       });
 
-      allFilterItems = data.results || [];
-      renderFilterCards(allFilterItems, filterName);
+      const rawItems = data.results || [];
+      const pageSize = getCategoryPageSize();
+      const items =
+        pageSize < CATEGORY_LIMIT_BACKEND ? rawItems.slice(0, pageSize) : rawItems;
 
-      const total = data.total ?? allFilterItems.length;
+      renderFilterCards(items, filterName);
+
+      const total = data.total ?? rawItems.length;
       currentPage = data.page ?? page;
       totalPages =
-        data.totalPages ?? (total ? Math.ceil(total / CATEGORY_LIMIT) : 1);
+        data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
 
       if (paginationContainer && totalPages > 1) {
         renderPagination({
@@ -120,7 +127,7 @@ const filterPanel = () => {
   ) {
     const payload = {
       page,
-      limit: EXERCISE_LIMIT,
+      limit: EXERCISE_LIMIT_BACKEND,
     };
 
     if (filterType === 'Body parts') {
@@ -133,13 +140,19 @@ const filterPanel = () => {
 
     try {
       const data = await api.getExercisesByFilters(payload);
-      const items = data.results || [];
-      const total = data.total ?? items.length;
+      const rawItems = data.results || [];
+      const pageSize = getExercisePageSize();
+      const items =
+        pageSize < EXERCISE_LIMIT_BACKEND
+          ? rawItems.slice(0, pageSize)
+          : rawItems;
+
+      const total = data.total ?? rawItems.length;
 
       currentExercises = items;
       currentPage = data.page ?? page;
       totalPages =
-        data.totalPages ?? (total ? Math.ceil(total / EXERCISE_LIMIT) : 1);
+        data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
 
       renderExercises(currentExercises);
 
@@ -261,6 +274,18 @@ const filterPanel = () => {
     currentExercises = [];
 
     await loadFilterCards(filter, 1);
+  });
+
+  window.addEventListener('resize', () => {
+    const nowIsMobile = isMobile();
+    if (nowIsMobile === lastIsMobile) return;
+    lastIsMobile = nowIsMobile;
+
+    if (filtersGrid.dataset.exercises === 'true' && currentSubcategory) {
+      loadExercisesForSubcategory(currentFilter, currentSubcategory, 1);
+    } else {
+      loadFilterCards(currentFilter, 1);
+    }
   });
 };
 
