@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,13 +13,19 @@
     />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
-  <body class="favorites">
+  <body class="favorites" data-page="favorites">
+    <!-- Page Loader -->
+    <div class="loader-page">
+      <img src="/img/page-loader.png" alt="Loading..." class="loader-logo" />
+    </div>
+
     <load src="./partials/components/header.html" highlight-act="active" />
 
     <load src="./partials/content/content-favorites.html" />
 
     <load src="./partials/components/footer.html" />
 
+    <load src="./partials/components/to_top_btn.html" />
     <script type="module" src="./main.js"></script>
   </body>
 </html>

@@ -6,6 +6,7 @@
 @import url('./global/container.css');
 
 /* Sections style */
+@import url('./components/loader-page.css');
 @import url('./components/header.css');
 @import url('./components/hero.css');
 @import url('./components/footer.css');
@@ -18,3 +19,4 @@
 
 /* Component styles */
 @import url('./components/to_top_btn.css');
+@import url('./components/exercise-card.css');

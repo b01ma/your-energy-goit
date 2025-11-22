@@ -1,5 +1,4 @@
-.favorites {
-}
+
 .favorites-header {
   font-size: 44px;
   font-weight: 400;
@@ -10,6 +9,7 @@
 .favorites-container, .home-quote-container {
   display: flex;
   width: 100%;
+  margin-bottom: 32px;
 }
 
 .left-wrapper {
