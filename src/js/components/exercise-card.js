@@ -1,8 +1,8 @@
 export function renderExerciseCard(payload) {
-  const { isHomePage, rating, name, burnedCalories, time, bodyPart, target } =
+  const { id, isHomePage, rating, name, burnedCalories, time, bodyPart, target } =
     payload;
   return `
-  <li class="exercise-card">
+  <li class="exercise-card" data-id="${id}">
     <div class="exercise-card__header">
       <div class="exercise-card__workout-and-rating">
         <div class="exercise-card__workout">
@@ -10,12 +10,12 @@ export function renderExerciseCard(payload) {
         </div>
         ${getRatingOrTrashIcon(isHomePage, rating)}
       </div>
-      <div class="exercise-card__start">
+      <button class="exercise-card__start">
         <span class="exercise-card__start__text">Start</span>
-        <svg width="16" height="16">
+        <svg class="exercise-card__start__icon" width="16" height="16">
           <use href="./img/icons.svg#icon-arrow-black"></use>
         </svg>
-      </div>
+      </button>
     </div>
     <div class="exercise-card__body">
       <div class="exercise-card__icon-runner__container">

@@ -1,5 +1,5 @@
 .exercises-section {
-    padding: 64px 32px 0;
+    padding-top: 64px;
 }
 
 .exercises-header {
@@ -36,6 +36,7 @@
 .exercises-controls {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 30px;
 }
 
@@ -79,9 +80,10 @@
 }
 
 .search-wrapper {
-    position: relative;
-    width: 273px;
+    flex: 0 0 273px;
+    max-width: 273px;
     height: 48px;
+    box-sizing: border-box;
 }
 
 .search-input {
@@ -89,9 +91,8 @@
     height: 100%;
     padding: 12px 48px 12px 14px;
     border-radius: 30px;
-    border: 1px solid rgba(36, 36, 36, 1);
+    border: 1px solid #242424;
     background-color: transparent;
-
     font-family: "DM Sans", sans-serif;
     font-size: 16px;
     line-height: 24px;
@@ -99,7 +100,11 @@
 }
 
 .search-input::placeholder {
-    color: rgba(36, 36, 36, 0.6);
+    color: #242424;
+}
+
+.search-input:focus::placeholder {
+    opacity: 0;
 }
 
 .search-input:focus {
@@ -123,4 +128,117 @@
 
 .search-icon:hover {
     opacity: 0.7;
+}
+
+#filtersGrid {
+    display: none;
+}
+
+/* ========= TABLET (768px–1024px) ========= */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .exercises-section {
+        padding-top: 64px;
+    }
+
+    .exercises-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .exercises-controls {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+    }
+
+
+
+    .search-wrapper {
+        flex: 0 0 273px;
+        height: 48px;
+    }
+
+    .search-wrapper[hidden] {
+        display: none !important;
+    }
+
+    .filters {
+        flex-shrink: 0;
+        gap: 20px;
+    }
+
+    .filter-btn {
+        font-size: 16px;
+    }
+
+
+}
+
+/* ========= MOBILE (до 768px) ========= */
+@media (max-width: 768px) {
+    .exercises-section {
+        padding-top: 64px;
+    }
+
+    .exercises-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .exercises-title {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    #selectedSubcategory:not(:empty)::before {
+        content: "/";
+        font-size: 28px;
+        margin-right: 8px;
+        color: #242424;
+    }
+
+    #selectedSubcategory {
+        font-size: 20px;
+        margin-left: 0;
+    }
+
+    .exercises-controls {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .search-wrapper {
+        width: 100%;
+        max-width: 100%;
+        height: 48px;
+        flex: 0 0 auto;
+        margin-top: 20px;
+    }
+
+    .search-wrapper[hidden] {
+        display: none !important;
+    }
+
+    .filters {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .search-input {
+
+        font-size: 14px;
+    }
+
+    .filter-btn {
+        font-size: 14px;
+    }
+
 }

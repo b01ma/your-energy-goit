@@ -1,5 +1,5 @@
 const BASE_URL = 'https://your-energy.b.goit.study/api'; //api працює, не прибираю, бо темплейт не підключений ні до чого
-const categoriesContainer = document.getElementById('categories-container');
+//const categoriesContainer = document.getElementById('categories-container');
 
 //!TEMPLATE
 function createCategoryCardMarkup(category, filterType) {
@@ -34,7 +34,7 @@ function createCategoryCardMarkup(category, filterType) {
         </li>`;
 }
 //!TEMPLATE
-async function loadAndRenderCategories(filterType = 'muscles') {
+export async function loadAndRenderCategories(filterType = 'muscles', categoriesContainer) {
 
   const apiFilterType = filterType.charAt(0).toUpperCase() + filterType.slice(1);
   const url = `${BASE_URL}/filters?filter=${apiFilterType}`;
