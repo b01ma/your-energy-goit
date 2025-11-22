@@ -7,6 +7,18 @@ function capitalize(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
 
+export function renderExercises(exercises) {
+  if (!exercises.length) {
+    filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
+    return;
+  }
+
+  filtersGrid.dataset.exercises = 'true';
+  filtersGrid.innerHTML = exercises
+    .map(ex => renderExerciseCard({ isHomePage: true, id: ex._id, ...ex }))
+    .join('');
+}
+
 const filterPanel = () => {
   const filtersBlock = document.getElementById('filters');
   const filtersGrid = document.getElementById('filtersGrid');
@@ -81,20 +93,9 @@ const filterPanel = () => {
     }
   }
 
-  function renderExercises(exercises) {
-    if (!exercises.length) {
-      filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
-      return;
-    }
-
-    filtersGrid.dataset.exercises = 'true';
-    filtersGrid.innerHTML = exercises
-      .map(ex => renderExerciseCard({ isHomePage: true, id: ex._id, ...ex }))
-      .join('');
-  }
-
   function runExercisesSearch() {
     const query = searchInput.value.toLowerCase().trim();
+    console.log(query);
 
     if (!query) {
       renderExercises(currentExercises);

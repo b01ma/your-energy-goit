@@ -16,7 +16,7 @@
 }
 
 .categories-section[data-exercises = 'true'] {
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(2, calc((100% / 2) - 15px));
 
 }
 

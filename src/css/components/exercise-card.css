@@ -4,6 +4,7 @@
   /* width: 335px; */
   width: 100%;
   padding: 16px;
+  height: fit-content;
 
   border-radius: 15px;
   background: var(--color-white);
