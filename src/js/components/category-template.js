@@ -4,7 +4,8 @@ export function createCategoryCardMarkup(item, filterName) {
   const { name, imgURL } = item;
 
   return `<li class="categories-item">
-            <button
+            <a
+              href="javascript:void(0);"
               class="category-card"
               data-name="${name}"
               aria-label="Category ${name}">
@@ -18,6 +19,6 @@ export function createCategoryCardMarkup(item, filterName) {
                     <h3 class="category-title">${name}</h3>
                     <p class='category-filter'>${filterName}</p>
                 </div>
-            </button>
+            </a>
         </li>`;
 }
