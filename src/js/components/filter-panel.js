@@ -64,7 +64,7 @@ const filterPanel = () => {
     };
 
     if (filterType === 'Body parts') {
-      payload.bodyPart = subcategoryName;
+      payload.bodypart = subcategoryName;
     } else if (filterType === 'Muscles') {
       payload.target = subcategoryName;
     } else if (filterType === 'Equipment') {
@@ -158,7 +158,7 @@ const filterPanel = () => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    loadFilterCards(currentFilter);
+    loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
   });
 
   exercisesTitle.addEventListener('click', async () => {
