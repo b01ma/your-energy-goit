@@ -216,15 +216,15 @@ const filterPanel = () => {
     loadFilterCards('Muscles');
   });
 
-  exercisesTitle.addEventListener('click', async () => {
-    currentFilter = 'muscles';
+  exercisesTitle.addEventListener('click', async e => {
+    let filter = document.querySelector('.filter-btn--active').dataset.filter;
 
     document
       .querySelectorAll('.filter-btn')
       .forEach(btn => btn.classList.remove('filter-btn--active'));
 
-    const musclesBtn = document.querySelector('[data-filter="Muscles"]');
-    if (musclesBtn) musclesBtn.classList.add('filter-btn--active');
+    const filterBtn = document.querySelector(`[data-filter="${filter}"]`);
+    if (filterBtn) filterBtn.classList.add('filter-btn--active');
 
     currentSubcategory = '';
     selectedSubcategoryEl.textContent = '';
@@ -234,7 +234,7 @@ const filterPanel = () => {
 
     currentExercises = [];
 
-    await loadFilterCards('muscles');
+    await loadFilterCards(`${filter}`);
   });
 };
 
