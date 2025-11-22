@@ -162,13 +162,6 @@ const filterPanel = () => {
     loadFilterCards('Muscles');
   });
 
-  // const exercisesHeader = document.querySelector('.exercises-header');
-  // exercisesHeader.addEventListener('click', (e) => {
-  //   let filter = exercisesHeader.querySelector('.filter-btn--active');
-
-  //   console.log(filter);
-  // });
-
   exercisesTitle.addEventListener('click', async e => {
     let filter = document.querySelector('.filter-btn--active').dataset.filter;
 
