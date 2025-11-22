@@ -82,6 +82,7 @@
   max-width: 273px;
   height: 48px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .search-input {
@@ -128,9 +129,8 @@
   opacity: 0.7;
 }
 
-#filtersGrid{
-    display: block;
-    
+#filtersGrid {
+  display: block;
 }
 
 /* ========= TABLET (768px–1024px) ========= */
