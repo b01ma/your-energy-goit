@@ -104,10 +104,12 @@ your-energy-goit/
 │   │   ├── styles.css          # Main stylesheet
 │   │   ├── components/         # Component-specific styles
 │   │   │   ├── category_template.css
+│   │   │   ├── exercise-card.css
 │   │   │   ├── filter-panel.css
 │   │   │   ├── footer.css
 │   │   │   ├── header.css
 │   │   │   ├── hero.css
+│   │   │   ├── loader-page.css
 │   │   │   └── to_top_btn.css
 │   │   ├── global/             # Global styles
 │   │   │   ├── base.css
@@ -121,7 +123,8 @@ your-energy-goit/
 │   │   ├── api/                # API integration
 │   │   │   └── api.js
 │   │   ├── components/         # JavaScript components
-│   │   │   ├── category_template.js
+│   │   │   ├── category-template.js
+│   │   │   ├── exercise-card.js
 │   │   │   ├── exercises.js
 │   │   │   ├── filter-panel.js
 │   │   │   ├── header.js
@@ -129,10 +132,12 @@ your-energy-goit/
 │   │   │   └── subscribe.js
 │   │   └── utilities/          # Helper functions
 │   │       ├── modal.js
-│   │       └── to_top_btn.js
+│   │       ├── page-loader.js
+│   │       └── to-top-btn.js
 │   ├── img/                    # Images and icons
 │   │   ├── icons/
 │   │   ├── icons.svg           # SVG sprite
+│   │   ├── page-loader.png     # Loader logo
 │   │   └── webp/
 │   ├── partials/               # HTML partials
 │   │   ├── components/
