@@ -103,14 +103,8 @@ your-energy-goit/
 │   ├── css/
 │   │   ├── styles.css          # Main stylesheet
 │   │   ├── components/         # Component-specific styles
-│   │   │   ├── category_template.css
-│   │   │   ├── exercise-card.css
-│   │   │   ├── filter-panel.css
 │   │   │   ├── footer.css
-│   │   │   ├── header.css
-│   │   │   ├── hero.css
-│   │   │   ├── loader-page.css
-│   │   │   └── to_top_btn.css
+│   │   │   └── header.css
 │   │   ├── global/             # Global styles
 │   │   │   ├── base.css
 │   │   │   ├── container.css
@@ -123,38 +117,20 @@ your-energy-goit/
 │   │   ├── api/                # API integration
 │   │   │   └── api.js
 │   │   ├── components/         # JavaScript components
-│   │   │   ├── category-template.js
-│   │   │   ├── exercise-card.js
-│   │   │   ├── exercises.js
-│   │   │   ├── filter-panel.js
-│   │   │   ├── header.js
-│   │   │   ├── quote.js
-│   │   │   └── subscribe.js
+│   │   │   └── exercises.js
 │   │   └── utilities/          # Helper functions
-│   │       ├── modal.js
-│   │       ├── page-loader.js
-│   │       └── to-top-btn.js
+│   │       └── modal.js
 │   ├── img/                    # Images and icons
 │   │   ├── icons/
-│   │   ├── icons.svg           # SVG sprite
-│   │   ├── page-loader.png     # Loader logo
 │   │   └── webp/
 │   ├── partials/               # HTML partials
 │   │   ├── components/
-│   │   │   ├── category_template.html
-│   │   │   ├── filter-panel.html
 │   │   │   ├── footer.html
-│   │   │   ├── header.html
-│   │   │   ├── home-quote.html
-│   │   │   └── to_top_btn.html
+│   │   │   └── header.html
 │   │   └── content/
 │   │       ├── content-favorites.html
 │   │       └── content-home.html
 │   └── public/                 # Static assets
-│       └── favicon.svg
-├── .github/
-│   └── workflows/
-│       └── deploy.yml          # GitHub Actions deployment
 ├── package.json
 ├── vite.config.js              # Vite configuration
 └── README.md
