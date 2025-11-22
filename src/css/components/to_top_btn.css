@@ -1,16 +1,18 @@
 .to-top-btn {
   position: fixed;
+  z-index: 99;
   bottom: 20px;
   right: 20px;
   padding: 0;
+  cursor: pointer;
 
   background-color: var(--color-primary);
-  border: none;
+  border: 5px solid var(--color-primary-80);
   border-radius: 50%;
   width: 100px;
   height: 100px;
 
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
 
@@ -18,14 +20,22 @@
 }
 
 .to-top-btn:hover {
-  background-color: var(--color-primary-80);
+  background-color: var(--color-light);
+}
+
+.to-top-icon path {
+  transition: all 0.15s ease-in-out;
+}
+
+.to-top-btn:hover .to-top-icon path {
+  fill: var(--color-primary) !important;
+  stroke: var(--color-primary) !important;
 }
 
 .to-top-icon {
   width: 50%;
   height: 50%;
 }
-
 
 @media screen and (max-width: 768px) {
   .to-top-btn {

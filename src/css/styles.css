@@ -10,6 +10,7 @@
 @import url('./components/hero.css');
 @import url('./components/footer.css');
 @import url('./components/filter-panel.css');
+@import url('./components/category_template.css');
 
 /* Pages */
 @import url('./pages/home.css');
@@ -17,3 +18,4 @@
 
 /* Component styles */
 @import url('./components/to_top_btn.css');
+@import url('./components/exercise-card.css');
