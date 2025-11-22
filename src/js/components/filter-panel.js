@@ -1,6 +1,7 @@
 import { api } from '../api/api.js';
 import { createCategoryCardMarkup } from './category-template.js';
 import { renderExerciseCard } from './exercise-card.js';
+import { renderPagination } from './pagination';
 
 function capitalize(str) {
   if (!str) return '';
@@ -33,6 +34,17 @@ const filterPanel = () => {
   let currentExercises = [];
   let currentSubcategory = '';
 
+  let currentPage = 1;
+  let totalPages = 1;
+  let paginationContainer = null;
+
+  if (filtersGrid) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = 'exercisesPagination';
+    paginationContainer.className = 'exercises-pagination';
+    filtersGrid.insertAdjacentElement('afterend', paginationContainer);
+  }
+
   function setActiveButton(activeBtn) {
     document
       .querySelectorAll('.filter-btn')
@@ -54,10 +66,19 @@ const filterPanel = () => {
     } catch (err) {
       console.error('Error loading filters:', err);
       filtersGrid.innerHTML = '<p>Не вдалося завантажити фільтри</p>';
+      if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
+      }
     }
   }
 
   function renderFilterCards(items, filterName) {
+    if (paginationContainer) {
+      paginationContainer.innerHTML = '';
+      paginationContainer.hidden = true;
+    }
+
     if (!items.length) {
       filtersGrid.innerHTML = '<p>Немає категорій</p>';
       return;
@@ -69,9 +90,13 @@ const filterPanel = () => {
       .join('');
   }
 
-  async function loadExercisesForSubcategory(filterType, subcategoryName) {
+  async function loadExercisesForSubcategory(
+    filterType,
+    subcategoryName,
+    page = 1
+  ) {
     const payload = {
-      page: 1,
+      page,
       limit: 12,
     };
 
@@ -85,17 +110,46 @@ const filterPanel = () => {
 
     try {
       const data = await api.getExercisesByFilters(payload);
-      currentExercises = (await data.results) || [];
+      const items = (await data.results) || [];
+      const total = data.total ?? items.length;
+
+      currentExercises = items;
+      currentPage = data.page ?? page;
+      totalPages =
+        data.totalPages ?? (total ? Math.ceil(total / payload.limit) : 1);
+
       renderExercises(currentExercises);
+
+      if (paginationContainer) {
+        renderPagination({
+          container: paginationContainer,
+          currentPage,
+          totalPages,
+          onPageChange: newPage => {
+            loadExercisesForSubcategory(
+              currentFilter,
+              currentSubcategory,
+              newPage
+            );
+            filtersBlock.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          },
+        });
+      }
     } catch (error) {
       console.error('Error loading exercises:', error);
       filtersGrid.innerHTML = '<p>Не вдалося завантажити вправи</p>';
+      if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
+      }
     }
   }
 
   function runExercisesSearch() {
     const query = searchInput.value.toLowerCase().trim();
-    console.log(query);
 
     if (!query) {
       renderExercises(currentExercises);
@@ -132,8 +186,8 @@ const filterPanel = () => {
     const card = event.target.closest('.category-card');
     if (!card) return;
 
-    const name = card.dataset.name; // "waist"
-    const prettyName = capitalize(name); // "Waist"
+    const name = card.dataset.name;
+    const prettyName = capitalize(name);
 
     currentSubcategory = name;
 
@@ -142,7 +196,7 @@ const filterPanel = () => {
     searchContainer.hidden = false;
     searchInput.value = '';
 
-    await loadExercisesForSubcategory(currentFilter, currentSubcategory);
+    await loadExercisesForSubcategory(currentFilter, currentSubcategory, 1);
   });
 
   searchInput.addEventListener('input', runExercisesSearch);
