@@ -1,7 +1,5 @@
-const BASE_URL = 'https://your-energy.b.goit.study/api'; //api працює, не прибираю, бо темплейт не підключений ні до чого
-//const categoriesContainer = document.getElementById('categories-container');
+const BASE_URL = 'https://your-energy.b.goit.study/api';
 
-//!TEMPLATE
 function createCategoryCardMarkup(category, filterType) {
   const { name, imgURL } = category;
   let ImgUrl = imgURL;
@@ -33,17 +31,20 @@ function createCategoryCardMarkup(category, filterType) {
             </a>
         </li>`;
 }
-//!TEMPLATE
 export async function loadAndRenderCategories(filterType = 'muscles', categoriesContainer) {
-
-  const apiFilterType = filterType.charAt(0).toUpperCase() + filterType.slice(1);
-  const url = `${BASE_URL}/filters?filter=${apiFilterType}`;
+  const page = 1;
+  const limit = 12;
+  const url = `${BASE_URL}/filters?page=${page}&limit=${limit}`;
   console.log(`[FETCH] Виконується запит за URL: ${url}`);
 
+
   try {
-    if (categoriesContainer) {
-      categoriesContainer.innerHTML = '<p class="loading-message">Loading...</p>';
+    if (!categoriesContainer) {
+      console.error('[ERROR] categoriesContainer is undefined. Rendering stopped.');
+      return;
     }
+
+    categoriesContainer.innerHTML = '<p class="loading-message">Loading...</p>';
 
     const response = await fetch(url);
 
@@ -54,19 +55,17 @@ export async function loadAndRenderCategories(filterType = 'muscles', categories
     const data = await response.json();
     const categories = Array.isArray(data) ? data : data.results;
 
-    if (categoriesContainer) {
-      if (!Array.isArray(categories) || categories.length === 0) {
-        categoriesContainer.innerHTML = '<p class="error-message">No Category found.</p>';
-        return;
-      }
-
-      const markup = categories.map(category =>
-        createCategoryCardMarkup(category, filterType)
-      ).join('');
-
-      categoriesContainer.innerHTML = markup;
-      console.log(`[SUCCESS] Успішно відмальовано ${categories.length} категорій.`);
+    if (!Array.isArray(categories) || categories.length === 0) {
+      categoriesContainer.innerHTML = '<p class="error-message">No Category found.</p>';
+      return;
     }
+
+    const markup = categories.map(category =>
+      createCategoryCardMarkup(category, filterType)
+    ).join('');
+
+    categoriesContainer.innerHTML = markup;
+    console.log(`[SUCCESS] Успішно відмальовано ${categories.length} категорій.`);
 
   } catch (error) {
     const displayError = error instanceof Error ? error.message : "Невідома помилка";
@@ -77,8 +76,9 @@ export async function loadAndRenderCategories(filterType = 'muscles', categories
   }
 }
 
-//!TEMPLATE
 document.addEventListener('DOMContentLoaded', () => {
-  loadAndRenderCategories('muscles');
+  const container = document.getElementById('categories-container');
+  if (container) {
+    loadAndRenderCategories('muscles', container);
+  }
 });
-//!TEMPLATE
