@@ -17,6 +17,8 @@
   flex-wrap: wrap;
   gap: 16px;
   max-width: 494px;
+  height: max-content;
+  margin-bottom: 32px;
 }
 
 .left-quote-block {
@@ -31,6 +33,7 @@
 .left-daily,
 .left-img {
   width: calc(50% - 8px);
+  max-height: 141px;
 }
 
 .left-quote-icon {
@@ -143,10 +146,11 @@
   object-fit: cover;
 }
 
-.favorites-list {
+.favorites-list-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -203,8 +207,86 @@
   letter-spacing: 0;
 }
 
+.favorites-list {
+  display: flex;
+  justify-content: start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  column-gap: 16px;
+  row-gap: 32px;
+  max-height: calc(100vh - 300px);
+  padding-right: 16px;
+  width: 100%;
+}
+
+.favorites-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.favorites-list::-webkit-scrollbar-thumb {
+  background: #242424;
+  border-radius: 12px;
+}
+
+.favorites-list::-webkit-scrollbar-track {
+  background-color: #2424241A;
+  border-radius: 12px;
+}
+
+.favorites-list .exercise-card {
+  width: calc(50% - 16px);
+  max-width: 405px;
+}
+
+.favorites-pagination-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  margin-top: 32px;
+  padding-bottom: 20px;
+}
+
+.favorites-pagination-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: 24px;
+  font-weight: 400;
+  color: #D4D4D4;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  line-height: 32px;
+}
+
+.favorites-pagination-btn:hover {
+  color: #242424;
+}
+
+.favorites-pagination-btn.active {
+  border-color: #242424;
+  background-color: transparent;
+  color: #242424;
+  cursor: default;
+  font-size: 24px;
+  font-weight: 400;
+}
+
 
 @media screen and (max-width: 1439px) {
+  .favorites-list {
+    overflow-y: hidden;
+    max-height: unset;
+    padding-right: 0;
+  }
   .favorites-container {
     flex-direction: column;
     max-width: none;
@@ -306,5 +388,12 @@
   .home-quote .left-img,
   .home-quote .left-recommendation{
     width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0;
   }
 }
