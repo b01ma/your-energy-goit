@@ -4,6 +4,7 @@ import quote from './js/components/quote.js';
 import filterPanel from './js/components/filter-panel.js';
 import subscribe from './js/components/subscribe';
 import toTopBtn from './js/utilities/to-top-btn.js';
+import favorites from './js/components/favorites.js';
 import { initPageLoader } from './js/utilities/page-loader.js';
 import './js/components/search.js'
 
@@ -26,6 +27,7 @@ const init = () => {
   quote();
   toTopBtn();
   subscribe();
+  favorites();
 };
 
 init();
