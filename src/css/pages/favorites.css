@@ -9,7 +9,7 @@
 .favorites-container, .home-quote-container {
   display: flex;
   width: 100%;
-  margin-bottom: 32px;
+  gap: 32px;
 }
 
 .left-wrapper {
@@ -235,7 +235,7 @@
 }
 
 .favorites-list .exercise-card {
-  width: calc(50% - 16px);
+  width: calc(50% - 8px);
   max-width: 405px;
 }
 
@@ -290,6 +290,7 @@
   .favorites-container {
     flex-direction: column;
     max-width: none;
+    gap: 64px;
   }
   .left-wrapper {
    max-width: unset;
@@ -341,6 +342,12 @@
 
 }
 @media screen and (max-width: 767px) {
+  .favorites-list {
+    gap: 20px;
+  }
+  .favorites-list .exercise-card {
+    width: 100%;
+  }
   .left-quote-header p {
     font-size: 20px;
   }
