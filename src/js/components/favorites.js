@@ -11,7 +11,7 @@ function favorites() {
 
   const favoritesClearMessage = document.querySelector('.favorites-list-clear');
   const favoritesList = document.querySelector('.favorites-list');
-  const paginationContainer = document.querySelector('.favorites-pagination-block');
+  const favoritesPaginationContainer = document.querySelector('.favorites-pagination-block');
 
   let currentPage = 1;
   const itemsPerPage = 10;
@@ -19,7 +19,7 @@ function favorites() {
   const renderList = () => {
     if (parsedFavorites.length === 0) {
       favoritesList.innerHTML = '';
-      paginationContainer.innerHTML = '';
+      favoritesPaginationContainer.innerHTML = '';
       if (favoritesClearMessage) favoritesClearMessage.style.display = 'block';
       return;
     } else {
@@ -30,7 +30,7 @@ function favorites() {
 
     if (window.innerWidth >= 1440) {
       pageData = parsedFavorites;
-      paginationContainer.innerHTML = '';
+      favoritesPaginationContainer.innerHTML = '';
     }
     else {
       const totalPages = Math.ceil(parsedFavorites.length / itemsPerPage);
@@ -54,7 +54,7 @@ function favorites() {
 
   const renderPagination = (totalPages) => {
     if (totalPages <= 1) {
-      paginationContainer.innerHTML = '';
+      favoritesPaginationContainer.innerHTML = '';
       return;
     }
 
@@ -63,10 +63,14 @@ function favorites() {
       const isActive = i === currentPage ? 'active' : '';
       paginationHTML += `<button class="favorites-pagination-btn ${isActive}" type="button" data-page="${i}">${i}</button>`;
     }
-    paginationContainer.innerHTML = paginationHTML;
+    favoritesPaginationContainer.innerHTML = paginationHTML;
   };
 
-  paginationContainer.addEventListener('click', (event) => {
+  if (!favoritesPaginationContainer) {
+    return;
+  }
+
+  favoritesPaginationContainer.addEventListener('click', (event) => {
     if (event.target.classList.contains('favorites-pagination-btn')) {
       const clickedPage = Number(event.target.dataset.page);
       if (clickedPage !== currentPage) {
