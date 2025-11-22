@@ -158,7 +158,7 @@ const filterPanel = () => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
+    loadFilterCards('Muscles');
   });
 
   exercisesTitle.addEventListener('click', async () => {
