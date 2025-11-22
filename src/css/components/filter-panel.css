@@ -129,10 +129,6 @@
   opacity: 0.7;
 }
 
-#filtersGrid {
-  display: block;
-}
-
 /* ========= TABLET (768px–1024px) ========= */
 @media (max-width: 1024px) and (min-width: 768px) {
   .exercises-section {
@@ -233,5 +229,20 @@
 
   .filter-btn {
     font-size: 14px;
+  }
+}
+
+.filters-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 32px;
+
+  margin-bottom: 132px;
+}
+
+@media screen and (max-width: 1440px) {
+  .filters-wrap {
+    flex-direction: column-reverse;
   }
 }

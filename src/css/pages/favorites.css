@@ -17,6 +17,7 @@
   flex-wrap: wrap;
   gap: 16px;
   max-width: 494px;
+  min-width: 494px;
 }
 
 .left-quote-block {
@@ -211,6 +212,7 @@
   }
   .left-wrapper {
    max-width: unset;
+   min-width: unset;
   }
 
   .left-quote-block {
