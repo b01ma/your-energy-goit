@@ -2,6 +2,8 @@ import { api } from '../api/api.js';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
+console.log('iziToast >>>', iziToast);
+
 // Элементы
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.querySelector('.search-btn');
@@ -172,7 +174,7 @@ if (searchInput) {
   searchInput.addEventListener(
     'input',
     async e => {
-      e.stopImmediatePropagation(); // глушим local-search из filter-panel.js
+      e.stopImmediatePropagation(); 
       updateClearBtnState();
 
       // если строка стала пустой → сразу показываем все упражнения
