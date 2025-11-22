@@ -66,6 +66,8 @@ class Api {
   async getFiltersOfExercises(payload = {}) {
     const { filter, page, limit } = payload;
 
+    console.log(filter);
+
     const params = {
       filter: this.#cleanString(filter),
       page: this.#cleanNumber(page, this.PAGE_DEFAULT),
@@ -74,6 +76,7 @@ class Api {
 
     try {
       const response = await this.client.get('filters', { params });
+      console.log(response);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);
