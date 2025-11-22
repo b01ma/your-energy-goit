@@ -2,7 +2,7 @@ const BASE_URL = 'https://your-energy.b.goit.study/api'; //api працює, н�
 //const categoriesContainer = document.getElementById('categories-container');
 
 //!TEMPLATE
-function createCategoryCardMarkup(category, filterType) {
+export function createCategoryCardMarkup(category, filterType) {
   const { name, imgURL } = category;
   let ImgUrl = imgURL;
   const title = name.charAt(0).toUpperCase() + name.slice(1);
@@ -17,7 +17,7 @@ function createCategoryCardMarkup(category, filterType) {
   return `<li class="categories-item">
             <a href="#"
                class="category-card"
-               data-name="${title}"
+               data-name="${name}"
                data-filter="${filterType}"
                aria-label="Category ${title}">
 
@@ -35,6 +35,8 @@ function createCategoryCardMarkup(category, filterType) {
 }
 //!TEMPLATE
 export async function loadAndRenderCategories(filterType = 'muscles', categoriesContainer) {
+  console.log('Container inside loadAndRenderCategories:', categoriesContainer);
+
 
   const apiFilterType = filterType.charAt(0).toUpperCase() + filterType.slice(1);
   const url = `${BASE_URL}/filters?filter=${apiFilterType}`;
@@ -60,9 +62,16 @@ export async function loadAndRenderCategories(filterType = 'muscles', categories
         return;
       }
 
-      const markup = categories.map(category =>
-        createCategoryCardMarkup(category, filterType)
-      ).join('');
+      const markup = `
+        <ul class="categories-list">
+          ${categories
+            .map(category => createCategoryCardMarkup(category, filterType))
+            .join('')}
+        </ul>
+      `;
+
+categoriesContainer.innerHTML = markup;
+
 
       categoriesContainer.innerHTML = markup;
       console.log(`[SUCCESS] Успішно відмальовано ${categories.length} категорій.`);
@@ -78,7 +87,7 @@ export async function loadAndRenderCategories(filterType = 'muscles', categories
 }
 
 //!TEMPLATE
-document.addEventListener('DOMContentLoaded', () => {
-  loadAndRenderCategories('muscles');
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   loadAndRenderCategories('muscles');
+// });
 //!TEMPLATE

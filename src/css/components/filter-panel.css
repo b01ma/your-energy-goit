@@ -76,63 +76,101 @@
 /* ===== SEARCH ===== */
 
 [hidden] {
-    display: none !important;
+  display: none !important;
 }
 
 .search-wrapper {
-    flex: 0 0 273px;
-    max-width: 273px;
-    height: 48px;
-    box-sizing: border-box;
+  flex: 0 0 273px;
+  max-width: 273px;
+  height: 48px;
+  box-sizing: border-box;
+  position: relative; /* для кнопок внутри */
 }
 
 .search-input {
-    width: 100%;
-    height: 100%;
-    padding: 12px 48px 12px 14px;
-    border-radius: 30px;
-    border: 1px solid #242424;
-    background-color: transparent;
-    font-family: "DM Sans", sans-serif;
-    font-size: 16px;
-    line-height: 24px;
-    color: #242424;
+  width: 100%;
+  height: 100%;
+  padding: 12px 96px 12px 14px; /* место под крестик и лупу справа */
+  border-radius: 30px;
+  border: 1px solid #242424;
+  background-color: transparent;
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #242424;
 }
 
 .search-input::placeholder {
-    color: #242424;
+  color: #242424;
 }
 
 .search-input:focus::placeholder {
-    opacity: 0;
+  opacity: 0;
 }
 
 .search-input:focus {
-    outline: none;
-    border-color: #242424;
+  outline: none;
+  border-color: #242424;
 }
 
-.search-icon {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    stroke: #242424;
-    fill: none;
+/* общие стили кнопок внутри инпута */
+.search-btn,
+.search-clear-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
 
-    cursor: pointer;
-    transition: opacity .2s;
+/* порядок как на макете: [текст]  x  🔍 */
+.search-clear-btn {
+  right: 48px;                /* левее лупы */
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+
+.search-clear-icon {
+  width: 7.5px;
+  height: 7.5px;
+}
+
+.search-btn {
+  right: 16px;             /* лупа у самого края */
+}
+
+/* показываем крестик только когда есть текст */
+.search-wrapper.has-text .search-clear-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* иконка лупы – без абсолютного позиционирования */
+.search-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #242424;
+  fill: none;
+  transition: opacity .2s;
 }
 
 .search-icon:hover {
-    opacity: 0.7;
+  opacity: 0.7;
 }
+
 
 #filtersGrid {
     display: none;
 }
+
 
 /* ========= TABLET (768px–1024px) ========= */
 @media (max-width: 1024px) and (min-width: 768px) {

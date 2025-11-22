@@ -24,3 +24,56 @@
 /* Search */
 @import url('./components/search.css');
 
+/* DEBUG для categories */
+#filtersGrid {
+  display: block !important;
+  position: relative !important;
+  z-index: 10 !important;
+  min-height: 200px;
+}
+
+.exercises-section .categories-list {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.exercises-section .categories-item {
+  display: block !important;
+}
+
+.exercises-section .category-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 300px;
+  height: 200px;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+}
+
+.exercises-section .card-image-wrapper,
+.exercises-section .category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.exercises-section .card-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.exercises-section .card-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+}

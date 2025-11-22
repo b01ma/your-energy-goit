@@ -14,13 +14,25 @@
           class="search-input"
           placeholder="Search"
         />
-
+        <button
+          type="button"
+          class="search-clear-btn"
+          aria-label="Clear search"         
+        >
+          <svg class="search-clear-icon">
+            <use href="/img/icons.svg#icon-cross"></use>
+          </svg>
+        </button>
         <button type="button" class="search-btn">
           <svg class="search-icon" width="18" height="18">
             <use href="/img/icons.svg#icon-search"></use>
           </svg>
         </button>
+        
+        
       </div>
+
+     
 
 
       <div class="filters" id="filters">
@@ -38,7 +50,7 @@
   </div>
 
   <!-- filtersGrid  -->
-  <div class="container">
-    <div id="filtersGrid"></div>
-  </div> 
+    <div class="container">
+      <div id="filtersGrid"></div>
+    </div> 
 </section>

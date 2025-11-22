@@ -15,6 +15,10 @@ const filterPanel = () => {
   let currentExercises = [];
   let currentSubcategory = '';
 
+    // сразу рисуем категории Muscles
+  loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
+
+
   function capitalize(str) {
     if (!str) return '';
     return str[0].toUpperCase() + str.slice(1);
@@ -143,7 +147,7 @@ const filterPanel = () => {
   });
 
   filtersGrid.addEventListener('click', async event => {
-    const card = event.target.closest('.filter-card');
+    const card = event.target.closest('.category-card');
     if (!card) return;
 
     const name = card.dataset.name; // "waist"
@@ -173,7 +177,7 @@ const filterPanel = () => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    loadFilterCards(currentFilter);
+    loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
   });
 
   exercisesTitle.addEventListener('click', async () => {
@@ -194,8 +198,10 @@ const filterPanel = () => {
 
     currentExercises = [];
 
-    await loadFilterCards('Muscles');
+    await loadAndRenderCategories('muscles', filtersGrid);
   });
 };
 
 export default filterPanel;
+
+console.log('Импорт OK:', loadAndRenderCategories);
