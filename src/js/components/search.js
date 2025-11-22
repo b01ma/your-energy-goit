@@ -1,5 +1,6 @@
 import { api } from '../api/api.js';
 import iziToast from 'izitoast';
+import { renderExercises } from './filter-panel.js';
 import 'izitoast/dist/css/iziToast.min.css';
 
 console.log('iziToast >>>', iziToast);
@@ -36,27 +37,27 @@ function mapFilterToKey(filterName) {
 }
 
 // Рендер карточек упражнений
-function renderExercises(exercises = []) {
-  if (!exercises.length) {
-    filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
-    return;
-  }
+// function renderExercises(exercises = []) {
+//   if (!exercises.length) {
+//     filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
+//     return;
+//   }
 
-  filtersGrid.innerHTML = exercises
-    .map(
-      ex => `
-      <article class="exercise-card">
-        <h3 class="exercise-card-title">${ex.name}</h3>
-        <p class="exercise-card-meta">
-          ${ex.bodyPart || ''}${ex.bodyPart && ex.target ? ' · ' : ''}${
-        ex.target || ''
-      }
-        </p>
-      </article>
-    `
-    )
-    .join('');
-}
+//   filtersGrid.innerHTML = exercises
+//     .map(
+//       ex => `
+//       <article class="exercise-card">
+//         <h3 class="exercise-card-title">${ex.name}</h3>
+//         <p class="exercise-card-meta">
+//           ${ex.bodyPart || ''}${ex.bodyPart && ex.target ? ' · ' : ''}${
+//         ex.target || ''
+//       }
+//         </p>
+//       </article>
+//     `
+//     )
+//     .join('');
+// }
 
 // ближайший .search-wrapper для класса has-text
 function getSearchWrapper() {
@@ -174,7 +175,7 @@ if (searchInput) {
   searchInput.addEventListener(
     'input',
     async e => {
-      e.stopImmediatePropagation(); 
+      e.stopImmediatePropagation();
       updateClearBtnState();
 
       // если строка стала пустой → сразу показываем все упражнения

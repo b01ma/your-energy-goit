@@ -82,7 +82,7 @@
   max-width: 273px;
   height: 48px;
   box-sizing: border-box;
-  position: relative; 
+  position: relative;
 }
 
 .search-input {
@@ -161,11 +161,6 @@
 
 .search-icon:hover {
   opacity: 0.7;
-}
-
-
-#filtersGrid{
-    display: block;    
 }
 
 /* ========= TABLET (768px–1024px) ========= */
@@ -271,4 +266,17 @@
   }
 }
 
+.filters-wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 32px;
 
+  margin-bottom: 132px;
+}
+
+@media screen and (max-width: 1440px) {
+  .filters-wrap {
+    flex-direction: column-reverse;
+  }
+}

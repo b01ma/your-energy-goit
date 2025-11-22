@@ -1,9 +1,23 @@
 import { api } from '../api/api.js';
-import {
-  loadAndRenderCategories,
-  createCategoryCardMarkup,
-} from './category-template.js';
+import { createCategoryCardMarkup } from './category-template.js';
 import { renderExerciseCard } from './exercise-card.js';
+
+function capitalize(str) {
+  if (!str) return '';
+  return str[0].toUpperCase() + str.slice(1);
+}
+
+export function renderExercises(exercises) {
+  if (!exercises.length) {
+    filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
+    return;
+  }
+
+  filtersGrid.dataset.exercises = 'true';
+  filtersGrid.innerHTML = exercises
+    .map(ex => renderExerciseCard({ isHomePage: true, id: ex._id, ...ex }))
+    .join('');
+}
 
 const filterPanel = () => {
   const filtersBlock = document.getElementById('filters');
@@ -19,15 +33,6 @@ const filterPanel = () => {
   let currentExercises = [];
   let currentSubcategory = '';
 
-    // сразу рисуем категории Muscles
-  loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
-
-
-  function capitalize(str) {
-    if (!str) return '';
-    return str[0].toUpperCase() + str.slice(1);
-  }
-
   function setActiveButton(activeBtn) {
     document
       .querySelectorAll('.filter-btn')
@@ -36,7 +41,6 @@ const filterPanel = () => {
   }
 
   async function loadFilterCards(filterName) {
-    // console.log(filterName);
     try {
       const data = await api.getFiltersOfExercises({
         filter: filterName,
@@ -53,29 +57,17 @@ const filterPanel = () => {
     }
   }
 
-  ///////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   function renderFilterCards(items, filterName) {
     if (!items.length) {
       filtersGrid.innerHTML = '<p>Немає категорій</p>';
       return;
     }
 
-    // filtersGrid.innerHTML = items
-    //   .map(
-    //     item => `
-    //   <article class="filter-card" data-name="${item.name}">
-    //     <div class="filter-card-name">${item.name}</div>
-    //   </article>
-    // `
-    //   )
-    //   .join('');
-
+    filtersGrid.dataset.exercises = 'false';
     filtersGrid.innerHTML = items
       .map(item => createCategoryCardMarkup(item, filterName))
       .join('');
   }
-
-  ///////////////
 
   async function loadExercisesForSubcategory(filterType, subcategoryName) {
     const payload = {
@@ -101,20 +93,9 @@ const filterPanel = () => {
     }
   }
 
-  //////
-  function renderExercises(exercises) {
-    if (!exercises.length) {
-      filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
-      return;
-    }
-
-    filtersGrid.innerHTML = exercises
-      .map(ex => renderExerciseCard({ isHomePage: true, id: ex._id, ...ex }))
-      .join('');
-  }
-
   function runExercisesSearch() {
     const query = searchInput.value.toLowerCase().trim();
+    console.log(query);
 
     if (!query) {
       renderExercises(currentExercises);
@@ -178,7 +159,7 @@ const filterPanel = () => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
+    loadFilterCards('Muscles');
   });
 
   exercisesTitle.addEventListener('click', async () => {
