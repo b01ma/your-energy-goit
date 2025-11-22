@@ -9,6 +9,9 @@ function capitalize(str) {
 }
 
 export function renderExercises(exercises) {
+  const filtersGrid = document.getElementById('filtersGrid');
+  if (!filtersGrid) return;
+
   if (!exercises.length) {
     filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
     return;
@@ -28,6 +31,11 @@ const filterPanel = () => {
   const searchInput = document.getElementById('searchInput');
   const searchIcon = document.querySelector('.search-icon');
   const exercisesTitle = document.querySelector('.exercises-title');
+  const paginationContainer = document.getElementById('exercisesPagination');
+
+  const isMobile = window.matchMedia('(max-width: 767px)').matches;
+  const CATEGORY_LIMIT = isMobile ? 9 : 12;
+  const EXERCISE_LIMIT = isMobile ? 8 : 10;
 
   let currentFilter = 'Muscles';
   let allFilterItems = [];
@@ -36,14 +44,6 @@ const filterPanel = () => {
 
   let currentPage = 1;
   let totalPages = 1;
-  let paginationContainer = null;
-
-  if (filtersGrid) {
-    paginationContainer = document.createElement('div');
-    paginationContainer.id = 'exercisesPagination';
-    paginationContainer.className = 'exercises-pagination';
-    filtersGrid.insertAdjacentElement('afterend', paginationContainer);
-  }
 
   function setActiveButton(activeBtn) {
     document
@@ -52,20 +52,43 @@ const filterPanel = () => {
     activeBtn.classList.add('filter-btn--active');
   }
 
-  async function loadFilterCards(filterName) {
+  async function loadFilterCards(filterName, page = 1) {
     try {
       const data = await api.getFiltersOfExercises({
         filter: filterName,
-        page: 1,
-        limit: 12,
+        page,
+        limit: CATEGORY_LIMIT,
       });
 
-      allFilterItems = (await data.results) || [];
+      allFilterItems = data.results || [];
+      renderFilterCards(allFilterItems, filterName);
 
-      renderFilterCards(await allFilterItems, filterName);
+      const total = data.total ?? allFilterItems.length;
+      currentPage = data.page ?? page;
+      totalPages =
+        data.totalPages ?? (total ? Math.ceil(total / CATEGORY_LIMIT) : 1);
+
+      if (paginationContainer && totalPages > 1) {
+        renderPagination({
+          container: paginationContainer,
+          currentPage,
+          totalPages,
+          onPageChange: newPage => {
+            loadFilterCards(filterName, newPage);
+            filtersBlock.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          },
+        });
+      } else if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
+      }
     } catch (err) {
       console.error('Error loading filters:', err);
       filtersGrid.innerHTML = '<p>Не вдалося завантажити фільтри</p>';
+
       if (paginationContainer) {
         paginationContainer.innerHTML = '';
         paginationContainer.hidden = true;
@@ -97,7 +120,7 @@ const filterPanel = () => {
   ) {
     const payload = {
       page,
-      limit: 12,
+      limit: EXERCISE_LIMIT,
     };
 
     if (filterType === 'Body parts') {
@@ -110,17 +133,17 @@ const filterPanel = () => {
 
     try {
       const data = await api.getExercisesByFilters(payload);
-      const items = (await data.results) || [];
+      const items = data.results || [];
       const total = data.total ?? items.length;
 
       currentExercises = items;
       currentPage = data.page ?? page;
       totalPages =
-        data.totalPages ?? (total ? Math.ceil(total / payload.limit) : 1);
+        data.totalPages ?? (total ? Math.ceil(total / EXERCISE_LIMIT) : 1);
 
       renderExercises(currentExercises);
 
-      if (paginationContainer) {
+      if (paginationContainer && totalPages > 1) {
         renderPagination({
           container: paginationContainer,
           currentPage,
@@ -137,6 +160,9 @@ const filterPanel = () => {
             });
           },
         });
+      } else if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
       }
     } catch (error) {
       console.error('Error loading exercises:', error);
@@ -179,7 +205,7 @@ const filterPanel = () => {
     searchInput.value = '';
     currentExercises = [];
 
-    loadFilterCards(currentFilter);
+    loadFilterCards(currentFilter, 1);
   });
 
   filtersGrid.addEventListener('click', async event => {
@@ -213,18 +239,18 @@ const filterPanel = () => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    loadFilterCards('Muscles');
+    loadFilterCards('Muscles', 1);
   });
 
-  exercisesTitle.addEventListener('click', async e => {
-    let filter = document.querySelector('.filter-btn--active').dataset.filter;
+  exercisesTitle.addEventListener('click', async () => {
+    const activeBtn = document.querySelector('.filter-btn--active');
+    const filter = activeBtn ? activeBtn.dataset.filter : currentFilter;
 
-    document
-      .querySelectorAll('.filter-btn')
-      .forEach(btn => btn.classList.remove('filter-btn--active'));
+    currentFilter = filter;
 
-    const filterBtn = document.querySelector(`[data-filter="${filter}"]`);
-    if (filterBtn) filterBtn.classList.add('filter-btn--active');
+    if (activeBtn) {
+      setActiveButton(activeBtn);
+    }
 
     currentSubcategory = '';
     selectedSubcategoryEl.textContent = '';
@@ -234,7 +260,7 @@ const filterPanel = () => {
 
     currentExercises = [];
 
-    await loadFilterCards(`${filter}`);
+    await loadFilterCards(filter, 1);
   });
 };
 

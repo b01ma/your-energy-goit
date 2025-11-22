@@ -1,6 +1,9 @@
 export function renderPagination({ container, currentPage, totalPages, onPageChange }) {
   if (!container) return;
 
+  currentPage = Number(currentPage) || 1;
+  totalPages = Number(totalPages) || 1;
+
   if (!totalPages || totalPages <= 1) {
     container.innerHTML = '';
     container.hidden = true;

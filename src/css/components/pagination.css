@@ -1,9 +1,9 @@
 .exercises-pagination {
-  margin: 24px 0;
+  margin: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px; /* з Figma */
+  gap: 8px;
 }
 
 .ex-pagination__btn {
@@ -17,7 +17,7 @@
   font-style: normal;
   font-size: 24px;
   line-height: 32px;
-  letter-spacing: 0.04em; /* 4% */
+  letter-spacing: 0.04em;
   color: #d4d4d4;
   display: inline-flex;
   align-items: center;
@@ -37,10 +37,20 @@
 
 .ex-pagination__btn--arrow {
   min-width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #2424241A;
+  background: transparent;
+  color: #2424241A;
+}
+
+.ex-pagination__btn--arrow:not(:disabled) {
+  border-color: #242424;
+  color: #242424;
 }
 
 .ex-pagination__btn:disabled {
-  opacity: 0.4;
+  opacity: 1;
   cursor: default;
 }
 
