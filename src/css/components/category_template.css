@@ -6,7 +6,7 @@
     padding: 20px;
     margin: 0;
 }
-/* !Template */
+
 .category-card {
     position: relative;
     border-radius: 8px;
@@ -42,7 +42,7 @@
     color: white;
     text-align: center;
 }
-/* !Template */
+
 .category-title {
     font-size: 24px;
     font-weight: bold;
@@ -61,4 +61,3 @@
     width: 100%;
     text-align: center;
 }
-/* !Template */

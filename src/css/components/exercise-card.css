@@ -178,7 +178,6 @@
 .exercise-card__trash-icon{
   fill: var(--color-bg);
   margin-left: 8px;
-  display: none;
 }
 
 .exercise-card__icon-runner {

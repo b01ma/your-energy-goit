@@ -5,11 +5,25 @@ const quote = () => {
   const AUTHOR_PLACEHOLDER = 'Tom Brady';
 
   document.addEventListener('DOMContentLoaded', async () => {
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const saved = JSON.parse(localStorage.getItem('dailyQuote'));
+
+    if (saved && saved.date === today) {
+      document.getElementById('quote-text').textContent = saved.quote;
+      document.getElementById('quote-author').textContent = saved.author;
+      return;
+    }
+
     try {
       const { quote, author } = await api.getQuote();
 
       document.getElementById('quote-text').textContent = quote;
       document.getElementById('quote-author').textContent = author;
+
+      localStorage.setItem(
+        'dailyQuote',
+        JSON.stringify({ quote, author, date: today })
+      );
     } catch (err) {
       console.error('Error loading quote:', err);
 

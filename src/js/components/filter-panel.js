@@ -1,5 +1,9 @@
 import { api } from '../api/api.js';
-import { loadAndRenderCategories } from './category-template.js';
+import {
+  loadAndRenderCategories,
+  createCategoryCardMarkup,
+} from './category-template.js';
+import { renderExerciseCard } from './exercise-card.js';
 
 const filterPanel = () => {
   const filtersBlock = document.getElementById('filters');
@@ -15,6 +19,10 @@ const filterPanel = () => {
   let currentExercises = [];
   let currentSubcategory = '';
 
+    // сразу рисуем категории Muscles
+  loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
+
+
   function capitalize(str) {
     if (!str) return '';
     return str[0].toUpperCase() + str.slice(1);
@@ -28,6 +36,7 @@ const filterPanel = () => {
   }
 
   async function loadFilterCards(filterName) {
+    // console.log(filterName);
     try {
       const data = await api.getFiltersOfExercises({
         filter: filterName,
@@ -35,30 +44,38 @@ const filterPanel = () => {
         limit: 12,
       });
 
-      allFilterItems = data.results || [];
-      renderFilterCards(allFilterItems);
+      allFilterItems = (await data.results) || [];
+
+      renderFilterCards(await allFilterItems, filterName);
     } catch (err) {
       console.error('Error loading filters:', err);
       filtersGrid.innerHTML = '<p>Не вдалося завантажити фільтри</p>';
     }
   }
 
-  function renderFilterCards(items) {
+  ///////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  function renderFilterCards(items, filterName) {
     if (!items.length) {
       filtersGrid.innerHTML = '<p>Немає категорій</p>';
       return;
     }
 
+    // filtersGrid.innerHTML = items
+    //   .map(
+    //     item => `
+    //   <article class="filter-card" data-name="${item.name}">
+    //     <div class="filter-card-name">${item.name}</div>
+    //   </article>
+    // `
+    //   )
+    //   .join('');
+
     filtersGrid.innerHTML = items
-      .map(
-        item => `
-      <article class="filter-card" data-name="${item.name}">
-        <div class="filter-card-name">${item.name}</div>
-      </article>
-    `
-      )
+      .map(item => createCategoryCardMarkup(item, filterName))
       .join('');
   }
+
+  ///////////////
 
   async function loadExercisesForSubcategory(filterType, subcategoryName) {
     const payload = {
@@ -67,7 +84,7 @@ const filterPanel = () => {
     };
 
     if (filterType === 'Body parts') {
-      payload.bodyPart = subcategoryName;
+      payload.bodypart = subcategoryName;
     } else if (filterType === 'Muscles') {
       payload.target = subcategoryName;
     } else if (filterType === 'Equipment') {
@@ -76,7 +93,7 @@ const filterPanel = () => {
 
     try {
       const data = await api.getExercisesByFilters(payload);
-      currentExercises = data.results || [];
+      currentExercises = (await data.results) || [];
       renderExercises(currentExercises);
     } catch (error) {
       console.error('Error loading exercises:', error);
@@ -84,6 +101,7 @@ const filterPanel = () => {
     }
   }
 
+  //////
   function renderExercises(exercises) {
     if (!exercises.length) {
       filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
@@ -91,18 +109,7 @@ const filterPanel = () => {
     }
 
     filtersGrid.innerHTML = exercises
-      .map(
-        ex => `
-      <article class="exercise-card">
-        <h3 class="exercise-card-title">${ex.name}</h3>
-        <p class="exercise-card-meta">
-          ${ex.bodyPart || ''}${ex.bodyPart && ex.target ? ' · ' : ''}${
-          ex.target || ''
-        }
-        </p>
-      </article>
-    `
-      )
+      .map(ex => renderExerciseCard({ isHomePage: true, id: ex._id, ...ex }))
       .join('');
   }
 
@@ -137,13 +144,11 @@ const filterPanel = () => {
     searchInput.value = '';
     currentExercises = [];
 
-    // await loadFilterCards(currentFilter);
-    console.log(currentFilter.toLowerCase());
-    await loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
+    loadFilterCards(currentFilter);
   });
 
   filtersGrid.addEventListener('click', async event => {
-    const card = event.target.closest('.filter-card');
+    const card = event.target.closest('.category-card');
     if (!card) return;
 
     const name = card.dataset.name; // "waist"
@@ -173,11 +178,11 @@ const filterPanel = () => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    loadFilterCards(currentFilter);
+    loadAndRenderCategories(currentFilter.toLowerCase(), filtersGrid);
   });
 
   exercisesTitle.addEventListener('click', async () => {
-    currentFilter = 'Muscles';
+    currentFilter = 'muscles';
 
     document
       .querySelectorAll('.filter-btn')
@@ -194,7 +199,7 @@ const filterPanel = () => {
 
     currentExercises = [];
 
-    await loadFilterCards('Muscles');
+    await loadFilterCards('muscles');
   });
 };
 
