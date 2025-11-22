@@ -18,6 +18,7 @@
 
   --color-light: rgba(244,244,244, 1); /* #F4F4F4 */
   --color-light-10: rgba(244,244,244, 0.1);
+  --color-light-40: rgba(244,244,244, 0.4);
   
   --color-white: #FFFFFF;
   --color-yellow: #FFB800;

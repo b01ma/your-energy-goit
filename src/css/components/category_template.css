@@ -1,63 +1,103 @@
 .categories-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    list-style: none;
-    padding: 20px;
-    margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.categories-section {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  row-gap: 32px;
+  column-gap: 15px;
+}
+
+.categories-section[data-exercises = 'true'] {
+  grid-template-columns: repeat(2, calc((100% / 2) - 15px));
+
+}
+
+@media screen and (max-width: 768px) {
+    .categories-section, 
+    .categories-section[data-exercises = 'true'] {
+        grid-template-columns: auto;
+    }
+}
+
+.categories-item {
+  width: fit-content;
+
+  width: 100%;
+  max-height: 250px;
+  height: 100%;
 }
 
 .category-card {
-    position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    width: 300px;
-    height: 200px;
-    cursor: pointer;
-    display: block;
-    text-decoration: none;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  padding: 0;
+}
+
+.categories-item:hover .category-card img {
+  scale: 1.1;
 }
 
 .card-image-wrapper,
 .category-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.category-card img {
+  transition: scale 0.15s ease-in-out;
 }
 
 .card-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .card-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-light);
+  text-align: center;
 }
 
 .category-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 5px;
+  font-size: 24px;
+  margin-bottom: 5px;
+  text-transform: capitalize;
+  font-weight: 400;
 }
 
 .category-filter {
-    font-size: 14px;
-    opacity: 0.8;
+  font-size: 14px;
+  color: var(--color-light-40);
 }
 
 .loading-message,
 .error-message {
-    font-size: 18px;
-    color: #333;
-    width: 100%;
-    text-align: center;
+  font-size: 18px;
+  color: #333;
+  width: 100%;
+  text-align: center;
 }
