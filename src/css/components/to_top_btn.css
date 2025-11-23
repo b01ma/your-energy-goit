@@ -1,16 +1,16 @@
 .to-top-btn {
   position: fixed;
   z-index: 99;
-  bottom: 38px;
-  right: 38px;
+  bottom: 70px;
+  right: 70px;
   padding: 0;
   cursor: pointer;
 
   background-color: var(--color-primary);
   border: 5px solid var(--color-primary-80);
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 56px;
+  height: 56px;
 
   display: none;
   align-items: center;
@@ -40,7 +40,7 @@
   height: 50%;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .to-top-btn {
     width: 40px;
     height: 40px;

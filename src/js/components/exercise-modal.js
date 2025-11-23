@@ -1,6 +1,7 @@
 import MicroModal from 'micromodal';
 import iziToast from 'izitoast';
 import { api } from '../api/api.js';
+import { syncButtonWithFavorites } from './exercise-modal-favorites.js';
 import iconSprite from '/img/icons.svg';
 
 const favoritesBtnText = {
@@ -46,7 +47,18 @@ export function initExerciseModal() {
       const exerciseData = await api.getExercisesById(exerciseId);
 
       // Update modal with real data
+      // 👉 Передаём id в модалку и кнопку "Add to favorites"
+      const modal = document.getElementById('exerciseModal');
+      modal.dataset.id = exerciseId;
+
+      const favoriteBtn = document.getElementById('exerciseModalFavoriteBtn');
+      favoriteBtn.dataset.id = exerciseId;
+
+      // Обновляем содержимое модалки
       updateModalContent(exerciseData);
+
+      // 👉 Синхронизируем состояние кнопки с localStorage
+      syncButtonWithFavorites();
 
       // Open the modal
       MicroModal.show('exerciseModal');
