@@ -25,7 +25,7 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .categories-section,
   .categories-section[data-exercises='true'] {
     grid-template-columns: 1fr;
