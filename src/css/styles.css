@@ -12,6 +12,7 @@
 @import url('./components/footer.css');
 @import url('./components/filter-panel.css');
 @import url('./components/category_template.css');
+@import url('./components/home-quote.css');
 
 /* Pages */
 @import url('./pages/home.css');

@@ -1,11 +1,6 @@
-.home {
-  /* Home page styles here */
-
-  .hero-section {
-    /* special styles here */
-  }
+.exercises-list-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-/* ---------------------------------- */
-/* ---------- Hero section ---------- */
-/* ---------------------------------- */

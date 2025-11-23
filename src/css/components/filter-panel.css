@@ -275,7 +275,7 @@
   margin-bottom: 132px;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1439px) {
   .filters-wrap {
     flex-direction: column-reverse;
   }

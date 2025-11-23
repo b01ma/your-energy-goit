@@ -11,10 +11,15 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  row-gap: 32px;
+  row-gap: 20px;
   column-gap: 15px;
 }
 
+@media screen and (min-width: 768px) {
+  .categories-section {
+    row-gap: 32px;
+  }
+}
 
 .categories-section[data-exercises='true'] {
   grid-template-columns: repeat(2, minmax(0, 1fr));
