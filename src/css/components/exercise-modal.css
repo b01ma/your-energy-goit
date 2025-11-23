@@ -166,7 +166,7 @@
   flex-direction: column;
   gap: 16px;
 
-  max-width: 370px;
+  max-width: 380px;
 
   color: var(--color-light);
 }
@@ -299,7 +299,7 @@
 }
 
 .exercise-modal__btn {
-  width: 100%;
+  /* width: 100%; */
   height: 42px;
   font-size: 14px;
   line-height: 18px;
@@ -311,6 +311,9 @@
   border: 1px solid var(--color-bg);
   transition: all 0.15s ease-in-out;
 
+  padding-left: 18px;
+  padding-right: 18px;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -321,7 +324,16 @@
   color: var(--color-primary);
   border: 1px solid var(--color-bg);
   transition: all 0.15s ease-in-out;
-  white-space: nowrap;
+
+  border-radius: 30px;
+  line-height: 1.29;
+  font-weight: 400;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .exercise-modal__btn--favorite:hover,
@@ -346,11 +358,17 @@
 }
 
 .exercise-modal__btn__icon {
-  stroke: currentColor;
   fill: none;
+  stroke: var(--color-primary);
   stroke-width: 2;
   margin-left: 8px;
-  max-height: 18px;
+  max-height: 16px;
+  transition: stroke 0.15s ease-in-out;
+}
+
+.exercise-modal__btn--favorite:hover .exercise-modal__btn__icon,
+.exercise-modal__btn--favorite:active .exercise-modal__btn__icon {
+  stroke: var(--color-light);
 }
 
 .exercise-modal__btn__heart-icon {
