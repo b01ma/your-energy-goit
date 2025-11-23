@@ -6,9 +6,9 @@
 /* Лоадер */
 .loader-cards {
   position: absolute; /* відносно .exercises-list-wrapper */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 24px;
+  right: 50%;
+  transform: translateX(50%);
   font-size: 40px;
   line-height: 1.5;
   font-family: system-ui, sans-serif;
