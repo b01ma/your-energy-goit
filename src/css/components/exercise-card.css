@@ -1,7 +1,7 @@
 .exercise-card {
   display: flex;
   flex-direction: column;
-  /* width: 335px; */
+  min-width: 300px;
   width: 100%;
   padding: 16px;
   height: fit-content;
