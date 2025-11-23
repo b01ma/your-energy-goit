@@ -24,7 +24,7 @@ export function renderExerciseCard(payload) {
         </svg>
       </div>
       <p class="exercise-card__title">
-        ${name}
+        ${capitalizeFirstLetter(name)}
       </p>
     </div>
     <ul class="exercise-card__footer__list">
@@ -71,4 +71,9 @@ function getRatingOrTrashIcon(isHomePage, rating) {
     : `<svg class="exercise-card__trash-icon" width="16" height="16">
           <use href="./img/icons.svg#icon-trash"></use>
         </svg>`;
+}
+
+function capitalizeFirstLetter(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
