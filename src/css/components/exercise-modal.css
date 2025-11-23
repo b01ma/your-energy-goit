@@ -299,7 +299,7 @@
 }
 
 .exercise-modal__btn {
-  width: 100%;
+  /* width: 100%; */
   height: 42px;
   border-radius: 30px;
   background-color: var(--color-bg);
@@ -353,11 +353,17 @@
 }
 
 .exercise-modal__btn__icon {
-  stroke: currentColor;
   fill: none;
+  stroke: var(--color-primary);
   stroke-width: 2;
   margin-left: 8px;
   max-height: 16px;
+  transition: stroke 0.15s ease-in-out;
+}
+
+.exercise-modal__btn--favorite:hover .exercise-modal__btn__icon,
+.exercise-modal__btn--favorite:active .exercise-modal__btn__icon {
+  stroke: var(--color-light);
 }
 
 .exercise-modal__btn__heart-icon {
