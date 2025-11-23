@@ -1,6 +1,7 @@
 import { api } from '../api/api.js';
 import { createCategoryCardMarkup } from './category-template.js';
 import { renderExerciseCard } from './exercise-card.js';
+import { renderPagination } from './pagination';
 
 function capitalize(str) {
   if (!str) return '';
@@ -8,6 +9,9 @@ function capitalize(str) {
 }
 
 export function renderExercises(exercises) {
+  const filtersGrid = document.getElementById('filtersGrid');
+  if (!filtersGrid) return;
+
   if (!exercises.length) {
     filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
     return;
@@ -27,11 +31,22 @@ const filterPanel = () => {
   const searchInput = document.getElementById('searchInput');
   const searchIcon = document.querySelector('.search-icon');
   const exercisesTitle = document.querySelector('.exercises-title');
+  const paginationContainer = document.getElementById('exercisesPagination');
+
+  const CATEGORY_LIMIT_BACKEND = 12;
+  const EXERCISE_LIMIT_BACKEND = 10;
+
+  const isMobile = () => window.matchMedia('(max-width: 767px)').matches;
+  const getCategoryPageSize = () => (isMobile() ? 9 : 12);
+  const getExercisePageSize = () => (isMobile() ? 8 : 10);
 
   let currentFilter = 'Muscles';
-  let allFilterItems = [];
   let currentExercises = [];
   let currentSubcategory = '';
+
+  let currentPage = 1;
+  let totalPages = 1;
+  let lastIsMobile = isMobile();
 
   function setActiveButton(activeBtn) {
     document
@@ -40,24 +55,60 @@ const filterPanel = () => {
     activeBtn.classList.add('filter-btn--active');
   }
 
-  async function loadFilterCards(filterName) {
+  async function loadFilterCards(filterName, page = 1) {
     try {
       const data = await api.getFiltersOfExercises({
         filter: filterName,
-        page: 1,
-        limit: 12,
+        page,
+        limit: CATEGORY_LIMIT_BACKEND,
       });
 
-      allFilterItems = (await data.results) || [];
+      const rawItems = data.results || [];
+      const pageSize = getCategoryPageSize();
+      const items =
+        pageSize < CATEGORY_LIMIT_BACKEND ? rawItems.slice(0, pageSize) : rawItems;
 
-      renderFilterCards(await allFilterItems, filterName);
+      renderFilterCards(items, filterName);
+
+      const total = data.total ?? rawItems.length;
+      currentPage = data.page ?? page;
+      totalPages =
+        data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
+
+      if (paginationContainer && totalPages > 1) {
+        renderPagination({
+          container: paginationContainer,
+          currentPage,
+          totalPages,
+          onPageChange: newPage => {
+            loadFilterCards(filterName, newPage);
+            filtersBlock.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          },
+        });
+      } else if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
+      }
     } catch (err) {
       console.error('Error loading filters:', err);
       filtersGrid.innerHTML = '<p>Не вдалося завантажити фільтри</p>';
+
+      if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
+      }
     }
   }
 
   function renderFilterCards(items, filterName) {
+    if (paginationContainer) {
+      paginationContainer.innerHTML = '';
+      paginationContainer.hidden = true;
+    }
+
     if (!items.length) {
       filtersGrid.innerHTML = '<p>Немає категорій</p>';
       return;
@@ -69,10 +120,14 @@ const filterPanel = () => {
       .join('');
   }
 
-  async function loadExercisesForSubcategory(filterType, subcategoryName) {
+  async function loadExercisesForSubcategory(
+    filterType,
+    subcategoryName,
+    page = 1
+  ) {
     const payload = {
-      page: 1,
-      limit: 12,
+      page,
+      limit: EXERCISE_LIMIT_BACKEND,
     };
 
     if (filterType === 'Body parts') {
@@ -85,17 +140,55 @@ const filterPanel = () => {
 
     try {
       const data = await api.getExercisesByFilters(payload);
-      currentExercises = (await data.results) || [];
+      const rawItems = data.results || [];
+      const pageSize = getExercisePageSize();
+      const items =
+        pageSize < EXERCISE_LIMIT_BACKEND
+          ? rawItems.slice(0, pageSize)
+          : rawItems;
+
+      const total = data.total ?? rawItems.length;
+
+      currentExercises = items;
+      currentPage = data.page ?? page;
+      totalPages =
+        data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
+
       renderExercises(currentExercises);
+
+      if (paginationContainer && totalPages > 1) {
+        renderPagination({
+          container: paginationContainer,
+          currentPage,
+          totalPages,
+          onPageChange: newPage => {
+            loadExercisesForSubcategory(
+              currentFilter,
+              currentSubcategory,
+              newPage
+            );
+            filtersBlock.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          },
+        });
+      } else if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
+      }
     } catch (error) {
       console.error('Error loading exercises:', error);
       filtersGrid.innerHTML = '<p>Не вдалося завантажити вправи</p>';
+      if (paginationContainer) {
+        paginationContainer.innerHTML = '';
+        paginationContainer.hidden = true;
+      }
     }
   }
 
   function runExercisesSearch() {
     const query = searchInput.value.toLowerCase().trim();
-    console.log(query);
 
     if (!query) {
       renderExercises(currentExercises);
@@ -125,15 +218,15 @@ const filterPanel = () => {
     searchInput.value = '';
     currentExercises = [];
 
-    loadFilterCards(currentFilter);
+    loadFilterCards(currentFilter, 1);
   });
 
   filtersGrid.addEventListener('click', async event => {
     const card = event.target.closest('.category-card');
     if (!card) return;
 
-    const name = card.dataset.name; // "waist"
-    const prettyName = capitalize(name); // "Waist"
+    const name = card.dataset.name;
+    const prettyName = capitalize(name);
 
     currentSubcategory = name;
 
@@ -142,7 +235,7 @@ const filterPanel = () => {
     searchContainer.hidden = false;
     searchInput.value = '';
 
-    await loadExercisesForSubcategory(currentFilter, currentSubcategory);
+    await loadExercisesForSubcategory(currentFilter, currentSubcategory, 1);
   });
 
   searchInput.addEventListener('input', runExercisesSearch);
@@ -159,18 +252,18 @@ const filterPanel = () => {
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    loadFilterCards('Muscles');
+    loadFilterCards('Muscles', 1);
   });
 
-  exercisesTitle.addEventListener('click', async e => {
-    let filter = document.querySelector('.filter-btn--active').dataset.filter;
+  exercisesTitle.addEventListener('click', async () => {
+    const activeBtn = document.querySelector('.filter-btn--active');
+    const filter = activeBtn ? activeBtn.dataset.filter : currentFilter;
 
-    document
-      .querySelectorAll('.filter-btn')
-      .forEach(btn => btn.classList.remove('filter-btn--active'));
+    currentFilter = filter;
 
-    const filterBtn = document.querySelector(`[data-filter="${filter}"]`);
-    if (filterBtn) filterBtn.classList.add('filter-btn--active');
+    if (activeBtn) {
+      setActiveButton(activeBtn);
+    }
 
     currentSubcategory = '';
     selectedSubcategoryEl.textContent = '';
@@ -180,7 +273,19 @@ const filterPanel = () => {
 
     currentExercises = [];
 
-    await loadFilterCards(`${filter}`);
+    await loadFilterCards(filter, 1);
+  });
+
+  window.addEventListener('resize', () => {
+    const nowIsMobile = isMobile();
+    if (nowIsMobile === lastIsMobile) return;
+    lastIsMobile = nowIsMobile;
+
+    if (filtersGrid.dataset.exercises === 'true' && currentSubcategory) {
+      loadExercisesForSubcategory(currentFilter, currentSubcategory, 1);
+    } else {
+      loadFilterCards(currentFilter, 1);
+    }
   });
 };
 
