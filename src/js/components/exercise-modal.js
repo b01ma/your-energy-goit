@@ -446,6 +446,33 @@ if (ratingForm) {
 
     try {
       await api.addRating(exerciseId, payload);
+
+      // Clear the form after successful submission
+      ratingForm.reset();
+
+      // Reset the rating stars to empty
+      const ratingValueElement = document.querySelector(
+        '.rating-modal__rating-value'
+      );
+      if (ratingValueElement) {
+        ratingValueElement.textContent = '0.0';
+      }
+
+      // Clear selected rating
+      starsContainer.removeAttribute('data-selected-rating');
+
+      // Reset all stars to empty state
+      const starButtons = starsContainer.querySelectorAll(
+        '.rating-modal__star-btn'
+      );
+      starButtons.forEach(btn => {
+        const star = btn.querySelector('svg');
+        if (star) {
+          star.classList.add('exercise-modal__star--empty');
+          star.classList.remove('exercise-modal__star--filled');
+        }
+      });
+
       MicroModal.close('ratingModal');
       iziToast.info({
         title: 'Success',
