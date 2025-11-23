@@ -8,6 +8,7 @@ import favorites from './js/components/favorites.js';
 import { initPageLoader } from './js/utilities/page-loader.js';
 import { initExerciseModal } from './js/components/exercise-modal.js';
 import './js/components/search.js';
+import './js/components/exercise-modal-favorites.js';
 
 // make a switch for the pages: home and favorties
 
