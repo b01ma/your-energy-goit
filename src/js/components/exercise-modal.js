@@ -1,6 +1,7 @@
 import MicroModal from 'micromodal';
 import iziToast from 'izitoast';
 import { api } from '../api/api.js';
+import iconSprite from '/img/icons.svg';
 
 const favoritesBtnText = {
   add: 'Add to favorites',
@@ -189,7 +190,7 @@ function initRatingModalStars(currentRating) {
     use.setAttributeNS(
       'http://www.w3.org/1999/xlink',
       'xlink:href',
-      '/img/icons.svg#icon-star'
+      `${iconSprite}#icon-star`
     );
     star.appendChild(use);
     starButton.appendChild(star);
@@ -353,7 +354,7 @@ function updateStars(rating) {
     bgUse.setAttributeNS(
       'http://www.w3.org/1999/xlink',
       'xlink:href',
-      '/img/icons.svg#icon-star'
+      `${iconSprite}#icon-star`
     );
     bgStar.appendChild(bgUse);
 
@@ -386,7 +387,7 @@ function updateStars(rating) {
       fgUse.setAttributeNS(
         'http://www.w3.org/1999/xlink',
         'xlink:href',
-        '/img/icons.svg#icon-star'
+        `${iconSprite}#icon-star`
       );
       fgStar.appendChild(fgUse);
 
