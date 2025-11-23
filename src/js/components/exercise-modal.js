@@ -17,14 +17,13 @@ export function initExerciseModal() {
   MicroModal.init({
     onShow: modal => console.info(`${modal.id} is shown`),
     onClose: modal => console.info(`${modal.id} is hidden`),
-    openTrigger: 'data-micromodal-trigger',
     closeTrigger: 'data-micromodal-close',
     openClass: 'is-open',
     disableScroll: true,
     disableFocus: false,
     awaitOpenAnimation: true,
     awaitCloseAnimation: true,
-    debugMode: true,
+    debugMode: false,
   });
 
   // Set up event delegation for all "Start" buttons
@@ -92,85 +91,88 @@ export function initExerciseModal() {
   });
 
   // Set up event handler for "Add to favorites" button
-  document.addEventListener('click', event => {
-    const addToFavoritesBtn = event.target.closest('#exerciseModalFavoriteBtn');
+  // const modal = document.getElementById('exerciseModal');
+  // modal.addEventListener('click', event => {
+  //   const addToFavoritesBtn = event.target.closest('#exerciseModalFavoriteBtn');
 
-    if (!addToFavoritesBtn) {
-      return;
-    }
+  //   debugger;
 
-    const addToFavoritesBtnText = addToFavoritesBtn.querySelector(
-      '.exerciseModalFavoriteBtn__text'
-    );
+  //   if (!addToFavoritesBtn) {
+  //     return;
+  //   }
 
-    const heartIcon = addToFavoritesBtn.querySelector(
-      '.exercise-modal__btn__heart-icon'
-    );
-    const trashIcon = addToFavoritesBtn.querySelector(
-      '.exercise-card__btn__trash-icon'
-    );
+  //   const addToFavoritesBtnText = addToFavoritesBtn.querySelector(
+  //     '.exerciseModalFavoriteBtn__text'
+  //   );
 
-    const modal = document.getElementById('exerciseModal');
-    const exerciseId = modal?.dataset.exerciseId;
+  //   const heartIcon = addToFavoritesBtn.querySelector(
+  //     '.exercise-modal__btn__heart-icon'
+  //   );
+  //   const trashIcon = addToFavoritesBtn.querySelector(
+  //     '.exercise-card__btn__trash-icon'
+  //   );
 
-    if (!exerciseId) {
-      console.error('Exercise ID not found');
-      return;
-    }
+  //   const modal = document.getElementById('exerciseModal');
+  //   const exerciseId = modal?.dataset.exerciseId;
 
-    // Get the current array from localStorage or create a new one
-    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+  //   if (!exerciseId) {
+  //     console.error('Exercise ID not found');
+  //     return;
+  //   }
 
-    // Check if the exercise is already in favorites by _id
-    const existingIndex = favorites.findIndex(item => item._id === exerciseId);
+  //   // Get the current array from localStorage or create a new one
+  //   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-    const rating =
-      parseFloat(document.getElementById('exerciseModalRating')?.textContent) ||
-      0;
-    const name =
-      document.getElementById('exerciseModal-title')?.textContent || '';
-    const burnedCalories =
-      document
-        .getElementById('exerciseModalCalories')
-        ?.textContent?.split('/')[0] || '';
-    const time =
-      document
-        .getElementById('exerciseModalCalories')
-        ?.textContent?.split('/')[1] || '';
-    const bodyPart =
-      document.getElementById('exerciseModalBodyPart')?.textContent || '';
-    const target =
-      document.getElementById('exerciseModalTarget')?.textContent || '';
+  //   // Check if the exercise is already in favorites by _id
+  //   const existingIndex = favorites.findIndex(item => item._id === exerciseId);
 
-    if (existingIndex === -1) {
-      // If not in favorites, add the full object
-      const exerciseObj = {
-        _id: exerciseId,
-        rating,
-        name,
-        burnedCalories,
-        target,
-        bodyPart,
-        time,
-      };
+  //   const rating =
+  //     parseFloat(document.getElementById('exerciseModalRating')?.textContent) ||
+  //     0;
+  //   const name =
+  //     document.getElementById('exerciseModal-title')?.textContent || '';
+  //   const burnedCalories =
+  //     document
+  //       .getElementById('exerciseModalCalories')
+  //       ?.textContent?.split('/')[0] || '';
+  //   const time =
+  //     document
+  //       .getElementById('exerciseModalCalories')
+  //       ?.textContent?.split('/')[1] || '';
+  //   const bodyPart =
+  //     document.getElementById('exerciseModalBodyPart')?.textContent || '';
+  //   const target =
+  //     document.getElementById('exerciseModalTarget')?.textContent || '';
 
-      favorites.push(exerciseObj);
-      addToFavoritesBtnText.textContent = favoritesBtnText.remove;
-      heartIcon.style.display = 'none';
-      trashIcon.style.display = 'block';
-    } else {
-      // If already in favorites, remove it
-      favorites.splice(existingIndex, 1);
-      addToFavoritesBtnText.textContent = favoritesBtnText.add;
-      heartIcon.style.display = 'block';
-      trashIcon.style.display = 'none';
-    }
+  //   if (existingIndex === -1) {
+  //     // If not in favorites, add the full object
+  //     const exerciseObj = {
+  //       _id: exerciseId,
+  //       rating,
+  //       name,
+  //       burnedCalories,
+  //       target,
+  //       bodyPart,
+  //       time,
+  //     };
 
-    // Save back to localStorage
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-    // Dispatching event for tracking changes in localStorage to rerender favorites on delete
-    window.dispatchEvent(new Event('favorites-updated'));
-  });
+  //     favorites.push(exerciseObj);
+  //     // addToFavoritesBtnText.textContent = favoritesBtnText.remove;
+  //     // heartIcon.style.display = 'none';
+  //     // trashIcon.style.display = 'block';
+  //   } else {
+  //     // If already in favorites, remove it
+  //     favorites.splice(existingIndex, 1);
+  //     // addToFavoritesBtnText.textContent = favoritesBtnText.add;
+  //     // heartIcon.style.display = 'block';
+  //     // trashIcon.style.display = 'none';
+  //   }
+
+  //   // Save back to localStorage
+  //   localStorage.setItem('favorites', JSON.stringify(favorites));
+  //   // Dispatching event for tracking changes in localStorage to rerender favorites on delete
+  //   window.dispatchEvent(new Event('favorites-updated'));
+  // });
 }
 
 // Helper function to initialize rating modal with empty interactive stars
