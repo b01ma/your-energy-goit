@@ -13,7 +13,7 @@ class Api {
     });
   }
 
-  #filterUndefined(obj = {}) {
+  #filterUndefinedStringValues(obj = {}) {
     return Object.fromEntries(
       Object.entries(obj)
         .map(([k, v]) => [k, this.#cleanString(v)])
@@ -36,7 +36,7 @@ class Api {
     const { page, limit, ...rest } = payload;
 
     const params = {
-      ...this.#filterUndefined(rest),
+      ...this.#filterUndefinedStringValues(rest),
       page: this.#cleanNumber(page, this.PAGE_DEFAULT),
       limit: this.#cleanNumber(limit, this.LIMIT_DEFAULT),
     };
@@ -88,6 +88,15 @@ class Api {
   async subscribe(email = '') {
     try {
       const response = await this.client.post('subscription', { email });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response.data.message);
+    }
+  }
+
+  async addRating(id, payload = {}) {
+    try {
+      const response = await this.client.patch(`exercises/${id}/rating`, payload);
       return response.data;
     } catch (error) {
       throw new Error(error.response.data.message);

@@ -1,8 +1,7 @@
 .exercise-card {
   display: flex;
   flex-direction: column;
-  min-width: 300px;
-  width: 100%;
+  width: 335px;
   padding: 16px;
   height: fit-content;
 
@@ -10,11 +9,11 @@
   background: var(--color-white);
 
   @media screen and (min-width: 768px) {
-    /* width: 344px; */
+    width: 344px;
   }
 
   @media screen and (min-width: 1440px) {
-    /* width: 442px; */
+    width: 442px;
   }
 }
 
@@ -91,8 +90,6 @@
 
 .exercise-card__body {
   max-width: 100%;
-  /* display: flex;
-  align-items: center; */
   align-self: start;
   margin-bottom: 16px;
   overflow: hidden;
@@ -119,7 +116,7 @@
 
   font-size: 20px;
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.2;
 
   @media screen and (min-width: 768px) {
     font-size: 24px;
@@ -175,11 +172,20 @@
   max-width: 40px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media screen and (min-width: 768px) {
+    max-width: 43px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    max-width: unset;
+  }
 }
 
 .exercise-card__trash-icon {
   fill: var(--color-bg);
   margin-left: 8px;
+  cursor: pointer;
 }
 
 .exercise-card__icon-runner {

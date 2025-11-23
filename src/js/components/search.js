@@ -81,7 +81,7 @@ function updateClearBtnState() {
 // ==================== ЗАГРУЗКА БЕЗ KEYWORD ====================
 
 // грузим все упражнения по текущей подкатегории (без keyword)
-async function loadExercisesForCurrentCategory() {
+async function loadExercisesForCurrentCategory(page = 1) {
   const subcategory = selectedSubcategoryEl.textContent.trim().toLowerCase();
   if (!subcategory) {
     // подкатегория не выбрана — просто ничего не делаем
@@ -95,7 +95,7 @@ async function loadExercisesForCurrentCategory() {
 
   try {
     const payload = {
-      page: 1,
+      page,
       limit: 12,
     };
     payload[filterKey] = subcategory;
@@ -103,17 +103,31 @@ async function loadExercisesForCurrentCategory() {
     const data = await api.getExercisesByFilters(payload);
     const items = Array.isArray(data.results) ? data.results : [];
 
-    if (!items.length) {
-      renderExercises(items);
+    renderExercises(items);
+
+    // pagination start
+    if (paginationContainer) {
+      const total = typeof data.total === 'number' ? data.total : items.length;
+      const currentPage = data.page ?? page;
+      const limit = data.limit ?? payload.limit ?? 12;
+      const totalPages =
+        typeof data.totalPages === 'number'
+          ? data.totalPages
+          : total
+          ? Math.ceil(total / limit)
+          : 0;
+
       renderPagination({
         container: paginationContainer,
-        currentPage: 1,
-        totalPages: 0,
-        onPageChange: () => {}
-      })
+        currentPage,
+        totalPages,
+        onPageChange: newPage => {
+          loadExercisesForCurrentCategory(newPage);
+        },
+      });
     }
-
-    renderExercises(items);
+    // pagination end
+						   
   } catch (error) {
     console.error(error);
     filtersGrid.innerHTML = '<p>Failed to load exercises</p>';
@@ -127,7 +141,7 @@ async function loadExercisesForCurrentCategory() {
 
 // ==================== ПОИСК ПО API С KEYWORD ====================
 
-async function runApiSearch() {
+async function runApiSearch(page = 1) {
   const keyword = searchInput.value.trim();
   const subcategory = selectedSubcategoryEl.textContent.trim().toLowerCase();
   const filterName = getCurrentFilter();
@@ -146,7 +160,7 @@ async function runApiSearch() {
 
   // Пустая строка → просто показываем все упражнения категории
   if (!keyword) {
-    await loadExercisesForCurrentCategory();
+    await loadExercisesForCurrentCategory(1);
     return;
   }
 
@@ -154,7 +168,7 @@ async function runApiSearch() {
 
   try {
     const payload = {
-      page: 1,
+      page,
       limit: 12,
       keyword,
     };
@@ -166,16 +180,44 @@ async function runApiSearch() {
     if (!items.length) {
       filtersGrid.innerHTML = '<p>There are no results for your query</p>';
 
-      renderPagination({
-        container: paginationContainer,
-        currentPage: 1,
-        totalPages: 0,
-        onPageChange: () => {},
-      });
+      // pagination start
+      if (paginationContainer) {
+        renderPagination({
+          container: paginationContainer,
+          currentPage: 1,
+          totalPages: 0,
+          onPageChange: () => {},
+        });
+      }
+      // pagination end
+
       return;
     }
 
     renderExercises(items);
+
+    // pagination start
+    if (paginationContainer) {
+      const total = typeof data.total === 'number' ? data.total : items.length;
+      const currentPage = data.page ?? page;
+      const limit = data.limit ?? payload.limit ?? 12;
+      const totalPages =
+        typeof data.totalPages === 'number'
+          ? data.totalPages
+          : total
+          ? Math.ceil(total / limit)
+          : 1;
+
+      renderPagination({
+        container: paginationContainer,
+        currentPage,
+        totalPages,
+        onPageChange: newPage => {
+          runApiSearch(newPage);
+        },
+      });
+    }
+    // pagination end
   } catch (error) {
     console.error(error);
     iziToast.error({
@@ -198,7 +240,7 @@ if (searchInput) {
 
       // если строка стала пустой → сразу показываем все упражнения
       if (!searchInput.value.trim()) {
-        await loadExercisesForCurrentCategory();
+        await loadExercisesForCurrentCategory(1);
       }
     },
     true
@@ -211,7 +253,7 @@ if (searchInput) {
       if (e.key === 'Enter') {
         e.preventDefault();
         e.stopImmediatePropagation();
-        runApiSearch();
+        runApiSearch(1);
       }
     },
     true
@@ -225,7 +267,7 @@ if (searchBtn) {
     e => {
       e.preventDefault();
       e.stopImmediatePropagation();
-      runApiSearch();
+      runApiSearch(1);
     },
     true
   );
@@ -240,7 +282,7 @@ if (clearSearchBtn && searchInput) {
       e.stopImmediatePropagation();
       searchInput.value = '';
       updateClearBtnState();
-      await loadExercisesForCurrentCategory();
+      await loadExercisesForCurrentCategory(1);
       searchInput.focus();
     },
     true

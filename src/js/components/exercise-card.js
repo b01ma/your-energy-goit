@@ -1,14 +1,8 @@
+import iconSprite from '/img/icons.svg';
+
 export function renderExerciseCard(payload) {
-  const {
-    id,
-    isHomePage,
-    rating,
-    name,
-    burnedCalories,
-    time,
-    bodyPart,
-    target,
-  } = payload;
+  const { id, isHomePage = true, rating, name, burnedCalories, time, bodyPart, target } =
+    payload;
   return `
   <li class="exercise-card" data-id="${id}">
     <div class="exercise-card__header">
@@ -21,18 +15,18 @@ export function renderExerciseCard(payload) {
       <button class="exercise-card__start">
         <span class="exercise-card__start__text">Start</span>
         <svg class="exercise-card__start__icon" width="16" height="16">
-          <use href="/img/icons.svg#icon-arrow-black"></use>
+          <use href="${iconSprite}#icon-arrow-black"></use>
         </svg>
       </button>
     </div>
     <div class="exercise-card__body">
       <div class="exercise-card__icon-runner__container">
         <svg class="exercise-card__icon-runner" width="16" height="16">
-          <use href="/img/icons.svg#icon-runner"></use>
+          <use href="${iconSprite}#icon-runner"></use>
         </svg>
       </div>
       <p class="exercise-card__title">
-        ${name}
+        ${capitalizeFirstLetter(name)}
       </p>
     </div>
     <ul class="exercise-card__footer__list">
@@ -73,10 +67,15 @@ function getRatingOrTrashIcon(isHomePage, rating) {
     ? `<div class="exercise-card__rating">
           <span class="exercise-card__rating__number">${rating}</span>
           <svg width="13" height="13">
-            <use fill="#EEA10C" href="/img/icons.svg#icon-star"></use>
+            <use fill="#EEA10C" href="${iconSprite}#icon-star"></use>
           </svg>
         </div>`
     : `<svg class="exercise-card__trash-icon" width="16" height="16">
-          <use href="/img/icons.svg#icon-trash"></use>
+          <use href="${iconSprite}#icon-trash"></use>
         </svg>`;
+}
+
+function capitalizeFirstLetter(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
