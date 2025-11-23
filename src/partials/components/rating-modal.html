@@ -1,0 +1,50 @@
+<div class="modal micromodal-slide" id="ratingModal" aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__container rating-modal__container" role="dialog" aria-modal="true" aria-labelledby="ratingModal-title">
+      <button class="modal__close" aria-label="Close modal" data-micromodal-close>
+        <svg width="18" height="18">
+          <use href="/img/icons.svg#icon-cross"></use>
+        </svg>
+      </button>
+      
+      <div class="rating-modal__content">
+        <h2 class="rating-modal__title" id="ratingModal-title">Rating</h2>
+        
+        <div class="rating-modal__current-rating">
+          <span class="rating-modal__rating-value" id="ratingModalCurrentValue">0.0</span>
+          <div class="rating-modal__stars" id="ratingModalCurrentStars">
+            <!-- Stars will be generated dynamically -->
+          </div>
+        </div>
+
+        <form class="rating-modal__form" id="ratingForm">
+          <div class="rating-modal__form-group">
+            <input 
+              type="email" 
+              class="rating-modal__input" 
+              id="ratingEmail" 
+              name="email"
+              placeholder="Email"
+              required
+            />
+          </div>
+
+          <div class="rating-modal__form-group">
+            <textarea 
+              class="rating-modal__textarea" 
+              id="ratingComment" 
+              name="comment"
+              placeholder="Your comment"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="rating-modal__submit-btn">
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
