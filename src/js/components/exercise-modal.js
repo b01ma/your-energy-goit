@@ -1,5 +1,12 @@
 import MicroModal from 'micromodal';
+import iziToast from 'izitoast';
 import { api } from '../api/api.js';
+import iconSprite from '/img/icons.svg';
+
+const favoritesBtnText = {
+  add: 'Add to favorites',
+  remove: 'Remove from favorites',
+};
 
 export function initExerciseModal() {
   // Initialize MicroModal with config
@@ -68,6 +75,85 @@ export function initExerciseModal() {
       MicroModal.show('ratingModal');
     }, 300);
   });
+
+  // Set up event handler for "Add to favorites" button
+  document.addEventListener('click', event => {
+    const addToFavoritesBtn = event.target.closest('#exerciseModalFavoriteBtn');
+
+    if (!addToFavoritesBtn) {
+      return;
+    }
+
+    const addToFavoritesBtnText = addToFavoritesBtn.querySelector(
+      '.exerciseModalFavoriteBtn__text'
+    );
+
+    const heartIcon = addToFavoritesBtn.querySelector(
+      '.exercise-modal__btn__heart-icon'
+    );
+    const trashIcon = addToFavoritesBtn.querySelector(
+      '.exercise-card__btn__trash-icon'
+    );
+
+    const modal = document.getElementById('exerciseModal');
+    const exerciseId = modal?.dataset.exerciseId;
+
+    if (!exerciseId) {
+      console.error('Exercise ID not found');
+      return;
+    }
+
+    // Get the current array from localStorage or create a new one
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Check if the exercise is already in favorites by _id
+    const existingIndex = favorites.findIndex(item => item._id === exerciseId);
+
+    const rating =
+      parseFloat(document.getElementById('exerciseModalRating')?.textContent) ||
+      0;
+    const name =
+      document.getElementById('exerciseModal-title')?.textContent || '';
+    const burnedCalories =
+      document
+        .getElementById('exerciseModalCalories')
+        ?.textContent?.split('/')[0] || '';
+    const time =
+      document
+        .getElementById('exerciseModalCalories')
+        ?.textContent?.split('/')[1] || '';
+    const bodyPart =
+      document.getElementById('exerciseModalBodyPart')?.textContent || '';
+    const target =
+      document.getElementById('exerciseModalTarget')?.textContent || '';
+
+    if (existingIndex === -1) {
+      // If not in favorites, add the full object
+      const exerciseObj = {
+        _id: exerciseId,
+        rating,
+        name,
+        burnedCalories,
+        target,
+        bodyPart,
+        time,
+      };
+
+      favorites.push(exerciseObj);
+      addToFavoritesBtnText.textContent = favoritesBtnText.remove;
+      heartIcon.style.display = 'none';
+      trashIcon.style.display = 'block';
+    } else {
+      // If already in favorites, remove it
+      favorites.splice(existingIndex, 1);
+      addToFavoritesBtnText.textContent = favoritesBtnText.add;
+      heartIcon.style.display = 'block';
+      trashIcon.style.display = 'none';
+    }
+
+    // Save back to localStorage
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  });
 }
 
 // Helper function to initialize rating modal with empty interactive stars
@@ -104,7 +190,7 @@ function initRatingModalStars(currentRating) {
     use.setAttributeNS(
       'http://www.w3.org/1999/xlink',
       'xlink:href',
-      '/img/icons.svg#icon-star'
+      `${iconSprite}#icon-star`
     );
     star.appendChild(use);
     starButton.appendChild(star);
@@ -150,6 +236,12 @@ function initRatingModalStars(currentRating) {
 // Function to update modal content dynamically
 export function updateModalContent(data) {
   if (!data) return;
+
+  // Saving exercise ID in modal
+  const modal = document.getElementById('exerciseModal');
+  if (modal && data._id) {
+    modal.dataset.exerciseId = data._id;
+  }
 
   // Update image (GIF)
   const image = document.getElementById('exerciseModalImage');
@@ -204,6 +296,27 @@ export function updateModalContent(data) {
   if (description && data.description) {
     description.textContent = data.description;
   }
+
+  const addToFavoritesBtnText = document.querySelector(
+    '.exerciseModalFavoriteBtn__text'
+  );
+  const heartIcon = document.querySelector('.exercise-modal__btn__heart-icon');
+  const trashIcon = document.querySelector('.exercise-card__btn__trash-icon');
+
+  if (addToFavoritesBtnText && heartIcon && trashIcon) {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const existingIndex = favorites.findIndex(item => item._id === data._id);
+
+    if (existingIndex === -1) {
+      addToFavoritesBtnText.textContent = favoritesBtnText.add;
+      heartIcon.style.display = 'block';
+      trashIcon.style.display = 'none';
+    } else {
+      addToFavoritesBtnText.textContent = favoritesBtnText.remove;
+      heartIcon.style.display = 'none';
+      trashIcon.style.display = 'block';
+    }
+  }
 }
 
 // Helper function to capitalize text
@@ -241,7 +354,7 @@ function updateStars(rating) {
     bgUse.setAttributeNS(
       'http://www.w3.org/1999/xlink',
       'xlink:href',
-      '/img/icons.svg#icon-star'
+      `${iconSprite}#icon-star`
     );
     bgStar.appendChild(bgUse);
 
@@ -274,7 +387,7 @@ function updateStars(rating) {
       fgUse.setAttributeNS(
         'http://www.w3.org/1999/xlink',
         'xlink:href',
-        '/img/icons.svg#icon-star'
+        `${iconSprite}#icon-star`
       );
       fgStar.appendChild(fgUse);
 
@@ -283,4 +396,51 @@ function updateStars(rating) {
 
     starsContainer.appendChild(starWrapper);
   }
+}
+
+const ratingForm = document.getElementById('ratingForm');
+
+if (ratingForm) {
+  ratingForm.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    const email = document.getElementById('ratingEmail')?.value.trim();
+    const review = document.getElementById('ratingComment')?.value.trim();
+    const starsContainer = document.getElementById('ratingModalCurrentStars');
+    const rate = parseFloat(starsContainer?.dataset.selectedRating || '0');
+
+    if (!email || !rate) {
+      console.error('Please fill all fields and select a rating');
+      return;
+    }
+
+    const modal = document.getElementById('exerciseModal');
+    const exerciseId = modal?.dataset.exerciseId;
+
+    if (!exerciseId) {
+      return;
+    }
+
+    const payload = {
+      email,
+      review,
+      rate,
+    };
+
+    try {
+      await api.addRating(exerciseId, payload);
+      MicroModal.close('ratingModal');
+      iziToast.info({
+        title: 'Success',
+        message: 'Rating sent successfully',
+        position: 'topRight',
+      });
+    } catch (error) {
+      iziToast.error({
+        title: 'Error',
+        message: error.message,
+        position: 'topRight',
+      });
+    }
+  });
 }
