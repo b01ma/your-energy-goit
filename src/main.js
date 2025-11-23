@@ -6,7 +6,8 @@ import subscribe from './js/components/subscribe';
 import toTopBtn from './js/utilities/to-top-btn.js';
 import favorites from './js/components/favorites.js';
 import { initPageLoader } from './js/utilities/page-loader.js';
-import './js/components/search.js'
+import { initExerciseModal } from './js/components/exercise-modal.js';
+import './js/components/search.js';
 
 // make a switch for the pages: home and favorties
 
@@ -28,6 +29,7 @@ const init = () => {
   toTopBtn();
   subscribe();
   favorites();
+  initExerciseModal();
 };
 
 init();

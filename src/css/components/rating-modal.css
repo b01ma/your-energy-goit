@@ -1,0 +1,179 @@
+/* Rating Modal - Inherits from exercise modal base styles */
+
+.rating-modal__container {
+  max-width: 500px;
+  min-width: 430px;
+  background-color: var(--color-primary, #242424);
+  padding: 40px;
+}
+
+.rating-modal__content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: var(--color-light, #F4F4F4);
+}
+
+.rating-modal__title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.3;
+  color: var(--color-light, #F4F4F4);
+  margin: 0;
+}
+
+/* Current Rating Display */
+.rating-modal__current-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(244, 244, 244, 0.2);
+}
+
+.rating-modal__rating-value {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--color-light, #F4F4F4);
+}
+
+.rating-modal__stars {
+  display: flex;
+  gap: 2px;
+}
+
+/* Interactive Rating Star Buttons */
+.rating-modal__star-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating-modal__star-btn:hover {
+  transform: scale(1.1);
+}
+
+.rating-modal__star-btn:focus {
+  outline: none;
+}
+
+/* Legacy class support */
+.rating-modal__star-interactive {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.rating-modal__star-interactive:hover {
+  transform: scale(1.1);
+}
+
+/* Form Styles */
+.rating-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rating-modal__form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-modal__input,
+.rating-modal__textarea {
+  width: 100%;
+  padding: 14px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.3;
+  color: var(--color-light, #F4F4F4);
+  background: transparent;
+  border: 1px solid rgba(244, 244, 244, 0.2);
+  border-radius: 30px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.rating-modal__textarea {
+  border-radius: 15px;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.rating-modal__input::placeholder,
+.rating-modal__textarea::placeholder {
+  color: rgba(244, 244, 244, 0.4);
+}
+
+.rating-modal__input:focus,
+.rating-modal__textarea:focus {
+  border-color: rgba(244, 244, 244, 0.5);
+}
+
+.rating-modal__input:hover,
+.rating-modal__textarea:hover {
+  border-color: rgba(244, 244, 244, 0.4);
+}
+
+/* Submit Button */
+.rating-modal__submit-btn {
+  width: 100%;
+  height: 42px;
+  padding: 12px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.3;
+  background-color: var(--color-bg, #F4F4F4);
+  color: var(--color-primary, #242424);
+  border: 1px solid var(--color-bg, #F4F4F4);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.rating-modal__submit-btn:hover,
+.rating-modal__submit-btn:active {
+  color: var(--color-bg, #F4F4F4);
+  background-color: transparent;
+  border-color: var(--color-bg, #F4F4F4);
+}
+
+/* Responsive styles */
+
+/* Tablet: 768px to 1024px */
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+  .rating-modal__container {
+    padding: 20px;
+    min-width: 430px;
+  }
+}
+
+/* Mobile: below 768px (less than 500px width) */
+@media screen and (max-width: 767px) {
+  .rating-modal__container {
+    max-width: 95%;
+    min-width: auto;
+    width: 100%;
+    margin: 20px;
+    padding: 20px;
+    padding-top: 70px;
+  }
+
+  .rating-modal__title {
+    font-size: 20px;
+  }
+
+  .rating-modal__submit-btn {
+    height: 42px;
+    font-size: 14px;
+  }
+}

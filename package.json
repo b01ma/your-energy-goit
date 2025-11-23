@@ -21,6 +21,7 @@
     "axios": "^1.13.2",
     "izimodal": "^1.6.1",
     "izitoast": "^1.4.0",
+    "micromodal": "^0.6.1",
     "vite-plugin-full-reload": "^1.2.0",
     "vite-plugin-html-inject": "^1.1.2"
   }
