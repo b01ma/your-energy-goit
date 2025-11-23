@@ -2,6 +2,7 @@ import { api } from '../api/api.js';
 import { createCategoryCardMarkup } from './category-template.js';
 import { renderExerciseCard } from './exercise-card.js';
 import { renderPagination } from './pagination';
+import { showLoader, hideLoader } from '../utilities/loader-cards.js';
 
 function capitalize(str) {
   if (!str) return '';
@@ -56,6 +57,7 @@ const filterPanel = () => {
   }
 
   async function loadFilterCards(filterName, page = 1) {
+    showLoader();
     try {
       const data = await api.getFiltersOfExercises({
         filter: filterName,
@@ -66,14 +68,15 @@ const filterPanel = () => {
       const rawItems = data.results || [];
       const pageSize = getCategoryPageSize();
       const items =
-        pageSize < CATEGORY_LIMIT_BACKEND ? rawItems.slice(0, pageSize) : rawItems;
+        pageSize < CATEGORY_LIMIT_BACKEND
+          ? rawItems.slice(0, pageSize)
+          : rawItems;
 
       renderFilterCards(items, filterName);
 
       const total = data.total ?? rawItems.length;
       currentPage = data.page ?? page;
-      totalPages =
-        data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
+      totalPages = data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
 
       if (paginationContainer && totalPages > 1) {
         renderPagination({
@@ -100,6 +103,8 @@ const filterPanel = () => {
         paginationContainer.innerHTML = '';
         paginationContainer.hidden = true;
       }
+    } finally {
+      hideLoader();
     }
   }
 
@@ -125,6 +130,7 @@ const filterPanel = () => {
     subcategoryName,
     page = 1
   ) {
+    showLoader();
     const payload = {
       page,
       limit: EXERCISE_LIMIT_BACKEND,
@@ -151,8 +157,7 @@ const filterPanel = () => {
 
       currentExercises = items;
       currentPage = data.page ?? page;
-      totalPages =
-        data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
+      totalPages = data.totalPages ?? (total ? Math.ceil(total / pageSize) : 1);
 
       renderExercises(currentExercises);
 
@@ -184,6 +189,8 @@ const filterPanel = () => {
         paginationContainer.innerHTML = '';
         paginationContainer.hidden = true;
       }
+    } finally {
+      hideLoader();
     }
   }
 

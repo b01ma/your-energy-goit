@@ -1,0 +1,44 @@
+.exercises-list-wrapper {
+  position: relative; /* важливо для абсолютного позиціонування лоадера */
+  min-height: 200px;  /* щоб лоадер був видно навіть на порожньому контейнері */
+}
+
+/* Лоадер */
+.loader-cards {
+  position: absolute; /* відносно .exercises-list-wrapper */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  line-height: 1.5;
+  font-family: system-ui, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 1px var(--color-primary);
+  background:
+    radial-gradient(1.13em at 50% 1.6em, var(--color-primary) 99%, var(--color-bg) 101%) calc(50% - 1.6em) 0/3.2em 100% text,
+    radial-gradient(1.13em at 50% -0.8em, var(--color-bg) 99%, var(--color-primary) 101%) 50% .8em/3.2em 100% repeat-x text;
+  animation: l9 2s linear infinite;
+}
+
+.loader-cards:before {
+  content: "YOUR ENERGY";
+  white-space: nowrap;
+}
+
+
+@keyframes l9 {
+  to {
+    background-position: calc(50% + 1.6em) 0, calc(50% + 3.2em) .8em;
+  }
+}
+
+
+@media only screen and (min-width: 1440px) {
+  .loader-cards {
+    left: calc(50% - 370px); /* тут підбираєш відступ відповідно до ширини .home-quote */
+  }
+}
