@@ -1,4 +1,5 @@
 import MicroModal from 'micromodal';
+import iziToast from 'izitoast';
 import { api } from '../api/api.js';
 
 const favoritesBtnText = {
@@ -394,4 +395,51 @@ function updateStars(rating) {
 
     starsContainer.appendChild(starWrapper);
   }
+}
+
+const ratingForm = document.getElementById('ratingForm');
+
+if (ratingForm) {
+  ratingForm.addEventListener('submit', async event => {
+    event.preventDefault();
+
+    const email = document.getElementById('ratingEmail')?.value.trim();
+    const review = document.getElementById('ratingComment')?.value.trim();
+    const starsContainer = document.getElementById('ratingModalCurrentStars');
+    const rate = parseFloat(starsContainer?.dataset.selectedRating || '0');
+
+    if (!email || !rate) {
+      console.error('Please fill all fields and select a rating');
+      return;
+    }
+
+    const modal = document.getElementById('exerciseModal');
+    const exerciseId = modal?.dataset.exerciseId;
+
+    if (!exerciseId) {
+      return;
+    }
+
+    const payload = {
+      email,
+      review,
+      rate,
+    };
+
+    try {
+      await api.addRating(exerciseId, payload);
+      MicroModal.close('ratingModal');
+      iziToast.info({
+        title: 'Success',
+        message: 'Rating sent successfully',
+        position: 'topRight',
+      });
+    } catch (error) {
+      iziToast.error({
+        title: 'Error',
+        message: error.message,
+        position: 'topRight',
+      });
+    }
+  });
 }
