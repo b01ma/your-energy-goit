@@ -22,15 +22,22 @@
   font-size: 24px;
   line-height: 1.33;
   color: rgba(36, 36, 36, 0.5);
-  margin-left: 8px;
+  margin-left: 16px;
   position: relative;
+  cursor: pointer;
 }
 
 #selectedSubcategory:not(:empty)::before {
   content: '/';
   font-size: 44px;
+  line-height: 1.1;
   margin-right: 8px;
   color: #242424;
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .exercises-controls {
@@ -43,6 +50,8 @@
 .filters {
   display: flex;
   gap: 20px;
+  height: 48px;
+  align-items: center;
 }
 
 .filter-btn {
@@ -239,11 +248,12 @@
     font-size: 28px;
     margin-right: 8px;
     color: #242424;
+    left: -16px;
   }
 
   #selectedSubcategory {
     font-size: 20px;
-    margin-left: 0;
+    /* margin-left: 0; */
   }
 
   .exercises-controls {
