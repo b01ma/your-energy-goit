@@ -5,13 +5,6 @@
   margin-bottom: 32px;
 }
 
-.favorites-container,
-.home-quote-container {
-  display: flex;
-  width: 100%;
-  gap: 32px;
-}
-
 .left-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -164,15 +157,6 @@
   max-width: 554px;
 }
 
-.home-quote .left-wrapper {
-  gap: 32px;
-  max-width: 444px;
-}
-.home-quote .left-img {
-  width: 100%;
-  min-height: 249px;
-}
-
 .left-recommendation {
   display: flex;
   padding: 40px;
@@ -315,30 +299,6 @@
     padding-bottom: 132px;
   }
 
-  .home-quote-container {
-    flex-wrap: wrap;
-  }
-
-  .home-quote .left-wrapper {
-    column-gap: 16px;
-    row-gap: 32px;
-    max-width: unset;
-  }
-
-  .home-quote .left-quote-block,
-  .home-quote .left-recommendation {
-    width: calc(60% - 8px);
-  }
-
-  .home-quote .left-quote-block {
-    min-height: 249px;
-  }
-
-  .home-quote .left-img {
-    width: calc(40% - 8px);
-    min-height: 249px;
-  }
-
   .left-recommendation-description p {
     display: -webkit-box;
     -webkit-line-clamp: 5;
@@ -390,21 +350,5 @@
   .left-recommendation-text p:first-child {
     margin-bottom: 0;
     margin-top: -5px;
-  }
-
-  .home-quote .left-wrapper {
-    gap: 16px;
-  }
-
-  .home-quote .left-quote-block,
-  .home-quote .left-img,
-  .home-quote .left-recommendation {
-    width: 100%;
-  }
-  .home-quote .left-quote-block {
-    min-height: auto;
-  }
-  .home-quote .left-img {
-    min-height: 242px;
   }
 }

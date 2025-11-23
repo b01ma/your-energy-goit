@@ -1,0 +1,67 @@
+.home-quote-container {
+  display: flex;
+  width: 335px;
+  gap: 32px;
+}
+
+.home-left-wrapper {
+  gap: 32px;
+  max-width: 444px;
+  display: flex;
+  flex-wrap: wrap;
+  height: max-content;
+}
+
+.home-quote .left-img {
+  width: 100%;
+  min-height: 249px;
+}
+
+@media screen and (min-width: 768px) {
+  .home-quote-container {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .home-left-wrapper {
+    column-gap: 16px;
+    row-gap: 32px;
+    max-width: unset;
+  }
+
+  .home-quote .left-quote-block,
+  .home-quote .left-recommendation {
+    width: calc(60% - 8px);
+  }
+
+  .home-quote .left-quote-block {
+    min-height: 249px;
+  }
+
+  .home-quote .left-img {
+    width: calc(40% - 8px);
+    min-height: 249px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .home-quote-container {
+    width: 444px;
+  }
+
+  .home-left-wrapper {
+    gap: 16px;
+  }
+
+  .home-quote .left-quote-block,
+  .home-quote .left-img,
+  .home-quote .left-recommendation {
+    width: 100%;
+  }
+  .home-quote .left-quote-block {
+    min-height: auto;
+  }
+  .home-quote .left-img {
+    min-height: 242px;
+  }
+}

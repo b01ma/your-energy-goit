@@ -1,13 +1,20 @@
 .exercise-card {
   display: flex;
   flex-direction: column;
-  min-width: 300px;
-  width: 100%;
+  width: 335px;
   padding: 16px;
   height: fit-content;
 
   border-radius: 15px;
   background: var(--color-white);
+
+  @media screen and (min-width: 768px) {
+    width: 344px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 442px;
+  }
 }
 
 .exercise-card__header,

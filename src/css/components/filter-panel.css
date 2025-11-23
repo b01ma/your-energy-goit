@@ -163,8 +163,23 @@
   opacity: 0.7;
 }
 
-/* ========= TABLET (768px–1024px) ========= */
-@media (max-width: 1024px) and (min-width: 768px) {
+/* ========= Desktop (від 1440px) ========= */
+@media screen and (min-width: 1440px) {
+  .exercises-header {
+    flex-direction: row;
+  }
+
+  .exercises-controls {
+    justify-content: end;;
+  }
+
+  .exercises-title {
+    width: 100%;
+  }
+}
+
+/* ========= TABLET (768px) ========= */
+@media screen and (min-width: 768px) {
   .exercises-section {
     padding-top: 64px;
   }
@@ -202,7 +217,7 @@
 }
 
 /* ========= MOBILE (до 768px) ========= */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .exercises-section {
     padding-top: 64px;
   }
@@ -275,7 +290,7 @@
   margin-bottom: 132px;
 }
 
-@media screen and (max-width: 1440px) {
+@media screen and (max-width: 1439px) {
   .filters-wrap {
     flex-direction: column-reverse;
   }
