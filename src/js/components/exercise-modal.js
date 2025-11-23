@@ -153,6 +153,8 @@ export function initExerciseModal() {
 
     // Save back to localStorage
     localStorage.setItem('favorites', JSON.stringify(favorites));
+    // Dispatching event for tracking changes in localStorage to rerender favorites on delete
+    window.dispatchEvent(new Event('favorites-updated'));
   });
 }
 

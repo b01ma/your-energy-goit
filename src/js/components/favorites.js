@@ -1,23 +1,22 @@
 import { renderExerciseCard } from './exercise-card.js';
 
 function favorites() {
-  const favorites = localStorage.getItem('favorites');
-
-  if (!favorites) {
-    return;
-  }
-
-  let parsedFavorites = JSON.parse(favorites);
+  let favorites = localStorage.getItem('favorites');
+  let parsedFavorites = favorites ? JSON.parse(favorites) : [];
 
   const favoritesClearMessage = document.querySelector('.favorites-list-clear');
   const favoritesList = document.querySelector('.favorites-list');
   const favoritesPaginationContainer = document.querySelector('.favorites-pagination-block');
 
+  if (!favoritesList || !favoritesPaginationContainer) {
+    return;
+  }
+
   let currentPage = 1;
   const itemsPerPage = 10;
 
   const renderList = () => {
-    if (parsedFavorites.length === 0) {
+    if (!parsedFavorites || parsedFavorites.length === 0) {
       favoritesList.innerHTML = '';
       favoritesPaginationContainer.innerHTML = '';
       if (favoritesClearMessage) favoritesClearMessage.style.display = 'block';
@@ -66,9 +65,11 @@ function favorites() {
     favoritesPaginationContainer.innerHTML = paginationHTML;
   };
 
-  if (!favoritesPaginationContainer) {
-    return;
-  }
+  const handleStorageUpdate = () => {
+    const updatedFavorites = localStorage.getItem('favorites');
+    parsedFavorites = updatedFavorites ? JSON.parse(updatedFavorites) : [];
+    renderList();
+  };
 
   favoritesPaginationContainer.addEventListener('click', (event) => {
     if (event.target.classList.contains('favorites-pagination-btn')) {
@@ -96,6 +97,12 @@ function favorites() {
   });
 
   window.addEventListener('resize', renderList);
+  window.addEventListener('favorites-updated', handleStorageUpdate);
+  window.addEventListener('storage', (event) => {
+    if (event.key === 'favorites') {
+      handleStorageUpdate();
+    }
+  });
 
   renderList();
 }

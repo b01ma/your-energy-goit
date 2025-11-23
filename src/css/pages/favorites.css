@@ -5,6 +5,12 @@
   margin-bottom: 32px;
 }
 
+.favorites-container {
+  display: flex;
+  width: 100%;
+  gap: 32px;
+}
+
 .left-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -142,7 +148,7 @@
 .favorites-list-wrapper {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
   width: 100%;
 }
@@ -155,6 +161,7 @@
   font-weight: 400;
   text-align: center;
   max-width: 554px;
+  padding-top: 144px;
 }
 
 .left-recommendation {
@@ -350,5 +357,8 @@
   .left-recommendation-text p:first-child {
     margin-bottom: 0;
     margin-top: -5px;
+  }
+  .favorites-container {
+    gap: 20px;
   }
 }
