@@ -22,6 +22,17 @@
   padding: 20px;
 }
 
+/* When rating modal is open with exercise modal in background, use exercise modal's backdrop */
+#ratingModal.is-open .modal__overlay {
+  background: transparent;
+  pointer-events: none;
+}
+
+/* Make rating modal container receive pointer events */
+#ratingModal.is-open .modal__container {
+  pointer-events: auto;
+}
+
 .modal__container {
   background-color: var(--color-primary);
   color: var(--color-light);

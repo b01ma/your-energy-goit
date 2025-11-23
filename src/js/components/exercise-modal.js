@@ -79,15 +79,49 @@ export function initExerciseModal() {
     const ratingValue =
       document.getElementById('exerciseModalRating')?.textContent || '0.0';
 
-    // Close exercise modal and open rating modal
-    MicroModal.close('exerciseModal');
+    // Hide exercise modal container and show rating modal container
+    // This keeps the backdrop visible for smooth transition
+    const exerciseModalContainer = document.querySelector(
+      '#exerciseModal .modal__container'
+    );
+    const ratingModalContainer = document.querySelector(
+      '#ratingModal .modal__container'
+    );
 
-    // Small delay to ensure smooth transition
-    setTimeout(() => {
-      // Initialize rating modal with empty stars
-      initRatingModalStars(parseFloat(ratingValue));
-      MicroModal.show('ratingModal');
-    }, 300);
+    if (exerciseModalContainer && ratingModalContainer) {
+      // Ensure rating modal container starts hidden (fixes first-open flicker)
+      if (!ratingModalContainer.style.display) {
+        ratingModalContainer.style.display = 'none';
+      }
+
+      // Hide exercise modal content with fade out
+      exerciseModalContainer.style.animation =
+        'mmfadeOut 0.2s cubic-bezier(0.0, 0.0, 0.2, 1)';
+
+      setTimeout(() => {
+        exerciseModalContainer.style.display = 'none';
+
+        // Initialize rating modal with empty stars
+        initRatingModalStars(parseFloat(ratingValue));
+
+        // Show rating modal (programmatically without closing exercise modal backdrop)
+        const ratingModal = document.getElementById('ratingModal');
+        const exerciseModal = document.getElementById('exerciseModal');
+
+        // Keep exercise modal open in background (for smooth transition back)
+        if (!exerciseModal.classList.contains('is-open')) {
+          exerciseModal.classList.add('is-open');
+        }
+
+        ratingModal.classList.add('is-open');
+        ratingModal.setAttribute('aria-hidden', 'false');
+
+        // Show rating modal content with fade in
+        ratingModalContainer.style.display = 'block';
+        ratingModalContainer.style.animation =
+          'mmfadeIn 0.2s cubic-bezier(0.0, 0.0, 0.2, 1)';
+      }, 200);
+    }
   });
 
   // Set up event handler for "Add to favorites" button
@@ -481,6 +515,9 @@ if (ratingForm) {
         message: 'Rating sent successfully',
         position: 'topRight',
       });
+
+      // After successful rating submission, close rating modal and return to exercise modal
+      closeRatingModalAndRestoreExercise();
     } catch (error) {
       iziToast.error({
         title: 'Error',
@@ -489,6 +526,73 @@ if (ratingForm) {
       });
     }
   });
+
+  // Add custom close handler for rating modal X button
+  const ratingModalCloseBtn = document.querySelector(
+    '#ratingModal .modal__close'
+  );
+  if (ratingModalCloseBtn) {
+    ratingModalCloseBtn.addEventListener('click', e => {
+      e.preventDefault();
+      closeRatingModalAndRestoreExercise();
+    });
+  }
+
+  // Add backdrop click handler - check both modal overlays
+  const exerciseModalOverlay = document.querySelector(
+    '#exerciseModal .modal__overlay'
+  );
+  if (exerciseModalOverlay) {
+    exerciseModalOverlay.addEventListener('click', e => {
+      if (e.target === exerciseModalOverlay) {
+        const ratingModal = document.getElementById('ratingModal');
+        // If rating modal is open, close it first
+        if (ratingModal && ratingModal.classList.contains('is-open')) {
+          closeRatingModalAndRestoreExercise();
+        } else {
+          // Otherwise close exercise modal normally
+          MicroModal.close('exerciseModal');
+        }
+      }
+    });
+  }
+}
+
+// Helper function to close rating modal and restore exercise modal smoothly
+function closeRatingModalAndRestoreExercise() {
+  const exerciseModal = document.getElementById('exerciseModal');
+  const ratingModal = document.getElementById('ratingModal');
+  const exerciseModalContainer = document.querySelector(
+    '#exerciseModal .modal__container'
+  );
+  const ratingModalContainer = document.querySelector(
+    '#ratingModal .modal__container'
+  );
+
+  // Check if we came from exercise modal (exercise modal is open in background)
+  const cameFromExerciseModal =
+    exerciseModal && exerciseModal.classList.contains('is-open');
+
+  if (cameFromExerciseModal && exerciseModalContainer && ratingModalContainer) {
+    // Transition back to exercise modal
+    ratingModalContainer.style.animation =
+      'mmfadeOut 0.2s cubic-bezier(0.0, 0.0, 0.2, 1)';
+
+    setTimeout(() => {
+      // Hide rating modal
+      ratingModal.classList.remove('is-open');
+      ratingModal.setAttribute('aria-hidden', 'true');
+      ratingModalContainer.style.display = 'none';
+
+      // Show exercise modal container again
+      exerciseModalContainer.style.display = 'block';
+      exerciseModalContainer.style.animation =
+        'mmfadeIn 0.2s cubic-bezier(0.0, 0.0, 0.2, 1)';
+    }, 200);
+  } else {
+    // If rating modal was opened directly (not from exercise modal), close normally
+    MicroModal.close('ratingModal');
+  }
 }
 
 // Update static icon paths in HTML to work with Vite build
