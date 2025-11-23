@@ -1,5 +1,5 @@
 export function renderExerciseCard(payload) {
-  const { id, isHomePage, rating, name, burnedCalories, time, bodyPart, target } =
+  const { id, isHomePage = true, rating, name, burnedCalories, time, bodyPart, target } =
     payload;
   return `
   <li class="exercise-card" data-id="${id}">

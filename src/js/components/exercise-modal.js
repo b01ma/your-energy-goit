@@ -1,6 +1,11 @@
 import MicroModal from 'micromodal';
 import { api } from '../api/api.js';
 
+const favoritesBtnText = {
+  add: 'Add to favorites',
+  remove: 'Remove from favorites',
+};
+
 export function initExerciseModal() {
   // Initialize MicroModal with config
   MicroModal.init({
@@ -67,6 +72,85 @@ export function initExerciseModal() {
       initRatingModalStars(parseFloat(ratingValue));
       MicroModal.show('ratingModal');
     }, 300);
+  });
+
+  // Set up event handler for "Add to favorites" button
+  document.addEventListener('click', event => {
+    const addToFavoritesBtn = event.target.closest('#exerciseModalFavoriteBtn');
+
+    if (!addToFavoritesBtn) {
+      return;
+    }
+
+    const addToFavoritesBtnText = addToFavoritesBtn.querySelector(
+      '.exerciseModalFavoriteBtn__text'
+    );
+
+    const heartIcon = addToFavoritesBtn.querySelector(
+      '.exercise-modal__btn__heart-icon'
+    );
+    const trashIcon = addToFavoritesBtn.querySelector(
+      '.exercise-card__btn__trash-icon'
+    );
+
+    const modal = document.getElementById('exerciseModal');
+    const exerciseId = modal?.dataset.exerciseId;
+
+    if (!exerciseId) {
+      console.error('Exercise ID not found');
+      return;
+    }
+
+    // Get the current array from localStorage or create a new one
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Check if the exercise is already in favorites by _id
+    const existingIndex = favorites.findIndex(item => item._id === exerciseId);
+
+    const rating =
+      parseFloat(document.getElementById('exerciseModalRating')?.textContent) ||
+      0;
+    const name =
+      document.getElementById('exerciseModal-title')?.textContent || '';
+    const burnedCalories =
+      document
+        .getElementById('exerciseModalCalories')
+        ?.textContent?.split('/')[0] || '';
+    const time =
+      document
+        .getElementById('exerciseModalCalories')
+        ?.textContent?.split('/')[1] || '';
+    const bodyPart =
+      document.getElementById('exerciseModalBodyPart')?.textContent || '';
+    const target =
+      document.getElementById('exerciseModalTarget')?.textContent || '';
+
+    if (existingIndex === -1) {
+      // If not in favorites, add the full object
+      const exerciseObj = {
+        _id: exerciseId,
+        rating,
+        name,
+        burnedCalories,
+        target,
+        bodyPart,
+        time,
+      };
+
+      favorites.push(exerciseObj);
+      addToFavoritesBtnText.textContent = favoritesBtnText.remove;
+      heartIcon.style.display = 'none';
+      trashIcon.style.display = 'block';
+    } else {
+      // If already in favorites, remove it
+      favorites.splice(existingIndex, 1);
+      addToFavoritesBtnText.textContent = favoritesBtnText.add;
+      heartIcon.style.display = 'block';
+      trashIcon.style.display = 'none';
+    }
+
+    // Save back to localStorage
+    localStorage.setItem('favorites', JSON.stringify(favorites));
   });
 }
 
@@ -151,6 +235,12 @@ function initRatingModalStars(currentRating) {
 export function updateModalContent(data) {
   if (!data) return;
 
+  // Saving exercise ID in modal
+  const modal = document.getElementById('exerciseModal');
+  if (modal && data._id) {
+    modal.dataset.exerciseId = data._id;
+  }
+
   // Update image (GIF)
   const image = document.getElementById('exerciseModalImage');
   if (image && data.gifUrl) {
@@ -203,6 +293,24 @@ export function updateModalContent(data) {
   const description = document.getElementById('exerciseModalDescription');
   if (description && data.description) {
     description.textContent = data.description;
+  }
+
+  const addToFavoritesBtnText = document.querySelector(
+    '.exerciseModalFavoriteBtn__text'
+  );
+  const heartIcon = document.querySelector('.exercise-modal__btn__heart-icon');
+  const trashIcon = document.querySelector('.exercise-card__btn__trash-icon');
+
+  if (addToFavoritesBtnText && heartIcon && trashIcon) {
+    if (window.location.pathname === '/favorites.html') {
+      addToFavoritesBtnText.textContent = favoritesBtnText.remove;
+      heartIcon.style.display = 'none';
+      trashIcon.style.display = 'block';
+    } else {
+      addToFavoritesBtnText.textContent = favoritesBtnText.add;
+      heartIcon.style.display = 'block';
+      trashIcon.style.display = 'none';
+    }
   }
 }
 
