@@ -1,14 +1,13 @@
 .exercises-list-wrapper {
-  position: relative; /* важливо для абсолютного позиціонування лоадера */
-  min-height: 200px;  /* щоб лоадер був видно навіть на порожньому контейнері */
+  position: relative;
+  min-height: 200px; 
 }
 
-/* Лоадер */
 .loader-cards {
-  position: absolute; /* відносно .exercises-list-wrapper */
-  top: 24px;
-  right: 50%;
-  transform: translateX(50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   font-size: 40px;
   line-height: 1.5;
   font-family: system-ui, sans-serif;
@@ -33,12 +32,5 @@
 @keyframes l9 {
   to {
     background-position: calc(50% + 1.6em) 0, calc(50% + 3.2em) .8em;
-  }
-}
-
-
-@media only screen and (min-width: 1440px) {
-  .loader-cards {
-    left: calc(50% - 370px); /* тут підбираєш відступ відповідно до ширини .home-quote */
   }
 }
