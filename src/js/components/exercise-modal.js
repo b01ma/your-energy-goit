@@ -267,7 +267,7 @@ export function updateModalContent(data) {
   // Update title
   const title = document.getElementById('exerciseModal-title');
   if (title && data.name) {
-    title.textContent = data.name;
+    title.textContent = capitalize(data.name);
   }
 
   // Update rating
