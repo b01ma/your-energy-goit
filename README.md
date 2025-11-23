@@ -1,6 +1,8 @@
 # Your Energy - GoIT Project
 
-A modern, responsive web application for browsing and managing fitness exercises. Built with Vite and vanilla JavaScript, featuring dynamic exercise filtering, favorites management, and interactive modals with API integration.
+A modern, responsive web application for browsing and managing fitness
+exercises. Built with Vite and vanilla JavaScript, featuring dynamic exercise
+filtering, favorites management, and interactive modals with API integration.
 
 ## 📋 Table of Contents
 
@@ -17,6 +19,7 @@ A modern, responsive web application for browsing and managing fitness exercises
 ## 🎯 About
 
 Your Energy is a fitness exercise catalog application that allows users to:
+
 - Browse exercises by categories (Muscles, Body Parts, Equipment)
 - Filter and search through exercise collections
 - View detailed exercise information with animations
@@ -30,12 +33,12 @@ Your Energy is a fitness exercise catalog application that allows users to:
 **API Documentation:**
 [Your Energy API Docs](https://your-energy.b.goit.study/api-docs/#/)
 
-**Live Demo:**
-[Your Energy App](https://b01ma.github.io/your-energy-goit/)
+**Live Demo:** [Your Energy App](https://b01ma.github.io/your-energy-goit/)
 
 ## ✨ Features
 
 ### Exercise Browsing
+
 - **Dynamic Filtering**: Filter exercises by Muscles, Body Parts, or Equipment
 - **Category Cards**: Visual category selection with hover effects
 - **Pagination**: Navigate through large exercise collections
@@ -43,8 +46,9 @@ Your Energy is a fitness exercise catalog application that allows users to:
 - **Responsive Grid**: Adaptive layout for mobile, tablet, and desktop
 
 ### Exercise Details
+
 - **Interactive Modals**: View exercise details in smooth, animated modals
-- **Exercise Information**: 
+- **Exercise Information**:
   - Animated GIF demonstrations
   - Target muscle groups
   - Body part focus
@@ -52,16 +56,19 @@ Your Energy is a fitness exercise catalog application that allows users to:
   - Calories burned
   - Exercise duration
   - Popularity rating
-- **Star Ratings**: Visual rating display with partial star fills (e.g., 3.7 stars)
+- **Star Ratings**: Visual rating display with partial star fills (e.g., 3.7
+  stars)
 - **Smooth Transitions**: Modal-to-modal transitions without backdrop flicker
 
 ### Rating System
+
 - **Interactive Rating**: Submit ratings with visual star feedback
 - **User Reviews**: Add written feedback for exercises
 - **Email Integration**: Associate ratings with email addresses
 - **Form Validation**: Client-side validation for rating submissions
 
 ### Favorites Management
+
 - **Save Exercises**: Add exercises to favorites with one click
 - **Persistent Storage**: Favorites saved in localStorage
 - **Dedicated Page**: Separate favorites view with full management
@@ -69,6 +76,7 @@ Your Energy is a fitness exercise catalog application that allows users to:
 - **State Synchronization**: Button states update across all views
 
 ### Additional Features
+
 - **Daily Quotes**: Motivational fitness quotes
 - **Smooth Scrolling**: Enhanced navigation experience
 - **Loading States**: Animated loaders during data fetching
@@ -214,40 +222,49 @@ your-energy-goit/
 ## 🔧 Key Features Implementation
 
 ### Modal System
+
 The project uses a dual-modal system with smooth transitions:
 
 **Exercise Modal:**
+
 - Fetches exercise details from API by ID
 - Displays animated GIF, ratings, and detailed information
 - Add/remove from favorites with state synchronization
 - Opens rating modal without closing backdrop
 
 **Rating Modal:**
+
 - Interactive 5-star rating system
 - Form validation for email and review text
 - Submits ratings to API
 - Smooth transition back to exercise modal
 
 **Technical Details:**
+
 - MicroModal for lightweight, accessible modals
 - Custom transition logic to keep backdrop visible between modals
 - Prevents flicker on first modal open with display state initialization
 - SVG icons with dynamic paths for Vite production builds
 
 ### Filter & Search System
+
 **Three-level filtering:**
+
 1. **Category Level**: Muscles, Body Parts, Equipment
 2. **Subcategory Level**: Specific muscle groups, body parts, or equipment types
 3. **Search Level**: Real-time search within selected subcategory
 
 **Responsive Pagination:**
+
 - Mobile: 8 exercises per page
 - Desktop: 10 exercises per page
 - Category cards: 9 (mobile) / 12 (desktop)
 - Smooth scroll to top on page change
 
 ### Favorites System
+
 **localStorage-based persistence:**
+
 - Stores exercise objects with all necessary data
 - Synchronizes button states across home and favorites pages
 - Event-driven updates using custom events
@@ -255,19 +272,23 @@ The project uses a dual-modal system with smooth transitions:
 - Heart icon for adding on home page
 
 ### Star Rating Display
+
 **Decimal precision rendering:**
+
 - Full stars for whole numbers
 - Partial star fills using CSS `clip-path`
 - SVG-based with smooth animations
 - Displays ratings like 3.7, 4.2 accurately
 
 ### Image Optimization
+
 - All images converted to WebP format
 - 85% quality for optimal size/quality balance
 - ~23% size reduction vs original JPG
 - Responsive images with srcset for retina displays
 
 ### Loading States
+
 - Custom "YOUR ENERGY" animated loader
 - Positioned 24px from top, horizontally centered
 - Displays during API calls
@@ -411,6 +432,7 @@ test: add unit tests for API calls
 ## 🎨 Design Patterns
 
 ### Modal Pattern
+
 ```javascript
 // Opening modal with data
 const exerciseData = await api.getExercisesById(id);
@@ -423,6 +445,7 @@ ratingModalContainer.style.display = 'block';
 ```
 
 ### Favorites Pattern
+
 ```javascript
 // Save to localStorage
 const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -434,25 +457,29 @@ window.dispatchEvent(new Event('favorites-updated'));
 ```
 
 ### Pagination Pattern
+
 ```javascript
 renderPagination({
   container: paginationElement,
   currentPage: 1,
   totalPages: 5,
-  onPageChange: (newPage) => {
+  onPageChange: newPage => {
     loadExercises(newPage);
-  }
+  },
 });
 ```
 
 ## 🐛 Known Issues & Solutions
 
 ### Production Build Issues
-- **SVG Icons not showing**: Import sprite with `import iconSprite from '/img/icons.svg'`
+
+- **SVG Icons not showing**: Import sprite with
+  `import iconSprite from '/img/icons.svg'`
 - **Images not loading**: Use absolute paths `/img/` not relative `./img/`
 - **Modal warnings**: Set `debugMode: false` in MicroModal config
 
 ### Performance Optimizations
+
 - WebP images for 23% size reduction
 - Lazy loading for images
 - Debounced search input
@@ -464,11 +491,13 @@ renderPagination({
 The project is configured for GitHub Pages deployment:
 
 1. **Build the project:**
+
    ```bash
    npm run build
    ```
 
 2. **The build creates optimized files in `dist/`:**
+
    - Minified JavaScript bundles
    - Optimized CSS
    - Processed HTML
@@ -480,12 +509,13 @@ The project is configured for GitHub Pages deployment:
    - Available at: `https://b01ma.github.io/your-energy-goit/`
 
 **Base Path Configuration:**
+
 ```javascript
 // vite.config.js
 export default {
   base: '/your-energy-goit/',
   // ... other config
-}
+};
 ```
 
 ## 🧪 Browser Support
@@ -497,6 +527,7 @@ export default {
 - Mobile browsers (iOS Safari, Chrome Android)
 
 **Features used:**
+
 - ES6+ JavaScript
 - CSS Grid & Flexbox
 - CSS Custom Properties
@@ -518,9 +549,11 @@ export default {
 
 For questions or issues:
 
-- Open an issue on [GitHub Issues](https://github.com/b01ma/your-energy-goit/issues)
+- Open an issue on
+  [GitHub Issues](https://github.com/b01ma/your-energy-goit/issues)
 - Contact the development team
-- Check API documentation: [Your Energy API](https://your-energy.b.goit.study/api-docs/)
+- Check API documentation:
+  [Your Energy API](https://your-energy.b.goit.study/api-docs/)
 
 ## 🙏 Acknowledgments
 
@@ -532,6 +565,7 @@ For questions or issues:
 ## 📝 Changelog
 
 ### Version 1.0.0 (Current)
+
 - ✅ Exercise browsing with dynamic filtering
 - ✅ Interactive exercise modals with API integration
 - ✅ Star rating system (display + user submission)
@@ -562,12 +596,15 @@ For questions or issues:
 **Author:** GoIT dev team  
 **License:** ISC  
 **Version:** 1.0.0  
-**Repository:** [github.com/b01ma/your-energy-goit](https://github.com/b01ma/your-energy-goit)
+**Repository:**
+[github.com/b01ma/your-energy-goit](https://github.com/b01ma/your-energy-goit)
 
 ---
 
 ### Quick Links
-- 🎨 [Figma Design](https://www.figma.com/design/E52uzlaSsHQS9yzLSQrtSX/YourEnergy--Copy-?node-id=126-18318&t=8Tr8GUtplZLQ2Dmk-0)
+
+- 🎨
+  [Figma Design](https://www.figma.com/design/E52uzlaSsHQS9yzLSQrtSX/YourEnergy--Copy-?node-id=126-18318&t=8Tr8GUtplZLQ2Dmk-0)
 - 📚 [API Documentation](https://your-energy.b.goit.study/api-docs/)
 - 🚀 [Live Demo](https://b01ma.github.io/your-energy-goit/)
 - 💻 [Source Code](https://github.com/b01ma/your-energy-goit)
