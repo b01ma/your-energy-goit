@@ -68,14 +68,15 @@
   border: 1px solid var(--color-light-10);
 }
 
-.footer-subscribe {
-  @media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 1440px) {
+  .footer-subscribe {
     display: flex;
     gap: 115px;
     width: 100%;
     justify-content: space-between;
   }
 }
+
 .footer-subscribe-tagline {
   margin-bottom: 20px;
   font-weight: 400;

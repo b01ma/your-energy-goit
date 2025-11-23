@@ -1,4 +1,3 @@
-
 .favorites-header {
   font-size: 44px;
   font-weight: 400;
@@ -6,7 +5,8 @@
   margin-bottom: 32px;
 }
 
-.favorites-container, .home-quote-container {
+.favorites-container,
+.home-quote-container {
   display: flex;
   width: 100%;
   gap: 32px;
@@ -42,7 +42,7 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background-color: #F4F4F433;
+  background-color: #f4f4f433;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -61,7 +61,7 @@
   display: flex;
   justify-content: space-between;
   align-items: start;
-  color: #F4F4F4;
+  color: #f4f4f4;
 }
 
 .left-quote-header p {
@@ -78,7 +78,7 @@
 }
 
 .left-quote-text p:first-child {
-  color: #F4F4F499;
+  color: #f4f4f499;
   font-size: 14px;
   line-height: 18px;
   font-weight: 400;
@@ -86,7 +86,7 @@
 }
 
 .left-quote-text p:last-child {
-  color: #F4F4F4;
+  color: #f4f4f4;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -95,7 +95,7 @@
 
 .left-daily {
   padding: 25px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -125,7 +125,7 @@
 }
 
 .left-daily-text p:last-child,
-.left-recommendation-text p:last-child{
+.left-recommendation-text p:last-child {
   color: #24242499;
   font-size: 14px;
   line-height: 18px;
@@ -164,11 +164,11 @@
   max-width: 554px;
 }
 
-.home-quote .left-wrapper{
+.home-quote .left-wrapper {
   gap: 32px;
   max-width: 444px;
 }
-.home-quote .left-img{
+.home-quote .left-img {
   width: 100%;
   min-height: 249px;
 }
@@ -176,7 +176,7 @@
 .left-recommendation {
   display: flex;
   padding: 40px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 20px;
 }
 
@@ -231,7 +231,7 @@
 }
 
 .favorites-list::-webkit-scrollbar-track {
-  background-color: #2424241A;
+  background-color: #2424241a;
   border-radius: 12px;
 }
 
@@ -258,7 +258,7 @@
   font-family: inherit;
   font-size: 24px;
   font-weight: 400;
-  color: #D4D4D4;
+  color: #d4d4d4;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -281,7 +281,6 @@
   font-weight: 400;
 }
 
-
 @media screen and (max-width: 1439px) {
   .favorites-list {
     overflow-y: hidden;
@@ -294,8 +293,8 @@
     gap: 64px;
   }
   .left-wrapper {
-   max-width: unset;
-   min-width: unset;
+    max-width: unset;
+    min-width: unset;
   }
 
   .left-quote-block {
@@ -327,7 +326,7 @@
   }
 
   .home-quote .left-quote-block,
-  .home-quote .left-recommendation{
+  .home-quote .left-recommendation {
     width: calc(60% - 8px);
   }
 
@@ -335,18 +334,17 @@
     min-height: 249px;
   }
 
-  .home-quote .left-img{
+  .home-quote .left-img {
     width: calc(40% - 8px);
     min-height: 249px;
   }
 
-  .left-recommendation-description p{
+  .left-recommendation-description p {
     display: -webkit-box;
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-
 }
 @media screen and (max-width: 767px) {
   .favorites-list {
@@ -400,7 +398,7 @@
 
   .home-quote .left-quote-block,
   .home-quote .left-img,
-  .home-quote .left-recommendation{
+  .home-quote .left-recommendation {
     width: 100%;
   }
   .home-quote .left-quote-block {
@@ -408,12 +406,5 @@
   }
   .home-quote .left-img {
     min-height: 242px;
-  }
-}
-
-@media only screen and (min-width: 768px) {
-  .container {
-    max-width: 768px;
-    padding: 0;
   }
 }
