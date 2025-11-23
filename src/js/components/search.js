@@ -4,7 +4,7 @@ import { renderExercises } from './filter-panel.js';
 import 'izitoast/dist/css/iziToast.min.css';
 import { renderPagination } from './pagination.js';
 
-console.log('iziToast >>>', iziToast);
+// console.log('iziToast >>>', iziToast);
 
 // Элементы
 const searchInput = document.getElementById('searchInput');
@@ -127,7 +127,6 @@ async function loadExercisesForCurrentCategory(page = 1) {
       });
     }
     // pagination end
-						   
   } catch (error) {
     console.error(error);
     filtersGrid.innerHTML = '<p>Failed to load exercises</p>';

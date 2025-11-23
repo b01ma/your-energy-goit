@@ -97,7 +97,7 @@ function getCurrentExerciseId() {
     }
   }
 
-  console.warn('exercise-modal-favorites: exercise id not found.');
+  // console.warn('exercise-modal-favorites: exercise id not found.');
   return null;
 }
 
