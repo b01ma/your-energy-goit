@@ -357,6 +357,22 @@
   border-color: var(--color-bg);
 }
 
+/* Button icons - single hyphen (new structure) */
+.exercise-modal__btn-icon {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  margin-left: 8px;
+  max-height: 20px;
+  transition: stroke 0.15s ease-in-out;
+}
+
+.exercise-modal__btn--favorite:hover .exercise-modal__btn-icon,
+.exercise-modal__btn--favorite:active .exercise-modal__btn-icon {
+  stroke: var(--color-light);
+}
+
+/* Button icons - double underscore (legacy structure) */
 .exercise-modal__btn__icon {
   fill: none;
   stroke: var(--color-primary);

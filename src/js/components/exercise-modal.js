@@ -10,6 +10,9 @@ const favoritesBtnText = {
 };
 
 export function initExerciseModal() {
+  // Update static SVG icon paths to work in production
+  updateStaticIconPaths();
+
   // Initialize MicroModal with config
   MicroModal.init({
     onShow: modal => console.info(`${modal.id} is shown`),
@@ -267,7 +270,7 @@ export function updateModalContent(data) {
   // Update title
   const title = document.getElementById('exerciseModal-title');
   if (title && data.name) {
-    title.textContent = data.name;
+    title.textContent = capitalize(data.name);
   }
 
   // Update rating
@@ -443,6 +446,33 @@ if (ratingForm) {
 
     try {
       await api.addRating(exerciseId, payload);
+
+      // Clear the form after successful submission
+      ratingForm.reset();
+
+      // Reset the rating stars to empty
+      const ratingValueElement = document.querySelector(
+        '.rating-modal__rating-value'
+      );
+      if (ratingValueElement) {
+        ratingValueElement.textContent = '0.0';
+      }
+
+      // Clear selected rating
+      starsContainer.removeAttribute('data-selected-rating');
+
+      // Reset all stars to empty state
+      const starButtons = starsContainer.querySelectorAll(
+        '.rating-modal__star-btn'
+      );
+      starButtons.forEach(btn => {
+        const star = btn.querySelector('svg');
+        if (star) {
+          star.classList.add('exercise-modal__star--empty');
+          star.classList.remove('exercise-modal__star--filled');
+        }
+      });
+
       MicroModal.close('ratingModal');
       iziToast.info({
         title: 'Success',
@@ -457,4 +487,39 @@ if (ratingForm) {
       });
     }
   });
+}
+
+// Update static icon paths in HTML to work with Vite build
+function updateStaticIconPaths() {
+  // Update close button icon
+  const closeButtonIcon = document.querySelector(
+    '#exerciseModal .modal__close use'
+  );
+  if (closeButtonIcon) {
+    closeButtonIcon.setAttribute('href', `${iconSprite}#icon-cross`);
+  }
+
+  // Update heart icon
+  const heartIcon = document.querySelector(
+    '.exercise-modal__btn__heart-icon use'
+  );
+  if (heartIcon) {
+    heartIcon.setAttribute('href', `${iconSprite}#icon-heart`);
+  }
+
+  // Update trash icon
+  const trashIcon = document.querySelector(
+    '.exercise-card__btn__trash-icon use'
+  );
+  if (trashIcon) {
+    trashIcon.setAttribute('href', `${iconSprite}#icon-trash`);
+  }
+
+  // Update rating modal close button
+  const ratingCloseIcon = document.querySelector(
+    '#ratingModal .modal__close use'
+  );
+  if (ratingCloseIcon) {
+    ratingCloseIcon.setAttribute('href', `${iconSprite}#icon-cross`);
+  }
 }
