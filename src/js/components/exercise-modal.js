@@ -10,6 +10,9 @@ const favoritesBtnText = {
 };
 
 export function initExerciseModal() {
+  // Update static SVG icon paths to work in production
+  updateStaticIconPaths();
+
   // Initialize MicroModal with config
   MicroModal.init({
     onShow: modal => console.info(`${modal.id} is shown`),
@@ -457,4 +460,39 @@ if (ratingForm) {
       });
     }
   });
+}
+
+// Update static icon paths in HTML to work with Vite build
+function updateStaticIconPaths() {
+  // Update close button icon
+  const closeButtonIcon = document.querySelector(
+    '#exerciseModal .modal__close use'
+  );
+  if (closeButtonIcon) {
+    closeButtonIcon.setAttribute('href', `${iconSprite}#icon-cross`);
+  }
+
+  // Update heart icon
+  const heartIcon = document.querySelector(
+    '.exercise-modal__btn__heart-icon use'
+  );
+  if (heartIcon) {
+    heartIcon.setAttribute('href', `${iconSprite}#icon-heart`);
+  }
+
+  // Update trash icon
+  const trashIcon = document.querySelector(
+    '.exercise-card__btn__trash-icon use'
+  );
+  if (trashIcon) {
+    trashIcon.setAttribute('href', `${iconSprite}#icon-trash`);
+  }
+
+  // Update rating modal close button
+  const ratingCloseIcon = document.querySelector(
+    '#ratingModal .modal__close use'
+  );
+  if (ratingCloseIcon) {
+    ratingCloseIcon.setAttribute('href', `${iconSprite}#icon-cross`);
+  }
 }

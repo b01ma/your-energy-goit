@@ -1,10 +1,11 @@
 import { api } from '../api/api.js';
+import iconSprite from '/img/icons.svg';
 
 const FAVORITES_KEY = 'favorites';
 
 // sprite icon ids (check these exist in your icons.svg)
-const HEART_ICON = '/img/icons.svg#icon-heart';
-const HEART_TRASH = '/img/icons.svg#icon-trash';
+const HEART_ICON = `${iconSprite}#icon-heart`;
+const HEART_TRASH = `${iconSprite}#icon-trash`;
 
 /**
  * Save favorites array to localStorage
