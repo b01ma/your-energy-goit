@@ -104,10 +104,10 @@ async function loadExercisesForCurrentCategory() {
     renderExercises(items);
   } catch (error) {
     console.error(error);
-    filtersGrid.innerHTML = '<p>Не вдалося завантажити вправи</p>';
+    filtersGrid.innerHTML = '<p>Failed to load exercises</p>';
     iziToast.error({
       title: 'Error',
-      message: 'Не вдалося завантажити вправи',
+      message: 'Failed to load exercises',
       position: 'topRight',
     });
   }
@@ -126,7 +126,7 @@ async function runApiSearch() {
   if (!subcategory) {
     iziToast.info({
       title: 'Select category',
-      message: 'Спочатку виберіть підкатегорію',
+      message: 'Choose the category first',
       position: 'topRight',
     });
     return;
@@ -153,7 +153,7 @@ async function runApiSearch() {
 
     if (!items.length) {
       filtersGrid.innerHTML =
-        '<p>По цьому ключовому слову немає результатів.</p>';
+        '<p>There are no results for your query</p>';
       return;
     }
 
@@ -162,7 +162,7 @@ async function runApiSearch() {
     console.error(error);
     iziToast.error({
       title: 'Error',
-      message: 'Не вдалося виконати пошук',
+      message: 'Search failed',
       position: 'topRight',
     });
   }

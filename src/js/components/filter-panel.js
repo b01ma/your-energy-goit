@@ -13,7 +13,7 @@ export function renderExercises(exercises) {
   if (!filtersGrid) return;
 
   if (!exercises.length) {
-    filtersGrid.innerHTML = '<p>Немає вправ для цієї категорії</p>';
+    filtersGrid.innerHTML = '<p>There are no exercises in this category</p>';
     return;
   }
 
@@ -94,7 +94,7 @@ const filterPanel = () => {
       }
     } catch (err) {
       console.error('Error loading filters:', err);
-      filtersGrid.innerHTML = '<p>Не вдалося завантажити фільтри</p>';
+      filtersGrid.innerHTML = '<p>Failed to load filters</p>';
 
       if (paginationContainer) {
         paginationContainer.innerHTML = '';
@@ -110,7 +110,7 @@ const filterPanel = () => {
     }
 
     if (!items.length) {
-      filtersGrid.innerHTML = '<p>Немає категорій</p>';
+      filtersGrid.innerHTML = '<p>There are no categories</p>';
       return;
     }
 
@@ -179,7 +179,7 @@ const filterPanel = () => {
       }
     } catch (error) {
       console.error('Error loading exercises:', error);
-      filtersGrid.innerHTML = '<p>Не вдалося завантажити вправи</p>';
+      filtersGrid.innerHTML = '<p>Failed to load exercises</p>';
       if (paginationContainer) {
         paginationContainer.innerHTML = '';
         paginationContainer.hidden = true;
