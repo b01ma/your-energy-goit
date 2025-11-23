@@ -2,6 +2,7 @@ import { api } from '../api/api.js';
 import iziToast from 'izitoast';
 import { renderExercises } from './filter-panel.js';
 import 'izitoast/dist/css/iziToast.min.css';
+import { renderPagination } from './pagination.js';
 
 console.log('iziToast >>>', iziToast);
 
@@ -11,6 +12,7 @@ const searchBtn = document.querySelector('.search-btn');
 const clearSearchBtn = document.querySelector('.search-clear-btn');
 const filtersGrid = document.getElementById('filtersGrid');
 const selectedSubcategoryEl = document.getElementById('selectedSubcategory');
+const paginationContainer = document.getElementById('exercisesPagination');
 
 // ==================== ВСПОМОГАТЕЛЬНОЕ ====================
 
@@ -101,6 +103,16 @@ async function loadExercisesForCurrentCategory() {
     const data = await api.getExercisesByFilters(payload);
     const items = Array.isArray(data.results) ? data.results : [];
 
+    if (!items.length) {
+      renderExercises(items);
+      renderPagination({
+        container: paginationContainer,
+        currentPage: 1,
+        totalPages: 0,
+        onPageChange: () => {}
+      })
+    }
+
     renderExercises(items);
   } catch (error) {
     console.error(error);
@@ -152,8 +164,14 @@ async function runApiSearch() {
     const items = Array.isArray(data.results) ? data.results : [];
 
     if (!items.length) {
-      filtersGrid.innerHTML =
-        '<p>There are no results for your query</p>';
+      filtersGrid.innerHTML = '<p>There are no results for your query</p>';
+
+      renderPagination({
+        container: paginationContainer,
+        currentPage: 1,
+        totalPages: 0,
+        onPageChange: () => {},
+      });
       return;
     }
 
