@@ -302,14 +302,17 @@ export function updateModalContent(data) {
   const trashIcon = document.querySelector('.exercise-card__btn__trash-icon');
 
   if (addToFavoritesBtnText && heartIcon && trashIcon) {
-    if (window.location.pathname === '/favorites.html') {
-      addToFavoritesBtnText.textContent = favoritesBtnText.remove;
-      heartIcon.style.display = 'none';
-      trashIcon.style.display = 'block';
-    } else {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    const existingIndex = favorites.findIndex(item => item._id === data._id);
+
+    if (existingIndex === -1) {
       addToFavoritesBtnText.textContent = favoritesBtnText.add;
       heartIcon.style.display = 'block';
       trashIcon.style.display = 'none';
+    } else {
+      addToFavoritesBtnText.textContent = favoritesBtnText.remove;
+      heartIcon.style.display = 'none';
+      trashIcon.style.display = 'block';
     }
   }
 }
