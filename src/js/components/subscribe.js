@@ -11,7 +11,7 @@ const subscribe = () => {
     iziToast.show({
       title: type === 'success' ? 'Success' : 'Error',
       message,
-      position: 'center',
+      position: 'topRight',
       color: type === 'success' ? 'green' : 'red',
       timeout: 4000,
       pauseOnHover: true,
