@@ -9,14 +9,6 @@
   }
 }
 
-.footer-container {
-  margin: 0 20px;
-
-  @media only screen and (min-width: 768px) {
-    margin: 0 32px;
-  }
-}
-
 .footer-up {
   margin-bottom: 120px;
 
@@ -65,7 +57,7 @@
   border: 1px solid var(--color-light-10);
   fill: var(--color-light);
   opacity: 0.8;
-  transition: all 0.3s;
+  transition: all 0.15s ease-in-out;
   outline: transparent;
   border-radius: 10px;
 }
@@ -101,6 +93,7 @@
 
   @media only screen and (min-width: 1440px) {
     margin-bottom: 0;
+    width: 595px;
   }
 }
 .footer-tagline-slanting {
@@ -140,6 +133,7 @@
   caret-color: rgba(224, 224, 224, 0.6);
   background-color: var(--color-primary);
   border: 1px solid var(--color-bg);
+  transition: all 0.15s ease-in-out;
 
   @media only screen and (min-width: 768px) {
     font-size: 16px;
@@ -156,6 +150,7 @@
   border-radius: 30px;
   background-color: var(--color-bg);
   border: 1px solid var(--color-bg);
+  transition: all 0.15s ease-in-out;
 }
 
 .footer-subscribe-btn:hover,
