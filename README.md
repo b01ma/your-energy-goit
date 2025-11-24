@@ -632,12 +632,14 @@ For questions or issues:
 
 ---
 
-**Built with ❤️ by GoIT dev team**
-**Author:** GoIT dev team
-**License:** ISC
-**Version:** 1.0.0
-**Repository:**
-[github.com/b01ma/your-energy-goit](https://github.com/b01ma/your-energy-goit)
+|            |                                                                                |
+| ---------- | :----------------------------------------------------------------------------: |
+| Built with |                               ❤️ by GoIT dev team                               |
+| Author     |                                 GoIT dev team                                  |
+| License    |                                      ISC                                       |
+| Version    |                                     1.0.0                                      |
+| Repository | [github.com/b01ma/your-energy-goit](https://github.com/b01ma/your-energy-goit) |
+
 
 ---
 
