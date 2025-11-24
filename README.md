@@ -590,12 +590,52 @@ For questions or issues:
 - [ ] Advanced filtering (combine multiple filters)
 - [ ] Exercise comparison feature
 
+
+## Development team:
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/b01ma)
+  _Eduard Bolma_ **Team Lead**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/Olha-Fursova)
+  _Olha Fursova_ **Scrum Master**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/Vi-encore)
+  _Viktoriia Matiushko_  **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/sanyanut)
+  _Alexander Sorochinskiy_ **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/rubannn)
+  _Mykola Ruban_  **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/osovetovs)
+  _Olegs Sovetovs_ **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/sidor91)
+  _Serhii Sydorenko_ **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/Stenvar21)
+  _Serhii Pavlyshyn_ **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/BurglachOK)
+  _Serhii Buriak_ **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/IrynaShostenko)
+  _Iryna Shostenko_ **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/dezzlly)
+  _Oleksandr Osypenko_ **Front End Developer**
+
+- [![GitHub](https://img.shields.io/badge/GitHub-100000?style=plastic&logo=github&logoColor=white)](https://github.com/ArchiChikenLeg)
+  _Lidiia Andriienko_ **Front End Developer**
+
+
 ---
 
-**Built with ❤️ by GoIT dev team**  
-**Author:** GoIT dev team  
-**License:** ISC  
-**Version:** 1.0.0  
+**Built with ❤️ by GoIT dev team**
+**Author:** GoIT dev team
+**License:** ISC
+**Version:** 1.0.0
 **Repository:**
 [github.com/b01ma/your-energy-goit](https://github.com/b01ma/your-energy-goit)
 
